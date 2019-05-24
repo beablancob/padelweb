@@ -1,9 +1,10 @@
-import { GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE } from '../actions/types';
+import { GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, IS_ADMIN, IS_NOT_ADMIN } from '../actions/types';
 
 const initialState = {
     profile: null,
     profiles: null,
-    loading: false
+    loading: false,
+    admin: false
 }
 
 export default function (state = initialState, action) {
@@ -24,6 +25,16 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 profile: null
+            }
+        case IS_ADMIN:
+            return {
+                ...state,
+                admin: true
+            }
+        case IS_NOT_ADMIN:
+            return {
+                ...state,
+                admin: false
             }
         default:
             return state;

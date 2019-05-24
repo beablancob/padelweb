@@ -6,18 +6,18 @@ import jwt_decode from 'jwt-decode'
 
 // Register User
 export const registerUser = (userData, history) => dispatch => {
+    console.log("Estoy dentro de registerUser");
     axios
-        .post('/api/users/register', userData)
-        .then(res => history.push('/login'))
+        .post('/users', userData)
+        .then(res => history.push('/signin'))
         .catch(err =>
             dispatch({
                 type: GET_ERRORS,
                 payload: err.response.data
-
             })
         );
-}
 
+}
 // Login - Get User Token
 export const loginUser = (userData) => dispatch => {
     axios.post('/signin', userData)

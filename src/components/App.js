@@ -22,6 +22,8 @@ import Landing from './layout/Landing';
 import Login from './auth/Login';
 import Register from './auth/Register';
 import Dashboard from './dashboard/Dashboard';
+import EditProfile from './edit-profile/EditProfile';
+
 
 
 //Con esto hacemos que aunque se refresque la página, nosotros sigamos con la sesión iniciada.
@@ -62,6 +64,9 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/edit-profile" component={EditProfile} />
               </Switch>
             </div>
             <Footer />

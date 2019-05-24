@@ -16,6 +16,11 @@
   color: red;
   
 }
+.btn-us{
+  text-align: center;
+  color: darkgray;
+
+}
 .navbar {
   z-index: 999;
 }
@@ -23,6 +28,7 @@
   margin-top: 58px;
 }
 .sidenav {
+  margin-top: 50px;
   height: 100%;
   width: 160px;
   position: fixed;
@@ -55,4 +61,18 @@
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
+}
+
+.typeUser{
+  color: white;
+}
+
+
+.usuario{
+  color: #f1f1f1;
+
+}
+.sidenav .nav-item{
+  padding-top: 50px;
+
 }

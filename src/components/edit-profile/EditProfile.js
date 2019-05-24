@@ -6,16 +6,17 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authAction';
 import TextFieldGroup from '../common/TextFieldGroup';
+import { getCurrentProfile, deleteAccount } from '../../actions/profileActions';
+import isEmpty from '../../validation/is-empty';
 
-
-class Register extends Component {
+class EditProfile extends Component {
     constructor() {
         super();
         this.state = {
             name: '',
-            apellidos: '',
+            surname: '',
             email: '',
-            password1: '',
+            password: '',
             password2: '',
             errors: {}
         };
@@ -23,36 +24,50 @@ class Register extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
     componentDidMount() {
-        if (this.props.auth.isAuthenticated) {
-            this.props.history.push('/dashboard');
-        }
+        this.props.getCurrentProfile()
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.errors) {
             this.setState({ errors: nextProps.errors });
         }
-    }
+        if (nextProps.profile.profile) {
 
-    onChange(e) {
-        this.setState(
-            { [e.target.name]: e.target.value }
-        );
+            const profile = nextProps.profile.profile;
+            profile.name = !isEmpty(profile.name) ? profile.name : '';
+            profile.surname = !isEmpty(profile.surname) ? profile.surname : '';
+
+            // Set component fields state
+            this.setState({
+                name: profile.name,
+                surname: profile.surname,
+                password: profile.password
+            });
+
+        }
+    }
+    onDeleteClick(e) {
+        e.preventDefault();
+        this.props.deleteAccount();
+
     }
     onSubmit(e) {
         e.preventDefault();
 
-        const newUser = {
+        const userData = {
             name: this.state.name,
-            apellidos: this.state.apellidos,
+            surname: this.state.surname,
             email: this.state.email,
-            password1: this.state.password1,
-            password2: this.state.password2
+            password: '',
+            password2: ''
         };
-
-        this.props.registerUser(newUser);
-        console.log(newUser);
+        console.log(userData);
         console.log("Errores: ", this.state.errors);
-        console.log("Ya he pasado por la linea de registerUser");
+        this.props.registerUser(userData);
+    }
+    onChange(e) {
+        this.setState(
+            { [e.target.name]: e.target.value }
+        );
     }
 
     render() {
@@ -67,11 +82,11 @@ class Register extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8 m-auto">
-                            <h1 className="display-4 text-center">Regístrate</h1>
-                            <p className="lead text-center">Crea tu propia cuenta</p>
+                            <h1 className="display-4 text-center">Edita tu perfil</h1>
+
                             <form noValidate onSubmit={this.onSubmit}>
                                 <TextFieldGroup
-                                    placeholder="Nombre"
+                                    placeholder={this.state.name}
                                     name="name"
                                     value={this.state.name}
                                     onChange={this.onChange}
@@ -79,11 +94,11 @@ class Register extends Component {
 
                                 />
                                 <TextFieldGroup
-                                    placeholder="Apellidos"
-                                    name="apellidos"
-                                    value={this.state.apellidos}
+                                    placeholder="Apellido"
+                                    name="surname"
+                                    value={this.state.surname}
                                     onChange={this.onChange}
-                                    error={errors.apellidos}
+                                    error={errors.surname}
 
                                 />
 
@@ -118,18 +133,28 @@ class Register extends Component {
                             </form>
                         </div>
                     </div>
+                    <div style={{ marginBottom: '60px' }} ></div>
+                    <div className="row">
+                        <button style={{ marginLeft: '200px' }} onClick={this.onDeleteClick.bind(this)} className="btn btn-danger">Eliminar mi cuenta</button>
+                    </div>
+
                 </div>
+
             </div>
         )
     }
 }
-Register.propTypes = {
+EditProfile.propTypes = {
+    deleteAccount: PropTypes.func.isRequired,
+    getCurrentProfile: PropTypes.func.isRequired,
     registerUser: PropTypes.func.isRequired,
+    profile: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 }
 const mapStateToProps = (state) => ({
+    profile: state.profile,
     auth: state.auth,
     errors: state.errors
 })
-export default connect(mapStateToProps, { registerUser })(withRouter(Register));
+export default connect(mapStateToProps, { registerUser, getCurrentProfile, deleteAccount })(withRouter(EditProfile));

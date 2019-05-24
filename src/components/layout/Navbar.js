@@ -6,6 +6,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authAction';
 import { clearCurrentProfile } from '../../actions/profileActions';
+import { isAdmin } from '../../actions/profileActions';
+import { isNotAdmin } from '../../actions/profileActions';
+
 import '../../assets/Style.css';
 
 
@@ -17,16 +20,19 @@ class Navbar extends Component {
     }
     onAdminClick(e) {
         e.preventDefault();
+        this.props.isAdmin();
         console.log("Hola", e);
 
     }
     onUserClick(e) {
         e.preventDefault();
+        this.props.isNotAdmin();
         console.log("Adios", e);
     }
     // TODO: Cuando tengan user.img entonces la meto en el login. Si el usuario no tiene, añadir la default
     render() {
         const { isAuthenticated, user } = this.props.auth;
+
 
         const authLinks = (
 
@@ -37,22 +43,17 @@ class Navbar extends Component {
                     <span></span>
                 </li>
                 <li className="nav-item">
-
-                    <p className="usuario">{user.name}</p>
-                    <a className="btn-us" onClick={this.onUserClick.bind(this)}>usuario</a>
-                    <a className="btn-us" onClick={this.onAdminClick.bind(this)}>admin</a>
-
-
+                    <p className="usuario">Welcome {user.name}</p>
+                    <div className="row">
+                        <a className="nav-link btn-us" onClick={this.onUserClick.bind(this)}>Usuario </a>
+                        <a className="nav-link btn-us" onClick={this.onAdminClick.bind(this)}>Admin</a>
+                    </div>
                 </li>
                 <li className="nav-item">
-
                 </li>
                 <li className="nav-item">
-
                 </li>
                 <li className="nav-item">
-
-
                     <a
                         href=""
                         onClick={this.onLogoutClick.bind(this)}
@@ -67,8 +68,6 @@ class Navbar extends Component {
                         Logout
                         </a>
                 </li>
-
-
             </ul>
         );
 
@@ -76,10 +75,10 @@ class Navbar extends Component {
 
             <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                    <Link className="nav-link" to="/register">Sign Up</Link>
+                    <Link className="nav-link" to="/register">Regístrate</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link" to="/login">Login</Link>
+                    <Link className="nav-link" to="/login">Inicia Sesión</Link>
                 </li>
             </ul>
         );
@@ -87,7 +86,7 @@ class Navbar extends Component {
         return (
             <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="/">DevConnector</Link>
+                    <Link className="navbar-brand" to="/">Torneos de pádel</Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -101,6 +100,7 @@ class Navbar extends Component {
         )
     }
 }
+//Si tiene dispatch, lo añado aqui como una funcion. Sino, no.
 Navbar.propTypes = {
     logoutUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
@@ -108,4 +108,4 @@ Navbar.propTypes = {
 const mapStateToProps = state => ({
     auth: state.auth
 })
-export default connect(mapStateToProps, { logoutUser, clearCurrentProfile })(Navbar);
+export default connect(mapStateToProps, { logoutUser, isAdmin, isNotAdmin, clearCurrentProfile })(Navbar);
