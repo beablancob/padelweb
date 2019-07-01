@@ -5,7 +5,7 @@ import { GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, IS_ADMIN, IS_NOT_A
 export const getCurrentProfile = () => dispatch => {
     dispatch(setProfileLoading());
     // Pido al backend la info del usuario
-    axios.get('/users')
+    axios.get('/users/:userId')
         .then(res =>
             dispatch({
                 type: GET_PROFILE,

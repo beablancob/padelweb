@@ -6,7 +6,7 @@ import { GET_CURRENT_TOURNAMENTS, TOURNAMENTS_LOADING } from './types';
 export const getCurrentTournaments = () => dispatch => {
     dispatch(setTournamentsLoading());
 
-    axios.get('/api/profile')
+    axios.get('/tournaments/publicos')
         .then(res =>
             dispatch({
                 type: GET_CURRENT_TOURNAMENTS,

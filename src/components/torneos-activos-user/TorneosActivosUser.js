@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCurrentTournaments } from '../../actions/torneosActivosUserActions';
 import Spinner from '../common/Spinner';
+import '../../assets/Style.css';
+
 
 class TorneosActivosUser extends Component {
     componentDidMount() {
@@ -11,27 +13,56 @@ class TorneosActivosUser extends Component {
     }
     render() {
         const { user } = this.props.auth;
-        const { torneos, loading } = this.props.torneos;
+        const { torneos, loading } = this.props.torneosActivosUser;
 
         let torneosContent;
-
-        if (torneos === null || loading) {
+        console.log(loading);
+        //   console.log(torneos.length());
+        if (loading) {
             torneosContent = <Spinner />;
         } else {
+            if (torneos === null) {
+                console.log("Hola bea");
+                // User is logged 
+                torneosContent = (
+                    < div >
+                        <p className="lead text-muted">Bienvenido {user.name} </ p>
+                        <p>No hay ningún torneo activo de momento, ¡anímate y organiza uno como administrador!</p>
+                    </div>
+                )
 
-            // User is logged 
-            torneosContent = (
-                < div >
-                    <p className="lead text-muted">Welcome {user.name} </ p>
-                    <p>You have not yet setup a profile, please add some info</p>
-                    <Link to="/create-profile" className="btn btn-lg btn-info">Create Profile</Link>
-                </div>
-            )
+            } else {
+                var listTorneos;
+                console.log("Torneos: ", this.props.torneos)
+                listTorneos = this.props.torneos.map((comp) =>
+                    <li key={comp} id="tips-span">{comp}</li>
+                );
+                // User is logged 
+                torneosContent = (
+                    <div>
+                        <table>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Lugar</th>
+                                <th>Estado</th>
+                            </tr>
+                            <tr>
+                                <td>{listTorneos.nombre}</td>
+                                <td>{listTorneos.place}</td>
+                                <td>{listTorneos.state}</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                )
+
+            }
+
 
         }
         return (
             <div className="dashboard" >
-                <div className="container">
+                <div className="container-app">
                     <div className="row">
                         <div className="col md-12">
                             <h1 className="display-4">Torneos</h1>
@@ -46,10 +77,10 @@ class TorneosActivosUser extends Component {
 TorneosActivosUser.propTypes = {
     getCurrentTournaments: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
-    torneos: PropTypes.object.isRequired
+    torneosActivosUser: PropTypes.object.isRequired
 }
 const mapStateToProps = state => ({
-    torneos: state.torneos,
+    torneosActivosUser: state.torneosActivosUser,
     auth: state.auth
 });
 

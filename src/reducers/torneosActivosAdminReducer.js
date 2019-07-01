@@ -14,7 +14,7 @@ export default function (state = initialState, action) {
         case GET_CURRENT_ADMIN_TOURNAMENTS:
             return {
                 ...state,
-                profile: action.payload,
+                torneosAdmin: action.payload,
                 loading: false
             }
         default:

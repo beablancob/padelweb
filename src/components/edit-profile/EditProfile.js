@@ -14,9 +14,9 @@ class EditProfile extends Component {
         super();
         this.state = {
             name: '',
-            surname: '',
+            apellidos: '',
             email: '',
-            password: '',
+            password1: '',
             password2: '',
             errors: {}
         };
@@ -34,13 +34,14 @@ class EditProfile extends Component {
 
             const profile = nextProps.profile.profile;
             profile.name = !isEmpty(profile.name) ? profile.name : '';
-            profile.surname = !isEmpty(profile.surname) ? profile.surname : '';
+            profile.apellidos = !isEmpty(profile.apellidos) ? profile.apellidos : '';
+            profile.password1 = !isEmpty(profile.password1) ? profile.password1 : '';
 
             // Set component fields state
             this.setState({
                 name: profile.name,
-                surname: profile.surname,
-                password: profile.password
+                surname: profile.apellidos,
+                password: profile.password1
             });
 
         }
@@ -55,10 +56,10 @@ class EditProfile extends Component {
 
         const userData = {
             name: this.state.name,
-            surname: this.state.surname,
+            apellidos: this.state.apellidos,
             email: this.state.email,
-            password: '',
-            password2: ''
+            password1: this.state.password1,
+            password2: this.state.password2
         };
         console.log(userData);
         console.log("Errores: ", this.state.errors);
@@ -95,15 +96,15 @@ class EditProfile extends Component {
                                 />
                                 <TextFieldGroup
                                     placeholder="Apellido"
-                                    name="surname"
-                                    value={this.state.surname}
+                                    name="apellidos"
+                                    value={this.state.apellidos}
                                     onChange={this.onChange}
                                     error={errors.surname}
 
                                 />
 
                                 <TextFieldGroup
-                                    placeholder="Email"
+                                    placeholder={this.state.email}
                                     name="email"
                                     type="email"
                                     value={this.state.email}

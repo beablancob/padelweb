@@ -1,30 +1,30 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
-import setAuthToken from '../utils/setAuthToken';
-import { setCurrentUser } from '../actions/authAction';
-import { logoutUser } from '../actions/authAction';
-import { clearCurrentProfile } from '../actions/profileActions';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import setAuthToken from "../utils/setAuthToken";
+import { setCurrentUser } from "../actions/authAction";
+import { logoutUser } from "../actions/authAction";
+import { clearCurrentProfile } from "../actions/profileActions";
 
-import PrivateRoute from './common/PrivateRoute'
+import PrivateRoute from "./common/PrivateRoute";
 
-import { Provider } from 'react-redux';
-import store from './store';
+import { Provider } from "react-redux";
+import store from "./store";
 
-import '../assets/App.css';
-import Navbar from './layout/Navbar';
-import Sidebar from './layout/Sidebar';
+import "../assets/App.css";
+import Navbar from "./layout/Navbar";
+import Sidebar from "./layout/Sidebar";
 
+import Footer from "./layout/Footer";
+import Landing from "./layout/Landing";
 
-import Footer from './layout/Footer';
-import Landing from './layout/Landing';
-
-import Login from './auth/Login';
-import Register from './auth/Register';
-import Dashboard from './dashboard/Dashboard';
-import EditProfile from './edit-profile/EditProfile';
-
-
+import Login from "./auth/Login";
+import Register from "./auth/Register";
+import Dashboard from "./dashboard/Dashboard";
+import EditProfile from "./edit-profile/EditProfile";
+import TorneosActivosUser from "./torneos-activos-user/TorneosActivosUser";
+import TorneosActivosAdmin from "./torneos-activos-admin/TorneosActivosAdmin";
+import CreateTournament from "./create-tournament/CreateTournament";
 
 //Con esto hacemos que aunque se refresque la página, nosotros sigamos con la sesión iniciada.
 // Check for token
@@ -46,7 +46,7 @@ if (localStorage.jwtToken) {
     store.dispatch(clearCurrentProfile());
 
     //Redirect to Login
-    window.location.href = '/login';
+    window.location.href = "/login";
   }
 }
 
@@ -66,7 +66,32 @@ class App extends Component {
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
               </Switch>
               <Switch>
-                <PrivateRoute exact path="/edit-profile" component={EditProfile} />
+                <PrivateRoute
+                  exact
+                  path="/edit-profile"
+                  component={EditProfile}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/torneos-activos-user"
+                  component={TorneosActivosUser}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/create-tournament"
+                  component={CreateTournament}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/torneos-activos-admin"
+                  component={TorneosActivosAdmin}
+                />
               </Switch>
             </div>
             <Footer />

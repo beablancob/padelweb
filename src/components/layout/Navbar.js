@@ -21,13 +21,13 @@ class Navbar extends Component {
     onAdminClick(e) {
         e.preventDefault();
         this.props.isAdmin();
-        console.log("Hola", e);
+        console.log("Hola has clickado en admin", e);
 
     }
     onUserClick(e) {
         e.preventDefault();
         this.props.isNotAdmin();
-        console.log("Adios", e);
+        console.log("Adios admin, ahora eres usuario", e);
     }
     // TODO: Cuando tengan user.img entonces la meto en el login. Si el usuario no tiene, añadir la default
     render() {
