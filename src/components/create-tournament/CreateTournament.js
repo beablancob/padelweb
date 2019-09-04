@@ -1,20 +1,25 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import TextFieldGroup from '../common/TextFieldGroup';
-import SelectListGroup from '../common/SelectListGroup';
-import { createTournament } from '../../actions/torneosActivosAdminActions';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import TextFieldGroup from "../common/TextFieldGroup";
+import SelectListBoolean from "../common/SelectListBoolean";
+
+import { createTournament } from "../../actions/torneosActivosAdminActions";
 
 class CreateTournament extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      nparticipants: '',
-      privOrpub: '',
-      limitDate: '',
-      url: '',
+      name: "",
+      numeroParejas: "",
+      parejasPorGrupo: "",
+      publico: true,
+      puntosPG: "",
+      puntosPP: "",
+      idaYvuelta: false,
+      numeroRondas: "",
+      parejasSuben: "",
       errors: {}
     };
 
@@ -33,11 +38,14 @@ class CreateTournament extends Component {
 
     const tournamentData = {
       name: this.state.name,
-      nparticipants: this.state.nparticipants,
-      privOrpub: this.state.privOrpub,
-      limitDate: this.state.limitDate,
-      url: this.state.url,
-
+      numeroParejas: this.state.numeroParejas,
+      parejasPorGrupo: this.state.parejasPorGrupo,
+      publico: this.state.publico,
+      puntosPG: this.state.puntosPG,
+      puntosPP: this.state.puntosPP,
+      idaYvuelta: this.state.idaYvuelta,
+      numeroRondas: this.state.numeroRondas,
+      parejasSuben: this.state.parejasSuben
     };
     //history sirve para redirigir. Para que funcione history tenemos que añadir withRouter en el componente que exportamos
     this.props.createTournament(tournamentData, this.props.history);
@@ -50,39 +58,15 @@ class CreateTournament extends Component {
   render() {
     const { errors } = this.state;
 
-
-    //Select options for type of tournament
     const options2 = [
-      { label: '6', value: '6' },
-      { label: '8', value: '8' },
-      { label: '10', value: '10' },
-      { label: '12', value: '12' },
-      { label: '14', value: '14' },
-      { label: '16', value: '16' },
-      { label: '18', value: '18' },
-      { label: '20', value: '20' },
-      { label: '22', value: '22' },
-      { label: '24', value: '24' },
-      { label: '26', value: '26' },
-      { label: '28', value: '28' },
-      { label: '30', value: '30' },
-      { label: '32', value: '32' },
-      { label: '34', value: '34' },
-      { label: '36', value: '36' },
-      { label: '38', value: '38' },
-      { label: '40', value: '40' },
-      { label: '42', value: '42' },
-      { label: '44', value: '44' },
-      { label: '46', value: '46' },
-      { label: '48', value: '48' },
-      { label: '50', value: '50' }
-
+      { label: "Si", value: true },
+      { label: "No", value: false }
     ];
 
-    // Select options for status
-    const options = [
-      { label: 'Privado', value: 'Privado' },
-      { label: 'Público', value: 'Público' }
+    // Select options for type of tournament
+    const options1 = [
+      { label: "Público", value: true },
+      { label: "Privado", value: false }
     ];
 
     return (
@@ -102,40 +86,77 @@ class CreateTournament extends Component {
                   onChange={this.onChange}
                   error={errors.name}
                 />
-                <SelectListGroup
-                  name="nparticipants"
-                  value={this.state.nparticipants}
+                <TextFieldGroup
+                  placeholder="Elige el número de parejas que van a participar"
+                  name="numeroParejas"
+                  type="number"
+                  min="2"
+                  max="200"
+                  value={this.state.numeroParejas}
                   onChange={this.onChange}
-                  options={options2}
-                  error={errors.nparticipants}
-                  info="Número de participantes"
+                  error={errors.numeroParejas}
                 />
-                <SelectListGroup
-                  name="privOrpub"
-                  value={this.state.privOrpub}
+                <TextFieldGroup
+                  placeholder="Elige el número de parejas por grupo que va a haber en cada ronda"
+                  name="parejasPorGrupo"
+                  type="number"
+                  min="2"
+                  max="100"
+                  value={this.state.parejasPorGrupo}
                   onChange={this.onChange}
-                  options={options}
-                  error={errors.privOrpub}
+                  error={errors.parejasPorGrupo}
+                />
+                <SelectListBoolean
+                  name="publico"
+                  value={this.state.publico}
+                  onChange={this.onChange}
+                  options={options1}
+                  error={errors.publico}
                   info="Elige el tipo de torneo que quieres"
                 />
                 <TextFieldGroup
-                  placeholder="Fecha límite para apuntarse"
-                  name="limitDate"
-                  value={this.state.limitDate}
+                  placeholder="Puntos por partido ganado"
+                  name="puntosPG"
+                  value={this.state.puntosPG}
                   onChange={this.onChange}
-                  error={errors.limitDate}
-                  info="Mirar cómo meter una fecha"
+                  error={errors.puntosPG}
                 />
-
                 <TextFieldGroup
-                  placeholder="TODO: URL!!! NO ES UN INPUT OBV"
-                  name="skills"
-                  value={this.state.skills}
+                  placeholder="Puntos por partido perdido"
+                  name="puntosPP"
+                  type="number"
+                  value={this.state.puntosPP}
                   onChange={this.onChange}
-                  error={errors.skills}
-                  info="Esto va a ser la url para que envíes a tus compañeros"
+                  error={errors.puntosPP}
                 />
-
+                <SelectListBoolean
+                  name="idaYvuelta"
+                  valueb={this.state.idaYvuelta}
+                  onChange={this.onChange}
+                  options={options2}
+                  error={errors.idaYvuelta}
+                  info="Elige si quieres que los partidos sean de ida y vuelta"
+                />
+                <TextFieldGroup
+                  placeholder="Elige el número de rondas que va a tener el torneo"
+                  name="numeroRondas"
+                  type="number"
+                  min="1"
+                  max="500"
+                  value={this.state.numeroRondas}
+                  onChange={this.onChange}
+                  error={errors.numeroRondas}
+                />
+                <TextFieldGroup
+                  placeholder="Elige el número de parejas que suben al terminar una ronda"
+                  name="parejasSuben"
+                  type="number"
+                  min="1"
+                  max="20"
+                  value={this.state.parejasSuben}
+                  onChange={this.onChange}
+                  error={errors.parejasSuben}
+                />
                 <input
                   type="submit"
                   value="Enviar"
@@ -151,7 +172,7 @@ class CreateTournament extends Component {
 }
 
 CreateTournament.propTypes = {
-  tournament: PropTypes.object.isRequired,
+  tournament: PropTypes.object,
   errors: PropTypes.object.isRequired
 };
 
@@ -159,8 +180,18 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { createTournament })(
-  withRouter(CreateTournament)
-);
+export default connect(
+  mapStateToProps,
+  { createTournament }
+)(withRouter(CreateTournament));
 
 //TODO: mirar la fecha!!!! tipo fecha??? calendario ahi??
+
+/* <TextFieldGroup
+                  placeholder="Fecha límite para apuntarse"
+                  name="limitDate"
+                  value={this.state.limitDate}
+                  onChange={this.onChange}
+                  error={errors.limitDate}
+                  info="Mirar cómo meter una fecha"
+                /> */
