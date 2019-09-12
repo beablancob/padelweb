@@ -49,16 +49,16 @@ class EditProfile extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const userData = {
+    const user = {
       name: this.state.name,
       apellidos: this.state.apellidos,
       email: this.state.email,
       password1: this.state.password1,
       password2: this.state.password2
     };
-    console.log(userData);
+    console.log(user);
     console.log("Errores: ", this.state.errors);
-    this.props.registerUser(userData);
+    this.props.registerUser(user);
   }
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -66,7 +66,7 @@ class EditProfile extends Component {
 
   render() {
     //npm i classnames para instalar isInvalid y toda la pesca
-
+    const { user } = this.props.auth;
     const { errors } = this.state; //const errors = this.state.errors es lo mismo!!
     //Las clases form-control etc van a estar siempre. Las is-invalid solo existen cuando hay un error, en el array de errores del estado.
     //Errors.name
@@ -140,12 +140,10 @@ EditProfile.propTypes = {
   deleteAccount: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   registerUser: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-  profile: state.profile,
   auth: state.auth,
   errors: state.errors
 });

@@ -14,6 +14,7 @@ import store from "./store";
 import "../assets/App.css";
 import Navbar from "./layout/Navbar";
 import Sidebar from "./layout/Sidebar";
+import Torneosbaruser from "./layout/Torneosbaruser";
 
 import Footer from "./layout/Footer";
 import Landing from "./layout/Landing";
@@ -25,20 +26,21 @@ import EditProfile from "./edit-profile/EditProfile";
 import TorneosActivosUser from "./torneos-activos-user/TorneosActivosUser";
 import TorneosActivosAdmin from "./torneos-activos-admin/TorneosActivosAdmin";
 import CreateTournament from "./create-tournament/CreateTournament";
+import ApuntarseTorneo from "./apuntarse-torneo/ApuntarseTorneo";
 
 //Con esto hacemos que aunque se refresque la página, nosotros sigamos con la sesión iniciada.
 // Check for token
-if (localStorage.jwtToken) {
+if (localStorage.session) {
   // Set auth token header auth
-  setAuthToken(localStorage.jwtToken);
+  setAuthToken(localStorage.session.jwtToken);
   // Decode token and get user info and exp
-  const decoded = jwt_decode(localStorage.jwtToken, "secreto");
+  //const decoded = jwt_decode(localStorage.session.jwtToken, "secreto");
   // Set user and isAuthenticated
-  store.dispatch(setCurrentUser(decoded));
+  store.dispatch(setCurrentUser(localStorage.session.user));
 
   // Check for expired token
   const currentTime = Date.now() / 1000;
-  if (decoded.exp < currentTime) {
+  if (localStorage.session.user.exp < currentTime) {
     // Logout user
     store.dispatch(logoutUser());
 
@@ -50,6 +52,14 @@ if (localStorage.jwtToken) {
   }
 }
 
+//TODO: Rondas etc que vayan dentro del switch de la torneosbaruser
+
+{
+  /* <Switch>
+      <Torneosbaruser />
+      Añadir aqui lo que falta de rondas
+    </Switch> */
+}
 class App extends Component {
   render() {
     return (
@@ -91,6 +101,13 @@ class App extends Component {
                   exact
                   path="/torneos-activos-admin"
                   component={TorneosActivosAdmin}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/apuntarse-torneo"
+                  component={ApuntarseTorneo}
                 />
               </Switch>
             </div>

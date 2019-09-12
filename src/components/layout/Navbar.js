@@ -17,6 +17,7 @@ class Navbar extends Component {
     this.props.clearCurrentProfile();
     this.props.logoutUser();
   }
+
   onAdminClick(e) {
     e.preventDefault();
     this.props.isAdmin();
@@ -30,6 +31,7 @@ class Navbar extends Component {
   // TODO: Cuando tengan user.img entonces la meto en el login. Si el usuario no tiene, añadir la default
   render() {
     const { isAuthenticated, user } = this.props.auth;
+
     console.log("Nombre del usuario: ", user.name);
 
     const authLinks = (
@@ -42,18 +44,20 @@ class Navbar extends Component {
         <li className="nav-item">
           <p className="usuario">Welcome {user.name}</p>
           <div className="row">
-            <a
+            <Link
+              to="/torneos-activos-user"
               className="nav-link btn-us"
               onClick={this.onUserClick.bind(this)}
             >
               Usuario{" "}
-            </a>
-            <a
+            </Link>
+            <Link
+              to="/torneos-activos-admin"
               className="nav-link btn-us"
               onClick={this.onAdminClick.bind(this)}
             >
               Admin
-            </a>
+            </Link>
           </div>
         </li>
         <li className="nav-item"></li>
@@ -112,6 +116,9 @@ class Navbar extends Component {
 //Si tiene dispatch, lo añado aqui como una funcion. Sino, no.
 Navbar.propTypes = {
   logoutUser: PropTypes.func.isRequired,
+  isAdmin: PropTypes.func.isRequired,
+  isNotAdmin: PropTypes.func.isRequired,
+  clearCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({

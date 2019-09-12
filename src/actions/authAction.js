@@ -1,4 +1,4 @@
-import { GET_ERRORS, SET_CURRENT_USER } from "./types";
+import { GET_ERRORS, SET_CURRENT_USER, GET_CURRENT_USER } from "./types";
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
@@ -23,16 +23,20 @@ export const loginUser = userData => dispatch => {
       //Save to localStorage
 
       const { token } = res.data;
-      console.log(token);
+      console.log(res.data.user);
+      let session = {
+        jwtToken: token,
+        user: res.data.user
+      };
 
       //Set token to localStorage
-      localStorage.setItem("jwtToken", token);
+      localStorage.setItem("session", session);
       //Set token to Auth header
-      setAuthToken(token);
+      setAuthToken(session.token);
       // Decode token to get user Data
-      const decoded = jwt_decode(token, "secreto");
+      // const decoded = jwt_decode(token, "secreto");
       // Set current user
-      dispatch(setCurrentUser(decoded));
+      dispatch(setCurrentUser(res.data.user));
     })
     .catch(err =>
       dispatch({
@@ -43,10 +47,11 @@ export const loginUser = userData => dispatch => {
 };
 
 // Set logged in user
-export const setCurrentUser = decoded => {
+export const setCurrentUser = currentUser => {
+  console.log("decoded: ", currentUser);
   return {
     type: SET_CURRENT_USER,
-    payload: decoded
+    payload: currentUser
   };
 };
 
@@ -59,3 +64,21 @@ export const logoutUser = () => dispatch => {
   // Set current user to {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
 };
+
+// export const getCurrentUser = userId => dispatch => {
+//   console.log("El userId en currentUSer es: ", userId);
+//   axios
+//     .get("/users/", userId)
+//     .then(res =>
+//       dispatch({
+//         type: GET_CURRENT_USER,
+//         payload: res.data
+//       })
+//     )
+//     .catch(err =>
+//       dispatch({
+//         type: GET_CURRENT_USER,
+//         payload: {}
+//       })
+//     );
+// };

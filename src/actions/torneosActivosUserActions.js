@@ -21,7 +21,7 @@ export const getCurrentTournaments = () => dispatch => {
       })
     );
 };
-// Profile loading
+// Tournaments loading
 export const setTournamentsLoading = () => {
   return {
     type: TOURNAMENTS_LOADING

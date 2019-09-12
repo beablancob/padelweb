@@ -13,6 +13,7 @@ class TorneosActivosAdmin extends Component {
   render() {
     const { user } = this.props.auth;
     const { torneosAdmin, loading } = this.props.torneosActivosAdmin;
+    let createTable;
 
     let torneosContent;
     if (loading) {
@@ -43,16 +44,42 @@ class TorneosActivosAdmin extends Component {
             torneosAdmin.tournaments.length
           );
 
-          var listTorneos;
+          let listTorneos = torneosAdmin.tournaments;
+          let table = [];
+          var j = 0;
 
-          listTorneos = torneosAdmin.tournaments;
+          
+          console.log("El torneo 0, nombre", listTorneos[0].name);
 
-          // for (let i = 0; i < listTorneos.length - 1; i++) {
-          //   torneosList2 = (
+          createTable = () => {
+            for (var i = 0; i < listTorneos.length; i++) {
+              let children = [];
 
-          //   )
-          // }
-          console.log("nombre del torneo i:", listTorneos.name);
+              children.push(
+                <td key={j} className="text-left">
+                  {listTorneos[i].name}
+                </td>
+              );
+              j++;
+              children.push(<td key={j}>{listTorneos[i].numeroParejas}</td>);
+              j++;
+              children.push(<td key={j}>{listTorneos[i].rondaActual}</td>);
+              j++;
+              children.push(<td key={j}>{listTorneos[i].numeroRondas}</td>);
+              j++;
+              children.push(<td key={j}>{listTorneos[i].parejasSuben}</td>);
+              console.log("El torneo i, nombre", listTorneos[i].name);
+              j++;
+              //Create the parent and add the children
+              table.push(
+                <tr key={i} className="text-center">
+                  {children}
+                </tr>
+              );
+            }
+            return table;
+          };
+
           torneosContent = (
             <div>
               <table>
@@ -65,90 +92,20 @@ class TorneosActivosAdmin extends Component {
                     <th>Nº de parejas que suben de grupo</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr className="text-center">
-                    <td className="text-left">{listTorneos[0].name}</td>
-                    <td>{listTorneos[0].numeroParejas}</td>
-                    <td>{listTorneos[0].rondaActual}</td>
-                    <td>{listTorneos[0].numeroRondas}</td>
-                    <td>{listTorneos[0].parejasSuben}</td>
-                  </tr>
-                </tbody>
+                <tbody>{createTable()}</tbody>
               </table>
             </div>
           );
-          // }
-
-          // var listTorneos;
-          // var torneo;
-          // listTorneos = torneosAdmin.tournaments.map(id => (
-          //   <li key={id}>{id}</li>
-          // ));
-          // torneo = listTorneos.map(comp => <li key={comp}>{comp}</li>);
-          // console.log("el nombre de un torneo es", torneo.name);
-          // torneosContent = (
-          //   <div>
-          //     <table>
-          //       <thead>
-          //         <tr>
-          //           <th>Nombre</th>
-          //           <th>Ronda actual</th>
-          //           <th>Número de rondas</th>
-          //           <th>Número de parejas</th>
-          //           <th>Nota</th>
-          //         </tr>
-          //       </thead>
-          //       <tbody>
-          //         <tr>
-          //           <td>{torneo.name}</td>
-          //           <td>{torneo.rondaActual}</td>
-          //           <td>{torneo.numeroRondas}</td>
-          //           <td>{torneo.numeroParejas}</td>
-          //           <td>Si la ronda actual es 0, estás a tiempo de apuntarte</td>
-          //         </tr>
-          //       </tbody>
-          //     </table>
-          //   </div>
-          // );
-
-          // ------------------
-          // var listTorneos;
-          // console.log("Torneos: ", torneosAdmin.tournaments);
-
-          // listTorneos = torneosAdmin.tournaments.map(id => (
-          //   <li key={id}>{id}</li>
-          // ));
-          // torneosContent = (
-          //   <div>
-          //     <table>
-          //       <thead>
-          //         <tr>
-          //           <th>Nombre</th>
-          //           <th>Ronda actual</th>
-          //           <th>Número de rondas</th>
-          //           <th>Número de parejas</th>
-          //         </tr>
-          //       </thead>
-          //       <tbody>
-          //         <tr>
-          //           <td>{listTorneos.nombre}</td>
-          //           <td>{listTorneos.rondaActual}</td>
-          //           <td>{listTorneos.numeroRondas}</td>
-          //           <td>{listTorneos.numeroParejas}</td>
-          //         </tr>
-          //       </tbody>
-          //     </table>
-          //   </div>
-          // );
         }
       }
     }
+
     return (
       <div className="dashboard">
         <div className="container-app">
           <div className="row">
             <div className="col md-12">
-              <h1 className="display-4">Torneos</h1>
+              <h1 className="display-4">Torneos organizados por ti</h1>
               {torneosContent}
             </div>
           </div>
@@ -157,6 +114,7 @@ class TorneosActivosAdmin extends Component {
     );
   }
 }
+
 TorneosActivosAdmin.propTypes = {
   getCurrentAdminTournaments: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
@@ -171,3 +129,4 @@ export default connect(
   mapStateToProps,
   { getCurrentAdminTournaments }
 )(TorneosActivosAdmin);
+
