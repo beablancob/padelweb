@@ -12,17 +12,20 @@ export const seleccionTorneo = (torneoData, history) => dispatch => {
 };
 
 // Apuntarse a un torneo
-export const registrarseTorneo = (
-  emailUser2Data,
-  registerCodeData,
-  history
-) => dispatch => {
-  console.log("Estoy en action: ", registerCodeData);
-  axios.put("/tournaments/", registerCodeData, "/", emailUser2Data).catch(err =>
-    dispatch({
-      type: GET_ERRORS,
-      payload: err.response.data
-    })
-  );
+export const registrarseTorneo = (infoRegistro, history) => dispatch => {
+  console.log("Estoy en action: ", infoRegistro);
+  axios
+    .put(
+      "/tournaments/",
+      infoRegistro.registerCode,
+      "/",
+      infoRegistro.emailUser2
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
   history.push("/torneos-activos-user");
 };

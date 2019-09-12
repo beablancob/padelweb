@@ -33,15 +33,15 @@ class ApuntarseTorneo extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const emailUser2Data = {
+    const infoRegistro = {
       emailUser2: this.state.emailUser2,
       registerCodeData: this.state.registerCodeData
     };
-    console.log("el email escrito es:", emailUser2Data);
+    console.log("parámetros:", infoRegistro);
 
     //history sirve para redirigir. Para que funcione history tenemos que añadir withRouter en el componente que exportamos
     //console.log("El registerCode del torneo es: ", registerCodeData);
-    this.props.registrarseTorneo(emailUser2Data, this.props.history);
+    this.props.registrarseTorneo(infoRegistro, this.props.history);
   }
   render() {
     const { torneoSelected } = this.props.apuntarseTorneo;
@@ -73,9 +73,9 @@ class ApuntarseTorneo extends Component {
               <TextFieldGroup
                 placeholder="RegisterCode"
                 name="registerCodeData"
-                value={this.state.registerCodeData}
                 onChange={this.onChange}
-                error={errors.registerCodeData}
+                value={this.state.registerCodeData}
+                error={errors.registerCode}
                 type="hidden"
               />
               <input
