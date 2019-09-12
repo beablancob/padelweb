@@ -31,21 +31,23 @@ import ApuntarseTorneo from "./apuntarse-torneo/ApuntarseTorneo";
 //Con esto hacemos que aunque se refresque la página, nosotros sigamos con la sesión iniciada.
 // Check for token
 if (localStorage.session) {
+  let session = JSON.parse(localStorage.session);
   // Set auth token header auth
-  setAuthToken(localStorage.session.jwtToken);
+  setAuthToken(session.jwtToken);
   // Decode token and get user info and exp
-  //const decoded = jwt_decode(localStorage.session.jwtToken, "secreto");
+  const decoded = jwt_decode(session.jwtToken, "secreto");
+  console.log("Token desde app", session.jwtToken);
   // Set user and isAuthenticated
-  store.dispatch(setCurrentUser(localStorage.session.user));
+  store.dispatch(setCurrentUser(session.user));
 
   // Check for expired token
   const currentTime = Date.now() / 1000;
-  if (localStorage.session.user.exp < currentTime) {
+  if (decoded.exp < currentTime) {
     // Logout user
     store.dispatch(logoutUser());
 
     // Clear current Profile
-    store.dispatch(clearCurrentProfile());
+    // store.dispatch(clearCurrentProfile());
 
     //Redirect to Login
     window.location.href = "/login";
