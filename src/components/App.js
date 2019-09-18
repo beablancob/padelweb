@@ -27,6 +27,8 @@ import TorneosActivosUser from "./torneos-activos-user/TorneosActivosUser";
 import TorneosActivosAdmin from "./torneos-activos-admin/TorneosActivosAdmin";
 import CreateTournament from "./create-tournament/CreateTournament";
 import ApuntarseTorneo from "./apuntarse-torneo/ApuntarseTorneo";
+import TorneoApuntadoInfo from "./torneo-apuntado-info/TorneoApuntadoInfo";
+import Dashboard2 from "./dashboard2/Dashboard2";
 
 //Con esto hacemos que aunque se refresque la página, nosotros sigamos con la sesión iniciada.
 // Check for token
@@ -110,6 +112,13 @@ class App extends Component {
                   exact
                   path="/apuntarse-torneo"
                   component={ApuntarseTorneo}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/torneo-apuntado-info"
+                  component={TorneoApuntadoInfo}
                 />
               </Switch>
             </div>

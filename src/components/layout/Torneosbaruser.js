@@ -3,16 +3,104 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Navbar, Nav, Container } from "reactstrap";
+import {
+  MDBNavbar,
+  MDBNavbarBrand,
+  MDBNavbarNav,
+  MDBNavItem,
+  MDBNavbarToggler,
+  MDBCollapse,
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBDropdownMenu,
+  MDBDropdownItem,
+  MDBIcon
+} from "mdbreact";
+import { BrowserRouter as Router } from "react-router-dom";
+import { miRondaInfo } from "../../actions/torneoApuntadoInfoAction";
 
 import "../../assets/Style.css";
 
 class Torneosbaruser extends Component {
+  constructor() {
+    super();
+    this.onMiRondaInfo = this.onMiRondaInfo.bind(this);
+  }
+
+  onMiRondaInfo(rondaActual, id) {
+    this.props.miRondaInfo(rondaActual, id);
+  }
+
   render() {
+    console.log("El componente se usa ¡barra de torneos!");
     const { isAuthenticated } = this.props.auth;
+
     if (isAuthenticated) {
       return (
-        <div>
-          <nav className="navbar navbar-expand-sm navbar-light bg-light mb-4">
+        <Router>
+          <MDBNavbar color="default-color" dark expand="md">
+            <MDBNavbarBrand>
+              <strong className="white-text">Navbar</strong>
+            </MDBNavbarBrand>
+            <MDBNavbarToggler onClick={this.toggleCollapse} />
+            <MDBCollapse id="navbarCollapse3" navbar>
+              <MDBNavbarNav left>
+                <MDBNavItem active>
+                  <Link to="/parejas">Parejas</Link>
+                </MDBNavItem>
+                <MDBNavItem>
+                  <MDBDropdown>
+                    <MDBDropdownToggle>
+                      <div className="d-none d-md-inline">Rondas</div>
+                    </MDBDropdownToggle>
+                    <MDBDropdownMenu className="dropdown-default">
+                      <MDBDropdownItem to="/clasificacion">
+                        Mi clasificación
+                      </MDBDropdownItem>
+                      <MDBDropdownItem href="#!">Partidos</MDBDropdownItem>
+                      <MDBDropdownItem href="#!">Grupos</MDBDropdownItem>
+                    </MDBDropdownMenu>
+                  </MDBDropdown>
+                </MDBNavItem>
+
+                <MDBNavItem>
+                  <Link to="#!">Ranking</Link>
+                </MDBNavItem>
+                <MDBNavItem>
+                  <Link to="#!">Contacto</Link>
+                </MDBNavItem>
+              </MDBNavbarNav>
+            </MDBCollapse>
+          </MDBNavbar>
+        </Router>
+      );
+    }
+  }
+}
+//Si tiene dispatch, lo añado aqui como una funcion. Sino, no.
+Torneosbaruser.propTypes = {
+  auth: PropTypes.object.isRequired,
+  torneoApuntadoInfo: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth,
+  torneoApuntadoInfo: state.torneoApuntadoInfo
+});
+export default connect(mapStateToProps)(Torneosbaruser);
+
+{
+  // <Navbar expand="lg" variant="light" bg="light">
+  //         <Container>
+  //           <Nav className="mr-auto">
+  //             <Link to="/rondas">Rondas</Link>
+  //             <Link to="/parejas">Parejas</Link>
+  //             <Link to="/ranking">Ranking</Link>
+  //             <Link to="/contacto">Contacto</Link>
+  //           </Nav>
+  //         </Container>
+  //       </Navbar>
+  /* <nav className="navbar navbar-expand-sm navbar-light bg-light mb-4">
             <div className="container-fluid">
               <Link className="navbar-brand" to="/rondasuser">
                 Rondas
@@ -45,17 +133,5 @@ class Torneosbaruser extends Component {
                 </ul>{" "}
               </div>
             </div>
-          </nav>
-        </div>
-      );
-    }
-  }
+          </nav> */
 }
-//Si tiene dispatch, lo añado aqui como una funcion. Sino, no.
-Torneosbaruser.propTypes = {
-  auth: PropTypes.object.isRequired
-};
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-export default connect(mapStateToProps)(Torneosbaruser);

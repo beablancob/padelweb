@@ -5,6 +5,7 @@ import profileReducer from "./profileReducer";
 import torneosActivosUserReducer from "./torneosActivosUserReducer";
 import torneosActivosAdminReducer from "./torneosActivosAdminReducer";
 import apuntarseTorneoReducer from "./apuntarseTorneoReducer";
+import torneoApuntadoInfoReducer from "./torneoApuntadoInfoReducer";
 
 //En este fichero solo combinamos reducers
 export default combineReducers({
@@ -13,6 +14,7 @@ export default combineReducers({
   profile: profileReducer,
   torneosActivosUser: torneosActivosUserReducer,
   torneosActivosAdmin: torneosActivosAdminReducer,
-  apuntarseTorneo: apuntarseTorneoReducer
+  apuntarseTorneo: apuntarseTorneoReducer,
+  torneoApuntadoInfo: torneoApuntadoInfoReducer
 });
 //utilizaremos this.props.auth

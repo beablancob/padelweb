@@ -3,24 +3,23 @@ import { SET_SELECTED_TOURNAMENT, GET_ERRORS } from "./types";
 
 //Seleccion del torneo al que me quiero apuntar
 export const seleccionTorneo = (torneoData, history) => dispatch => {
-  console.log("En action de seleccion torneo: ", torneoData);
-  dispatch({
-    type: SET_SELECTED_TOURNAMENT,
-    payload: torneoData
+  axios.get("/tournaments/" + torneoData.id).then(res => {
+    dispatch({
+      type: SET_SELECTED_TOURNAMENT,
+      payload: res.data
+    });
+    history.push("/apuntarse-torneo");
   });
-  history.push("/apuntarse-torneo");
+  console.log("En action de seleccion torneo: ", torneoData);
 };
 
 // Apuntarse a un torneo
-export const registrarseTorneo = (infoRegistro, history) => dispatch => {
+export const registrarseTorneo = (infoRegistro, email, history) => dispatch => {
   console.log("Estoy en action: ", infoRegistro);
+  console.log("EmailUser2 en action: ", infoRegistro.emailUser2);
   axios
-    .put(
-      "/tournaments/",
-      infoRegistro.registerCode,
-      "/",
-      infoRegistro.emailUser2
-    )
+    .post("/tournaments/" + infoRegistro.registerCodeData + "/couples", email)
+
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

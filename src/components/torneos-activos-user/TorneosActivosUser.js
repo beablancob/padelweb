@@ -6,6 +6,7 @@ import { getCurrentTournaments } from "../../actions/torneosActivosUserActions";
 import Spinner from "../common/Spinner";
 import "../../assets/Style.css";
 import { seleccionTorneo } from "../../actions/apuntarseTorneoAction";
+import { infoTorneo } from "../../actions/torneoApuntadoInfoAction";
 import { withRouter } from "react-router-dom";
 import { Button } from "reactstrap";
 
@@ -24,7 +25,9 @@ class TorneosActivosUser extends Component {
     this.props.getCurrentTournaments();
   }
   onTorneoComenzadoClick(torneoData) {}
-  onTorneoApuntadoClick(torneoData) {}
+  onTorneoApuntadoClick(torneoData) {
+    this.props.infoTorneo(torneoData, this.props.history);
+  }
 
   onSeleccionTorneoClick(torneoData) {
     this.props.seleccionTorneo(torneoData, this.props.history);
@@ -72,7 +75,6 @@ class TorneosActivosUser extends Component {
             "Las parejas del torneo x son:",
             torneos.tournaments[0].couples
           );
-          let couplesTorneo = torneos.couples;
           let listTorneos = torneos.tournaments;
           let table = [];
           var j = 0;
@@ -111,9 +113,10 @@ class TorneosActivosUser extends Component {
               } else {
                 for (var k = 0; k < listTorneos[i].couples.length; k++) {
                   console.log("Couples del torneo i: ", listTorneos[i].couples);
+
                   if (
-                    listTorneos[i].couples[k].userId1 === user.id ||
-                    listTorneos[i].couples[k].userId2 === user.id
+                    listTorneos[i].couples[k].user1Id === user.id ||
+                    listTorneos[i].couples[k].user2Id === user.id
                   ) {
                     children.push(
                       <td key={j}>
@@ -126,7 +129,7 @@ class TorneosActivosUser extends Component {
                           )}
                           className="btn"
                         >
-                          Información del torneo registrado
+                          Participas en este torneo
                         </Button>
                       </td>
                     );
@@ -224,6 +227,7 @@ class TorneosActivosUser extends Component {
 TorneosActivosUser.propTypes = {
   seleccionTorneo: PropTypes.func.isRequired,
   getCurrentTournaments: PropTypes.func.isRequired,
+  infoTorneo: PropTypes.func.isRequired,
   // getCurrentUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   torneosActivosUser: PropTypes.object.isRequired
@@ -235,5 +239,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentTournaments, seleccionTorneo }
+  { getCurrentTournaments, seleccionTorneo, infoTorneo }
 )(withRouter(TorneosActivosUser));
