@@ -6,7 +6,10 @@ import { getCurrentTournaments } from "../../actions/torneosActivosUserActions";
 import Spinner from "../common/Spinner";
 import "../../assets/Style.css";
 import { seleccionTorneo } from "../../actions/apuntarseTorneoAction";
-import { infoTorneo } from "../../actions/torneoApuntadoInfoAction";
+import {
+  infoTorneo,
+  miRondaInfo
+} from "../../actions/torneoApuntadoInfoAction";
 import { withRouter } from "react-router-dom";
 import { Button } from "reactstrap";
 
@@ -26,6 +29,10 @@ class TorneosActivosUser extends Component {
   }
   onTorneoComenzadoClick(torneoData) {}
   onTorneoApuntadoClick(torneoData) {
+    if (torneoData.rondaActual != 0) {
+      this.props.miRondaInfo(torneoData);
+    }
+
     this.props.infoTorneo(torneoData, this.props.history);
   }
 
@@ -78,6 +85,7 @@ class TorneosActivosUser extends Component {
           let listTorneos = torneos.tournaments;
           let table = [];
           var j = 0;
+          var p = 0;
           createTable = () => {
             for (var i = 0; i < listTorneos.length; i++) {
               let children = [];
@@ -111,64 +119,79 @@ class TorneosActivosUser extends Component {
                   </td>
                 );
               } else {
-                for (var k = 0; k < listTorneos[i].couples.length; k++) {
-                  console.log("Couples del torneo i: ", listTorneos[i].couples);
-
-                  if (
-                    listTorneos[i].couples[k].user1Id === user.id ||
-                    listTorneos[i].couples[k].user2Id === user.id
-                  ) {
-                    children.push(
-                      <td key={j}>
-                        <Button
-                          outline
-                          color="info"
-                          onClick={this.onTorneoApuntadoClick.bind(
-                            this,
-                            listTorneos[i]
-                          )}
-                          className="btn"
-                        >
-                          Participas en este torneo
-                        </Button>
-                      </td>
+                if (listTorneos[i].rondaActual != 0) {
+                  children.push(
+                    <td key={j}>
+                      <Button
+                        outline
+                        color="warning"
+                        onClick={this.onTorneoComenzadoClick.bind(
+                          this,
+                          listTorneos[i]
+                        )}
+                        className="btn"
+                      >
+                        Este torneo ya ha comenzado
+                      </Button>
+                    </td>
+                  );
+                } else {
+                  for (var k = 0; k < listTorneos[i].couples.length; k++) {
+                    console.log(
+                      "Parejas del for del torneo i: ",
+                      listTorneos[i].couples.length
                     );
-                    break;
-                  } else {
-                    if (listTorneos[i].rondaActual === 0) {
+                    console.log(
+                      "user.id:",
+                      user.id,
+                      "user1Id: ",
+                      listTorneos[i].couples[k].user1Id,
+                      "user2Id: ",
+                      listTorneos[i].couples[k].user2Id
+                    );
+
+                    if (
+                      listTorneos[i].couples[k].user1Id === user.id ||
+                      listTorneos[i].couples[k].user2Id === user.id
+                    ) {
+                      p = 0;
                       children.push(
                         <td key={j}>
                           <Button
                             outline
-                            color="success"
-                            onClick={this.onSeleccionTorneoClick.bind(
+                            color="info"
+                            onClick={this.onTorneoApuntadoClick.bind(
                               this,
                               listTorneos[i]
                             )}
                             className="btn"
                           >
-                            Apúntate a este torneo
+                            Participas en este torneo
                           </Button>
                         </td>
                       );
                       break;
                     } else {
-                      children.push(
-                        <td key={j}>
-                          <Button
-                            outline
-                            color="warning"
-                            onClick={this.onTorneoComenzadoClick.bind(
-                              this,
-                              listTorneos[i]
-                            )}
-                            className="btn"
-                          >
-                            Este torneo ya ha comenzado
-                          </Button>
-                        </td>
-                      );
-                      break;
+                      p++;
+                      if (p === listTorneos[i].couples.length) {
+                        p = 0;
+                        children.push(
+                          <td key={j}>
+                            <Button
+                              outline
+                              color="success"
+                              onClick={this.onSeleccionTorneoClick.bind(
+                                this,
+                                listTorneos[i]
+                              )}
+                              className="btn"
+                            >
+                              Apúntate a este torneo
+                            </Button>
+                          </td>
+                        );
+                        break;
+                      }
                     }
                   }
                 }
@@ -180,6 +203,7 @@ class TorneosActivosUser extends Component {
                   {children}
                 </tr>
               );
+              console.log("valor de p: ", p);
             }
 
             return table;
@@ -228,6 +252,7 @@ TorneosActivosUser.propTypes = {
   seleccionTorneo: PropTypes.func.isRequired,
   getCurrentTournaments: PropTypes.func.isRequired,
   infoTorneo: PropTypes.func.isRequired,
+  miRondaInfo: PropTypes.func.isRequired,
   // getCurrentUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   torneosActivosUser: PropTypes.object.isRequired
@@ -239,5 +264,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentTournaments, seleccionTorneo, infoTorneo }
+  { getCurrentTournaments, seleccionTorneo, infoTorneo, miRondaInfo }
 )(withRouter(TorneosActivosUser));

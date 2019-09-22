@@ -18,9 +18,10 @@ class Parejas extends Component {
     let j = 0;
 
     let createTable = () => {
-      for (var i = 0; torneoInfo.tournament.couples.length; i++) {
+      for (var i = 0; torneoInfo.tournament.couples.length - 1; i++) {
         let children = [];
-        console.log("hola", torneoInfo.tournament.couples[i].user1Name);
+        console.log(torneoInfo.tournament.couples);
+        console.log("hola", i, torneoInfo.tournament.couples[i].user1Name);
         console.log("adios", torneoInfo.tournament.couples[i].user2Name);
 
         children.push(
@@ -60,13 +61,9 @@ class Parejas extends Component {
     return (
       <div className="info-torneo">
         <div className="container">
-          <div className="col-md-8 m-auto">
-            <h2 className="display-4 text-center">
-              Lista de parejas apuntadas en el torneo
-            </h2>
+          <h2>Lista de parejas apuntadas en el torneo</h2>
 
-            {parejasContent}
-          </div>
+          {parejasContent}
         </div>
       </div>
     );

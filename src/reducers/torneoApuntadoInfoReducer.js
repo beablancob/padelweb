@@ -7,8 +7,7 @@ import {
 
 const initialState = {
   torneoInfo: null,
-  user1: null,
-  user2: null,
+
   miRondaInformacion: null
 };
 
@@ -19,17 +18,7 @@ export default function(state = initialState, action) {
         ...state,
         torneoInfo: action.payload
       };
-    case GET_USER1:
-      console.log("USER 1", action.payload);
-      return {
-        ...state,
-        user1: action.payload
-      };
-    case GET_USER2:
-      return {
-        ...state,
-        user2: action.payload
-      };
+
     case GET_MI_RONDA_INFO:
       return {
         ...state,

@@ -8,13 +8,13 @@ class Clasificacion extends Component {
     let tableJor = [];
     let m = 0;
     let createTableJornada = () => {
-      for (var i = 0; torneoInfo.couples.length; i++) {
+      for (var i = 0; torneoInfo.tournament.couples.length; i++) {
         if (
-          torneoInfo.couples[i].user1Id === user.id ||
-          torneoInfo.couples[i].user2Id === user.id
+          torneoInfo.tournament.couples[i].user1Id === user.id ||
+          torneoInfo.tournament.couples[i].user2Id === user.id
         ) {
-          let grupo = torneoInfo.couples[i].grupoActual;
-          let ronda = torneoInfo.rondaActual;
+          let grupo = torneoInfo.tournament.couples[i].grupoActual;
+          let ronda = torneoInfo.tournament.rondaActual;
           for (let k = 0; miRondaInformacion.partidos.length; k++) {
             let children = [];
             let children2 = [];
@@ -22,7 +22,13 @@ class Clasificacion extends Component {
               miRondaInformacion.partidos[k].numeroGrupo === grupo &&
               miRondaInformacion.partidos[k].numeroRonda === ronda
             ) {
-              children.push(<td key={j}>Pareja 1 por hacer</td>);
+              children.push(
+                <td key={j}>
+                  {" "}
+                  {torneoInfo.tournament.couples[i].user1Name} y{" "}
+                  {torneoInfo.tournament.couples[i].user2Name}
+                </td>
+              );
               m++;
               children.push(
                 <td key={j}>{miRondaInformacion.partidos[k].set1Couple1}</td>
@@ -175,6 +181,14 @@ class Clasificacion extends Component {
         </table>
       </div>
     );
+    let noIniciado = (
+      <div>
+        <h4>El torneo todavía no ha comenzado</h4>
+        <h5>
+          Cuando comience podrás ver los resultados de tu grupo en esta ronda
+        </h5>
+      </div>
+    );
 
     let tablaJornadaContent = (
       <div>
@@ -200,7 +214,7 @@ class Clasificacion extends Component {
               Información de tu ronda y grupo
             </h2>
             <h3>Ronda {torneoInfo.rondaActual}</h3>
-            {tablaRondaContent}
+            {miRondaInformacion ? tablaRondaContent : noIniciado}
             <h3>Jornadas</h3>
             {tablaJornadaContent}
           </div>

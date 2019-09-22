@@ -16,7 +16,7 @@ export const seleccionTorneo = (torneoData, history) => dispatch => {
 // Apuntarse a un torneo
 export const registrarseTorneo = (infoRegistro, email, history) => dispatch => {
   console.log("Estoy en action: ", infoRegistro);
-  console.log("EmailUser2 en action: ", infoRegistro.emailUser2);
+  console.log("EmailUser2 en action: ", email);
   axios
     .post("/tournaments/" + infoRegistro.registerCodeData + "/couples", email)
 

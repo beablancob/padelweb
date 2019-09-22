@@ -59,10 +59,10 @@ if (localStorage.session) {
 //TODO: Rondas etc que vayan dentro del switch de la torneosbaruser
 
 {
-  /* <Switch>
+  /* 
       <Torneosbaruser />
       Añadir aqui lo que falta de rondas
-    </Switch> */
+     */
 }
 class App extends Component {
   render() {
@@ -78,45 +78,38 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
-              </Switch>
-              <Switch>
+
                 <PrivateRoute
                   exact
                   path="/edit-profile"
                   component={EditProfile}
                 />
-              </Switch>
-              <Switch>
+
                 <PrivateRoute
                   exact
                   path="/torneos-activos-user"
                   component={TorneosActivosUser}
                 />
-              </Switch>
-              <Switch>
+
                 <PrivateRoute
                   exact
                   path="/create-tournament"
                   component={CreateTournament}
                 />
-              </Switch>
-              <Switch>
+
                 <PrivateRoute
                   exact
                   path="/torneos-activos-admin"
                   component={TorneosActivosAdmin}
                 />
-              </Switch>
-              <Switch>
+
                 <PrivateRoute
                   exact
                   path="/apuntarse-torneo"
                   component={ApuntarseTorneo}
                 />
-              </Switch>
-              <Switch>
+
                 <PrivateRoute
-                  exact
                   path="/torneo-apuntado-info"
                   component={TorneoApuntadoInfo}
                 />

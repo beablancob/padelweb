@@ -7,6 +7,8 @@ import "../../assets/Style.css";
 import Parejas from "../parejas/Parejas";
 import Torneosbaruser from "../layout/Torneosbaruser";
 import { Router } from "react-router-dom";
+import PrivateRoute from "../common/PrivateRoute";
+import { Switch } from "react-router-dom";
 
 class TorneoApuntadoInfo extends Component {
   render() {
@@ -21,10 +23,17 @@ class TorneoApuntadoInfo extends Component {
       <div className="info-torneo">
         <div className="container">
           <div className="col-md-8 m-auto">
-            <h1 className="display-4 text-center">Torneo {torneoInfo.name}</h1>
+            <h1 className="display-4 text-center">
+              Torneo {torneoInfo.tournament.name}
+            </h1>
 
             <Torneosbaruser />
-            <Parejas />
+            <Switch>
+              <PrivateRoute
+                path="/torneo-apuntado-info/parejas"
+                component={Parejas}
+              />
+            </Switch>
           </div>
         </div>
       </div>
@@ -42,4 +51,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { infoTorneo }
-)(withRouter(TorneoApuntadoInfo));
+)(TorneoApuntadoInfo);

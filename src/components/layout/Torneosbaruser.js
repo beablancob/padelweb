@@ -18,6 +18,7 @@ import {
   MDBIcon
 } from "mdbreact";
 import { BrowserRouter as Router } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { miRondaInfo } from "../../actions/torneoApuntadoInfoAction";
 
 import "../../assets/Style.css";
@@ -38,42 +39,17 @@ class Torneosbaruser extends Component {
 
     if (isAuthenticated) {
       return (
-        <Router>
-          <MDBNavbar color="default-color" dark expand="md">
-            <MDBNavbarBrand>
-              <strong className="white-text">Navbar</strong>
-            </MDBNavbarBrand>
-            <MDBNavbarToggler onClick={this.toggleCollapse} />
-            <MDBCollapse id="navbarCollapse3" navbar>
-              <MDBNavbarNav left>
-                <MDBNavItem active>
-                  <Link to="/parejas">Parejas</Link>
-                </MDBNavItem>
-                <MDBNavItem>
-                  <MDBDropdown>
-                    <MDBDropdownToggle>
-                      <div className="d-none d-md-inline">Rondas</div>
-                    </MDBDropdownToggle>
-                    <MDBDropdownMenu className="dropdown-default">
-                      <MDBDropdownItem to="/clasificacion">
-                        Mi clasificación
-                      </MDBDropdownItem>
-                      <MDBDropdownItem href="#!">Partidos</MDBDropdownItem>
-                      <MDBDropdownItem href="#!">Grupos</MDBDropdownItem>
-                    </MDBDropdownMenu>
-                  </MDBDropdown>
-                </MDBNavItem>
-
-                <MDBNavItem>
-                  <Link to="#!">Ranking</Link>
-                </MDBNavItem>
-                <MDBNavItem>
-                  <Link to="#!">Contacto</Link>
-                </MDBNavItem>
-              </MDBNavbarNav>
-            </MDBCollapse>
-          </MDBNavbar>
-        </Router>
+        <nav>
+          <NavLink exact to="/torneo-apuntado-info/parejas">
+            Parejas
+          </NavLink>
+          <NavLink exact to="/torneo-apuntado-info/clasificacion">
+            Mi clasificacion
+          </NavLink>
+          <NavLink exact to="/torneo-apuntado-info/resultado-partido-pareja">
+            Sube el resultado de un partido
+          </NavLink>
+        </nav>
       );
     }
   }
@@ -90,6 +66,42 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps)(Torneosbaruser);
 
 {
+  // return (
+  //   <Router>
+  //     <MDBNavbar color="default-color" dark expand="md">
+  //       <MDBNavbarBrand>
+  //         <strong className="white-text">Navbar</strong>
+  //       </MDBNavbarBrand>
+  //       <MDBNavbarToggler onClick={this.toggleCollapse} />
+  //       <MDBCollapse id="navbarCollapse3" navbar>
+  //         <MDBNavbarNav left>
+  //           <MDBNavItem active>
+  //             <Link to="/torneo-apuntado-info/parejas">Parejas</Link>
+  //           </MDBNavItem>
+  //           <MDBNavItem>
+  //             <MDBDropdown>
+  //               <MDBDropdownToggle>
+  //                 <div className="d-none d-md-inline">Rondas</div>
+  //               </MDBDropdownToggle>
+  //               <MDBDropdownMenu className="dropdown-default">
+  //                 <Link to="/clasificacion">Mi clasificación</Link>
+  //                 <MDBDropdownItem href="#!">Partidos</MDBDropdownItem>
+  //                 <MDBDropdownItem href="#!">Grupos</MDBDropdownItem>
+  //               </MDBDropdownMenu>
+  //             </MDBDropdown>
+  //           </MDBNavItem>
+  //           <MDBNavItem>
+  //             <Link to="#!">Ranking</Link>
+  //           </MDBNavItem>
+  //           <MDBNavItem>
+  //             <Link to="#!">Contacto</Link>
+  //           </MDBNavItem>
+  //         </MDBNavbarNav>
+  //       </MDBCollapse>
+  //     </MDBNavbar>
+  //   </Router>
+  // );
+  // ---------x -------
   // <Navbar expand="lg" variant="light" bg="light">
   //         <Container>
   //           <Nav className="mr-auto">

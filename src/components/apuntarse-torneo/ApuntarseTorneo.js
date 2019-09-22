@@ -48,7 +48,7 @@ class ApuntarseTorneo extends Component {
     let torneo = torneoSelected;
     console.log("El torneo seleccionado es:", torneo);
 
-    let registerCodeData = torneo.registerCode;
+    let registerCodeData = torneo.tournament.registerCode;
     console.log("Register", registerCodeData);
     this.state.registerCodeData = registerCodeData;
     //this.setState({ registerCodeData: registerCodeData });
