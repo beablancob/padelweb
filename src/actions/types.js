@@ -25,5 +25,6 @@ export const GET_USER1 = "GET_USER1";
 export const GET_USER2 = "GET_USER2";
 
 export const GET_MI_RONDA_INFO = "GET_MI_RONDA_INFO";
+export const RONDA_INFO_NULL = "RONDA_INFO_NULL";
 
 export const SET_PAREJA_CONTRINCANTE = "SET_PAREJA_CONTRINCANTE";

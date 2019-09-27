@@ -7,9 +7,11 @@ import Spinner from "../common/Spinner";
 import "../../assets/Style.css";
 import { seleccionTorneo } from "../../actions/apuntarseTorneoAction";
 import {
-  infoTorneo,
+  infoTorneoComenzadoNoParticipo,
+  infoTorneoComenzadoParticipo,
+  infoTorneoNoComenzadoParticipo,
   miRondaInfo
-} from "../../actions/torneoApuntadoInfoAction";
+} from "../../actions/torneoInfoAction";
 import { withRouter } from "react-router-dom";
 import { Button } from "reactstrap";
 
@@ -20,23 +22,33 @@ class TorneosActivosUser extends Component {
       torneo: "",
       errors: {}
     };
-    this.onSeleccionTorneoClick = this.onSeleccionTorneoClick.bind(this);
-    this.onTorneoComenzadoClick = this.onTorneoComenzadoClick.bind(this);
-    this.onTorneoApuntadoClick = this.onTorneoApuntadoClick.bind(this);
+    this.onTorneoApuntarseClick = this.onTorneoApuntarseClick.bind(this);
+    this.onTorneoComenzadoNoParticipoClick = this.onTorneoComenzadoNoParticipoClick.bind(
+      this
+    );
+    this.onTorneoComenzadoParticipoClick = this.onTorneoComenzadoParticipoClick.bind(
+      this
+    );
+    this.onTorneoNoComenzadoParticipoClick = this.onTorneoNoComenzadoParticipoClick.bind(
+      this
+    );
   }
   componentDidMount() {
     this.props.getCurrentTournaments();
   }
-  onTorneoComenzadoClick(torneoData) {}
-  onTorneoApuntadoClick(torneoData) {
-    if (torneoData.rondaActual != 0) {
-      this.props.miRondaInfo(torneoData);
-    }
+  onTorneoComenzadoNoParticipoClick(torneoData) {
+    this.props.infoTorneoComenzadoNoParticipo(torneoData, this.props.history);
+  }
+  onTorneoComenzadoParticipoClick(torneoData) {
+    this.props.infoTorneoComenzadoParticipo(torneoData);
 
-    this.props.infoTorneo(torneoData, this.props.history);
+    this.props.miRondaInfo(torneoData, this.props.history);
+  }
+  onTorneoNoComenzadoParticipoClick(torneoData) {
+    this.props.infoTorneoNoComenzadoParticipo(torneoData, this.props.history);
   }
 
-  onSeleccionTorneoClick(torneoData) {
+  onTorneoApuntarseClick(torneoData) {
     this.props.seleccionTorneo(torneoData, this.props.history);
   }
   render() {
@@ -79,7 +91,7 @@ class TorneosActivosUser extends Component {
         } else {
           console.log("Existen torneos publicos: ", torneos.tournaments);
           console.log(
-            "Las parejas del torneo x son:",
+            "Las parejas del torneo 0 son:",
             torneos.tournaments[0].couples
           );
           let listTorneos = torneos.tournaments;
@@ -108,7 +120,7 @@ class TorneosActivosUser extends Component {
                     <Button
                       outline
                       color="success"
-                      onClick={this.onSeleccionTorneoClick.bind(
+                      onClick={this.onTorneoApuntarseClick.bind(
                         this,
                         listTorneos[i]
                       )}
@@ -119,82 +131,174 @@ class TorneosActivosUser extends Component {
                   </td>
                 );
               } else {
-                if (listTorneos[i].rondaActual != 0) {
-                  children.push(
-                    <td key={j}>
-                      <Button
-                        outline
-                        color="warning"
-                        onClick={this.onTorneoComenzadoClick.bind(
-                          this,
-                          listTorneos[i]
-                        )}
-                        className="btn"
-                      >
-                        Este torneo ya ha comenzado
-                      </Button>
-                    </td>
+                for (var k = 0; k < listTorneos[i].couples.length; k++) {
+                  console.log(
+                    "Parejas del for del torneo i: ",
+                    listTorneos[i].couples.length
                   );
-                } else {
-                  for (var k = 0; k < listTorneos[i].couples.length; k++) {
-                    console.log(
-                      "Parejas del for del torneo i: ",
-                      listTorneos[i].couples.length
-                    );
-                    console.log(
-                      "user.id:",
-                      user.id,
-                      "user1Id: ",
-                      listTorneos[i].couples[k].user1Id,
-                      "user2Id: ",
-                      listTorneos[i].couples[k].user2Id
-                    );
+                  console.log(
+                    "user.id:",
+                    user.id,
+                    "user1Id: ",
+                    listTorneos[i].couples[k].user1Id,
+                    "user2Id: ",
+                    listTorneos[i].couples[k].user2Id
+                  );
 
-                    if (
-                      listTorneos[i].couples[k].user1Id === user.id ||
-                      listTorneos[i].couples[k].user2Id === user.id
-                    ) {
-                      p = 0;
+                  if (
+                    listTorneos[i].couples[k].user1Id === user.id ||
+                    listTorneos[i].couples[k].user2Id === user.id
+                  ) {
+                    if (listTorneos[i].rondaActual === 0) {
                       children.push(
                         <td key={j}>
                           <Button
                             outline
                             color="info"
-                            onClick={this.onTorneoApuntadoClick.bind(
+                            onClick={this.onTorneoNoComenzadoParticipoClick.bind(
                               this,
                               listTorneos[i]
                             )}
                             className="btn"
                           >
-                            Participas en este torneo
+                            Este torneo no ha comenzado. Participas en él
                           </Button>
                         </td>
                       );
                       break;
                     } else {
-                      p++;
-                      if (p === listTorneos[i].couples.length) {
-                        p = 0;
-                        children.push(
-                          <td key={j}>
-                            <Button
-                              outline
-                              color="success"
-                              onClick={this.onSeleccionTorneoClick.bind(
-                                this,
-                                listTorneos[i]
-                              )}
-                              className="btn"
-                            >
-                              Apúntate a este torneo
-                            </Button>
-                          </td>
-                        );
-                        break;
-                      }
+                      children.push(
+                        <td key={j}>
+                          <Button
+                            outline
+                            color="warning"
+                            onClick={this.onTorneoComenzadoParticipoClick.bind(
+                              this,
+                              listTorneos[i]
+                            )}
+                            className="btn"
+                          >
+                            Este torneo ha comenzado. Participas en él
+                          </Button>
+                        </td>
+                      );
+                      break;
+                    }
+                  } else {
+                    if (listTorneos[i].rondaActual === 0) {
+                      children.push(
+                        <td key={j}>
+                          <Button
+                            outline
+                            color="success"
+                            onClick={this.onTorneoApuntarseClick.bind(
+                              this,
+                              listTorneos[i]
+                            )}
+                            className="btn"
+                          >
+                            Apúntate a este torneo
+                          </Button>
+                        </td>
+                      );
+                      break;
+                    } else {
+                      children.push(
+                        <td key={j}>
+                          <Button
+                            outline
+                            color="danger"
+                            onClick={this.onTorneoComenzadoNoParticipoClick.bind(
+                              this,
+                              listTorneos[i]
+                            )}
+                            className="btn"
+                          >
+                            Este torneo ha comenzado. No participas en él
+                          </Button>
+                        </td>
+                      );
+                      break;
                     }
                   }
                 }
+
+                // if (listTorneos[i].rondaActual != 0) {
+                //   children.push(
+                //     <td key={j}>
+                //       <Button
+                //         outline
+                //         color="warning"
+                //         onClick={this.onTorneoComenzadoClick.bind(
+                //           this,
+                //           listTorneos[i]
+                //         )}
+                //         className="btn"
+                //       >
+                //         Este torneo ya ha comenzado. No participas en él
+                //       </Button>
+                //     </td>
+                //   );
+                // } else {
+                //   for (var k = 0; k < listTorneos[i].couples.length; k++) {
+                //     console.log(
+                //       "Parejas del for del torneo i: ",
+                //       listTorneos[i].couples.length
+                //     );
+                //     console.log(
+                //       "user.id:",
+                //       user.id,
+                //       "user1Id: ",
+                //       listTorneos[i].couples[k].user1Id,
+                //       "user2Id: ",
+                //       listTorneos[i].couples[k].user2Id
+                //     );
+
+                //     if (
+                //       listTorneos[i].couples[k].user1Id === user.id ||
+                //       listTorneos[i].couples[k].user2Id === user.id
+                //     ) {
+                //       p = 0;
+                //       children.push(
+                //         <td key={j}>
+                //           <Button
+                //             outline
+                //             color="info"
+                //             onClick={this.onTorneoApuntadoClick.bind(
+                //               this,
+                //               listTorneos[i]
+                //             )}
+                //             className="btn"
+                //           >
+                //             Participas en este torneo
+                //           </Button>
+                //         </td>
+                //       );
+                //       break;
+                //     } else {
+                //       p++;
+                //       if (p === listTorneos[i].couples.length) {
+                //         p = 0;
+                //         children.push(
+                //           <td key={j}>
+                //             <Button
+                //               outline
+                //               color="success"
+                //               onClick={this.onSeleccionTorneoClick.bind(
+                //                 this,
+                //                 listTorneos[i]
+                //               )}
+                //               className="btn"
+                //             >
+                //               Apúntate a este torneo
+                //             </Button>
+                //           </td>
+                //         );
+                //         break;
+                //       }
+                //     }
+                //   }
+                // }
               }
 
               //Create the parent and add the children
@@ -217,7 +321,7 @@ class TorneosActivosUser extends Component {
               </p>
               <table>
                 <thead>
-                  <tr>
+                  <tr className="text-center">
                     <th>Nombre </th>
                     <th>Número de parejas </th>
                     <th>Ronda actual </th>
@@ -251,9 +355,10 @@ class TorneosActivosUser extends Component {
 TorneosActivosUser.propTypes = {
   seleccionTorneo: PropTypes.func.isRequired,
   getCurrentTournaments: PropTypes.func.isRequired,
-  infoTorneo: PropTypes.func.isRequired,
+  infoTorneoComenzadoNoParticipo: PropTypes.func.isRequired,
+  infoTorneoNoComenzadoParticipo: PropTypes.func.isRequired,
+  infoTorneoComenzadoParticipo: PropTypes.func.isRequired,
   miRondaInfo: PropTypes.func.isRequired,
-  // getCurrentUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   torneosActivosUser: PropTypes.object.isRequired
 };
@@ -264,5 +369,12 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentTournaments, seleccionTorneo, infoTorneo, miRondaInfo }
+  {
+    getCurrentTournaments,
+    seleccionTorneo,
+    infoTorneoComenzadoNoParticipo,
+    infoTorneoComenzadoParticipo,
+    infoTorneoNoComenzadoParticipo,
+    miRondaInfo
+  }
 )(withRouter(TorneosActivosUser));

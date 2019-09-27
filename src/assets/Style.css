@@ -1,10 +1,7 @@
-
-
 #sesion {
   margin: auto;
   width: 300px;
   margin-top: 3em;
-
 }
 #img-sesion {
   height: 10em;
@@ -14,16 +11,18 @@
 
 .alert {
   color: red;
-  
 }
-.btn-us{
+.btn-us {
   text-align: center;
   color: darkgray;
-
+}
+.navbar-torneo {
+  margin-left: 160;
 }
 .navbar {
   z-index: 999;
 }
+
 .torneos {
   margin-top: 58px;
 }
@@ -59,24 +58,25 @@
 }
 
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
 }
 
-.typeUser{
+.typeUser {
   color: white;
 }
 
-
-.usuario{
+.usuario {
   color: #f1f1f1;
-
 }
-.sidenav .nav-item{
+.sidenav .nav-item {
   padding-top: 50px;
-
 }
 
-.container-app{
-margin-left: 160px;
+.container-app {
+  margin-left: 160px;
 }

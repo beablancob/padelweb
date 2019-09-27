@@ -19,7 +19,8 @@ import {
 } from "mdbreact";
 import { BrowserRouter as Router } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import { miRondaInfo } from "../../actions/torneoApuntadoInfoAction";
+import { miRondaInfo } from "../../actions/torneoInfoAction";
+import "../../assets/Style.css";
 
 import "../../assets/Style.css";
 
@@ -39,12 +40,12 @@ class Torneosbaruser extends Component {
 
     if (isAuthenticated) {
       return (
-        <nav>
+        <nav className="navbar-torneo">
           <NavLink exact to="/torneo-apuntado-info/parejas">
             Parejas
           </NavLink>
           <NavLink exact to="/torneo-apuntado-info/clasificacion">
-            Mi clasificacion
+            Clasificacion
           </NavLink>
           <NavLink exact to="/torneo-apuntado-info/resultado-partido-pareja">
             Sube el resultado de un partido
@@ -57,11 +58,11 @@ class Torneosbaruser extends Component {
 //Si tiene dispatch, lo añado aqui como una funcion. Sino, no.
 Torneosbaruser.propTypes = {
   auth: PropTypes.object.isRequired,
-  torneoApuntadoInfo: PropTypes.object.isRequired
+  torneoInfo: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth,
-  torneoApuntadoInfo: state.torneoApuntadoInfo
+  torneoInfo: state.torneoInfo
 });
 export default connect(mapStateToProps)(Torneosbaruser);
 

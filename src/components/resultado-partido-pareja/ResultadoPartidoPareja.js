@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../common/Spinner";
 import { withRouter } from "react-router-dom";
-import { parejaContrincante } from "ResultadoPartidoAction";
+import { parejaContrincante } from "../../actions/resultadoPartidoAction";
 
 class ResultadoPartidoPareja extends Component {
   //No funciona, en clasificación tb lo tengo q arreglar

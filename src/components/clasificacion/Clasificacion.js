@@ -1,23 +1,31 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { miRondaInfo } from "../../actions/torneoInfoAction";
 
 class Clasificacion extends Component {
   render() {
     //miRondaInformacion es un json con parejas y partidos
-    const { torneoInfo, miRondaInformacion } = this.props.torneoApuntadoInfo;
-
+    const { torneoInformacion, miRondaInformacion } = this.props.torneoInfo;
+    const { user } = this.props.auth;
+    let tableJor2 = [];
     let tableJor = [];
     let m = 0;
     let createTableJornada = () => {
-      for (var i = 0; torneoInfo.tournament.couples.length; i++) {
+      for (
+        var i = 0;
+        i < torneoInformacion.tournament.couples.length - 1;
+        i++
+      ) {
+        let children = [];
+        let children2 = [];
         if (
-          torneoInfo.tournament.couples[i].user1Id === user.id ||
-          torneoInfo.tournament.couples[i].user2Id === user.id
+          torneoInformacion.tournament.couples[i].user1Id === user.id ||
+          torneoInformacion.tournament.couples[i].user2Id === user.id
         ) {
-          let grupo = torneoInfo.tournament.couples[i].grupoActual;
-          let ronda = torneoInfo.tournament.rondaActual;
-          for (let k = 0; miRondaInformacion.partidos.length; k++) {
-            let children = [];
-            let children2 = [];
+          let grupo = torneoInformacion.tournament.couples[i].grupoActual;
+          let ronda = torneoInformacion.tournament.rondaActual;
+          for (let k = 0; k < miRondaInformacion.partidos.length - 1; k++) {
             if (
               miRondaInformacion.partidos[k].numeroGrupo === grupo &&
               miRondaInformacion.partidos[k].numeroRonda === ronda
@@ -25,8 +33,8 @@ class Clasificacion extends Component {
               children.push(
                 <td key={j}>
                   {" "}
-                  {torneoInfo.tournament.couples[i].user1Name} y{" "}
-                  {torneoInfo.tournament.couples[i].user2Name}
+                  {torneoInformacion.tournament.couples[i].user1Name} y{" "}
+                  {torneoInformacion.tournament.couples[i].user2Name}
                 </td>
               );
               m++;
@@ -42,7 +50,7 @@ class Clasificacion extends Component {
                 <td key={j}>{miRondaInformacion.parejas[k].set3Couple1}</td>
               );
               m++;
-              table.push(
+              tableJor.push(
                 <tr key={i} className="text-center">
                   {children}
                 </tr>
@@ -62,44 +70,81 @@ class Clasificacion extends Component {
                 <td key={j}>{miRondaInformacion.parejas[k].set3Couple2}</td>
               );
               m++;
-              table.push(
+              tableJor2.push(
                 <tr key={i} className="text-center">
                   {children2}
                 </tr>
               );
-              <div>
-                <p></p>
-              </div>;
             }
           }
         }
       }
 
-      return table;
+      return tableJor;
     };
 
     let table = [];
     let j = 0;
-    let createTable = () => {
-      for (var i = 0; torneoInfo.couples.length; i++) {
+    let createRonda = () => {
+      console.log(
+        "ESTOY EN LA TABLA DE RONDA",
+        torneoInformacion.tournament.couples
+      );
+
+      // Recorro todas las parejas del torneo
+      for (
+        var i = 0;
+        i < torneoInformacion.tournament.couples.length - 1;
+        i++
+      ) {
+        console.log("hola");
+        //let children = [];
+        console.log(
+          "couple1",
+          torneoInformacion.tournament.couples[i].user1Id,
+          "couple2",
+          torneoInformacion.tournament.couples[i].user2Id,
+          "user",
+          user.id
+        );
+        // Veo la pareja a la que pertenezco y cojo mi grupo
         if (
-          torneoInfo.couples[i].user1Id === user.id ||
-          torneoInfo.couples[i].user2Id === user.id
+          torneoInformacion.tournament.couples[i].user1Id === user.id ||
+          torneoInformacion.tournament.couples[i].user2Id === user.id
         ) {
-          let grupo = torneoInfo.couples[i].grupoActual;
-          for (var k = 0; miRondaInformacion.parejas.length; k++) {
-            let children = [];
-            if (miRondaInformacion.parejas[k].grupo === grupo) {
+          let grupo = torneoInformacion.tournament.couples[i].grupoActual;
+          console.log("grupo al q pertenezco: ", grupo);
+          console.log("miRondaInformacion: ", miRondaInformacion);
+          console.log(
+            "miRondaInformacion.parejas: ",
+            miRondaInformacion.parejas
+          );
+          // Desde la información de la ronda, recorro las parejas
+          for (var k = 0; k < miRondaInformacion.parejas.length - 1; k++) {
+            console.log("parejas[k]: ", miRondaInformacion.parejas[k]);
+            // Cuando veo una pareja que pertenece a mi grupo, la cojo
+            if (miRondaInformacion.parejas[k].grupoActual === grupo) {
+              console.log(
+                "grupo de la pareja k: ",
+                miRondaInformacion.parejas[k].grupoActual,
+                "pareja k: ",
+                miRondaInformacion.parejas[k]
+              );
+              let children = [];
+
               j++;
-              children.push(<td key={j}>Clasificacion por hacer</td>);
+              children.push(<td key={j}>//TODO</td>);
               j++;
               //Tengo que hacer el getUser1Id !!!!
               children.push(
                 <td key={j} className="text-left">
-                  {miRondaInformacion.parejas[k].user1Name} y
-                  {miRondaInformacion.parejas[k].user2Name}
+                  {miRondaInformacion.parejas[k].user1Name}{" "}
+                  {miRondaInformacion.parejas[k].user1LastName} y{" "}
+                  {miRondaInformacion.parejas[k].user2Name}{" "}
+                  {miRondaInformacion.parejas[k].user2LastName}
                 </td>
               );
+              console.log("holaaaa");
               j++;
               children.push(
                 <td key={j}>{miRondaInformacion.parejas[k].puntos}</td>
@@ -144,15 +189,19 @@ class Clasificacion extends Component {
                   {miRondaInformacion.parejas[k].diferenciaJuegos}
                 </td>
               );
+              console.log("j al final de cada vuelta", j);
               j++;
+              console.log("children en clasif", children);
+              table.push(
+                <tr key={i} className="text-center">
+                  {children}
+                </tr>
+              );
             }
           }
         }
-        table.push(
-          <tr key={i} className="text-center">
-            {children}
-          </tr>
-        );
+
+        console.log("table: ", table);
       }
 
       return table;
@@ -166,27 +215,19 @@ class Clasificacion extends Component {
               <th>Clasificación </th>
               <th>Jugadores </th>
               <th>Puntos </th>
-              <th>Partidos jugados </th>
-              <th>Partidos ganados</th>
-              <th>Partidos perdidos </th>
-              <th>Sets ganados </th>
-              <th>Sets perdidos </th>
-              <th>Juegos ganados </th>
-              <th>Juegos perdidos </th>
-              <th>Diferencia de sets </th>
-              <th>Diferencia de juegos </th>
+              <th>PJ </th>
+              <th>PG</th>
+              <th>PP</th>
+              <th>SG</th>
+              <th>SP</th>
+              <th>JG</th>
+              <th>JP</th>
+              <th>Diferencia sets </th>
+              <th>Diferencia juegos </th>
             </tr>
           </thead>
-          <tbody>{createTable()}</tbody>
+          <tbody>{createRonda()}</tbody>
         </table>
-      </div>
-    );
-    let noIniciado = (
-      <div>
-        <h4>El torneo todavía no ha comenzado</h4>
-        <h5>
-          Cuando comience podrás ver los resultados de tu grupo en esta ronda
-        </h5>
       </div>
     );
 
@@ -208,30 +249,28 @@ class Clasificacion extends Component {
 
     return (
       <div className="info-torneo">
-        <div className="container">
-          <div className="col-md-8 m-auto">
-            <h2 className="display-4 text-center">
-              Información de tu ronda y grupo
-            </h2>
-            <h3>Ronda {torneoInfo.rondaActual}</h3>
-            {miRondaInformacion ? tablaRondaContent : noIniciado}
-            <h3>Jornadas</h3>
-            {tablaJornadaContent}
-          </div>
-        </div>
+        <p className="titulillos">Información de tu ronda y grupo</p>
+
+        <h3>Ronda {torneoInformacion.tournament.rondaActual}</h3>
+        {tablaRondaContent}
+
+        <h3>Jornadas</h3>
+        {tablaJornadaContent}
       </div>
     );
   }
 }
 
-TorneoApuntadoInfo.propTypes = {
-  torneoApuntadoInfo: PropTypes.object.isRequired
+Clasificacion.propTypes = {
+  torneoInfo: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-  torneoApuntadoInfo: state.torneoApuntadoInfo
+  torneoInfo: state.torneoInfo,
+  auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  { getInfoRonda }
+  { miRondaInfo }
 )(Clasificacion);
