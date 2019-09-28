@@ -17,37 +17,64 @@ class Clasificacion extends Component {
         i < torneoInformacion.tournament.couples.length - 1;
         i++
       ) {
-        let children = [];
-        let children2 = [];
         if (
           torneoInformacion.tournament.couples[i].user1Id === user.id ||
           torneoInformacion.tournament.couples[i].user2Id === user.id
         ) {
+          let children = [];
+          let idCouple = torneoInformacion.tournament.couples[i].id;
           let grupo = torneoInformacion.tournament.couples[i].grupoActual;
           let ronda = torneoInformacion.tournament.rondaActual;
+          console.log(
+            "Tengo grupo y ronda de mi usuario, respectivamente: ",
+            grupo,
+            ronda
+          );
+
           for (let k = 0; k < miRondaInformacion.partidos.length - 1; k++) {
             if (
               miRondaInformacion.partidos[k].numeroGrupo === grupo &&
               miRondaInformacion.partidos[k].numeroRonda === ronda
             ) {
               children.push(
-                <td key={j}>
-                  {" "}
-                  {torneoInformacion.tournament.couples[i].user1Name} y{" "}
-                  {torneoInformacion.tournament.couples[i].user2Name}
-                </td>
+                <td key={m}> {miRondaInformacion.partidos[k].couple1Id}</td>
               );
               m++;
               children.push(
-                <td key={j}>{miRondaInformacion.partidos[k].set1Couple1}</td>
+                <td key={m}>{miRondaInformacion.partidos[k].set1Couple1}</td>
+              );
+              console.log(
+                "Set1Couple1",
+                miRondaInformacion.partidos[k].set1Couple1
               );
               m++;
               children.push(
-                <td key={j}>{miRondaInformacion.parejas[k].set2Couple1}</td>
+                <td key={m}>{miRondaInformacion.parejas[k].set2Couple1}</td>
               );
               m++;
               children.push(
-                <td key={j}>{miRondaInformacion.parejas[k].set3Couple1}</td>
+                <td key={m}>{miRondaInformacion.parejas[k].set3Couple1}</td>
+              );
+              m++;
+              tableJor.push(
+                <tr key={i} className="text-center">
+                  {children}
+                </tr>
+              );
+              children.push(
+                <td key={m}> {miRondaInformacion.partidos[k].couple2Id}</td>
+              );
+              m++;
+              children.push(
+                <td key={m}>{miRondaInformacion.partidos[k].set1Couple2}</td>
+              );
+              m++;
+              children.push(
+                <td key={m}>{miRondaInformacion.parejas[k].set2Couple2}</td>
+              );
+              m++;
+              children.push(
+                <td key={m}>{miRondaInformacion.parejas[k].set3Couple2}</td>
               );
               m++;
               tableJor.push(
@@ -56,25 +83,134 @@ class Clasificacion extends Component {
                 </tr>
               );
 
-              children2.push(<td key={j}>Pareja 2 por hacer</td>);
-              m++;
-              children2.push(
-                <td key={j}>{miRondaInformacion.partidos[k].set1Couple2}</td>
-              );
-              m++;
-              children2.push(
-                <td key={j}>{miRondaInformacion.parejas[k].set2Couple2}</td>
-              );
-              m++;
-              children2.push(
-                <td key={j}>{miRondaInformacion.parejas[k].set3Couple2}</td>
-              );
-              m++;
-              tableJor2.push(
-                <tr key={i} className="text-center">
-                  {children2}
-                </tr>
-              );
+              tableJor.push(<tr key={i}>{}</tr>);
+
+              // for (let l = 0; l < miRondaInformacion.parejas.length - 1; l++) {
+              //   if (
+              //     miRondaInformacion.partidos[k].couple1Id ===
+              //     miRondaInformacion.parejas[l].id
+              //   ) {
+              //     let nombre11 = miRondaInformacion.parejas[l].user1Name;
+              //     let apellido11 = miRondaInformacion.parejas[l].user1LastName;
+              //     let nombre12 = miRondaInformacion.parejas[l].user2Name;
+              //     let apellido12 = miRondaInformacion.parejas[l].user2LastName;
+              //     children.push(
+              //       <td key={m}>
+              //         {" "}
+              //         {nombre11} {apellido11}y {nombre12} {apellido12}
+              //       </td>
+              //     );
+              //     m++;
+              //     children.push(
+              //       <td key={m}>
+              //         {miRondaInformacion.partidos[k].set1Couple1}
+              //       </td>
+              //     );
+              //     m++;
+              //     children.push(
+              //       <td key={m}>{miRondaInformacion.parejas[k].set2Couple1}</td>
+              //     );
+              //     m++;
+              //     children.push(
+              //       <td key={m}>{miRondaInformacion.parejas[k].set3Couple1}</td>
+              //     );
+              //     m++;
+              //     tableJor.push(
+              //       <tr key={i} className="text-center">
+              //         {children}
+              //       </tr>
+              //     );
+              //     if (
+              //       miRondaInformacion.partidos[k].couple2Id ===
+              //       miRondaInformacion.parejas[l].id
+              //     ) {
+              //       let nombre21 = miRondaInformacion.parejas[l].user1Name;
+              //       let apellido21 =
+              //         miRondaInformacion.parejas[l].user1LastName;
+              //       let nombre22 = miRondaInformacion.parejas[l].user2Name;
+              //       let apellido22 =
+              //         miRondaInformacion.parejas[l].user2LastName;
+              //       children.push(
+              //         <td key={m}>
+              //           {" "}
+              //           {nombre21} {apellido21}y {nombre22} {apellido22}
+              //         </td>
+              //       );
+
+              //       children.push(
+              //         <td key={m}>
+              //           {miRondaInformacion.partidos[k].set1Couple2}
+              //         </td>
+              //       );
+              //       m++;
+              //       children.push(
+              //         <td key={m}>
+              //           {miRondaInformacion.parejas[k].set2Couple2}
+              //         </td>
+              //       );
+              //       m++;
+              //       children.push(
+              //         <td key={m}>
+              //           {miRondaInformacion.parejas[k].set3Couple2}
+              //         </td>
+              //       );
+              //       m++;
+              //       tableJor.push(
+              //         <tr key={i} className="text-center">
+              //           {children}
+              //         </tr>
+              //       );
+              //     }
+              //   }
+              // }
+              //________x______________
+              // children.push(
+              //   <td key={j}>
+              //     {" "}
+              //     {torneoInformacion.tournament.couples[i].user1Name}{" "}
+              //     {torneoInformacion.tournament.couples[i].user1LastName}y{" "}
+              //     {torneoInformacion.tournament.couples[i].user2Name}{" "}
+              //     {torneoInformacion.tournament.couples[i].user2Name}
+              //   </td>
+              // );
+              // m++;
+              // children.push(
+              //   <td key={j}>{miRondaInformacion.partidos[k].set1Couple1}</td>
+              // );
+              // m++;
+              // children.push(
+              //   <td key={j}>{miRondaInformacion.parejas[k].set2Couple1}</td>
+              // );
+              // m++;
+              // children.push(
+              //   <td key={j}>{miRondaInformacion.parejas[k].set3Couple1}</td>
+              // );
+              // m++;
+              // tableJor.push(
+              //   <tr key={i} className="text-center">
+              //     {children}
+              //   </tr>
+              // );
+
+              // children2.push(<td key={j}>Pareja 2 por hacer</td>);
+              // m++;
+              // children2.push(
+              //   <td key={j}>{miRondaInformacion.partidos[k].set1Couple2}</td>
+              // );
+              // m++;
+              // children2.push(
+              //   <td key={j}>{miRondaInformacion.parejas[k].set2Couple2}</td>
+              // );
+              // m++;
+              // children2.push(
+              //   <td key={j}>{miRondaInformacion.parejas[k].set3Couple2}</td>
+              // );
+              // m++;
+              // tableJor2.push(
+              //   <tr key={i} className="text-center">
+              //     {children2}
+              //   </tr>
+              // );
             }
           }
         }
@@ -86,18 +222,12 @@ class Clasificacion extends Component {
     let table = [];
     let j = 0;
     let createRonda = () => {
-      console.log(
-        "ESTOY EN LA TABLA DE RONDA",
-        torneoInformacion.tournament.couples
-      );
-
       // Recorro todas las parejas del torneo
       for (
         var i = 0;
         i < torneoInformacion.tournament.couples.length - 1;
         i++
       ) {
-        console.log("hola");
         //let children = [];
         console.log(
           "couple1",
@@ -113,23 +243,11 @@ class Clasificacion extends Component {
           torneoInformacion.tournament.couples[i].user2Id === user.id
         ) {
           let grupo = torneoInformacion.tournament.couples[i].grupoActual;
-          console.log("grupo al q pertenezco: ", grupo);
-          console.log("miRondaInformacion: ", miRondaInformacion);
-          console.log(
-            "miRondaInformacion.parejas: ",
-            miRondaInformacion.parejas
-          );
+
           // Desde la información de la ronda, recorro las parejas
           for (var k = 0; k < miRondaInformacion.parejas.length - 1; k++) {
-            console.log("parejas[k]: ", miRondaInformacion.parejas[k]);
             // Cuando veo una pareja que pertenece a mi grupo, la cojo
             if (miRondaInformacion.parejas[k].grupoActual === grupo) {
-              console.log(
-                "grupo de la pareja k: ",
-                miRondaInformacion.parejas[k].grupoActual,
-                "pareja k: ",
-                miRondaInformacion.parejas[k]
-              );
               let children = [];
 
               j++;
@@ -144,7 +262,6 @@ class Clasificacion extends Component {
                   {miRondaInformacion.parejas[k].user2LastName}
                 </td>
               );
-              console.log("holaaaa");
               j++;
               children.push(
                 <td key={j}>{miRondaInformacion.parejas[k].puntos}</td>
@@ -189,9 +306,7 @@ class Clasificacion extends Component {
                   {miRondaInformacion.parejas[k].diferenciaJuegos}
                 </td>
               );
-              console.log("j al final de cada vuelta", j);
               j++;
-              console.log("children en clasif", children);
               table.push(
                 <tr key={i} className="text-center">
                   {children}
@@ -200,7 +315,6 @@ class Clasificacion extends Component {
             }
           }
         }
-
         console.log("table: ", table);
       }
 
