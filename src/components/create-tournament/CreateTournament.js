@@ -105,6 +105,7 @@ class CreateTournament extends Component {
                   value={this.state.parejasPorGrupo}
                   onChange={this.onChange}
                   error={errors.parejasPorGrupo}
+                  info="Parejas por grupo"
                 />
                 <SelectListBoolean
                   name="publico"
@@ -120,6 +121,7 @@ class CreateTournament extends Component {
                   value={this.state.puntosPG}
                   onChange={this.onChange}
                   error={errors.puntosPG}
+                  info="Puntos por PG"
                 />
                 <TextFieldGroup
                   placeholder="Puntos por partido perdido"
@@ -128,6 +130,7 @@ class CreateTournament extends Component {
                   value={this.state.puntosPP}
                   onChange={this.onChange}
                   error={errors.puntosPP}
+                  info="Puntos por PP"
                 />
                 <SelectListBoolean
                   name="idaYvuelta"

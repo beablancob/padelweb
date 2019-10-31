@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../common/Spinner";
-
+import { infoTorneoComenzadoParticipo } from "../../actions/torneoInfoAction";
 class Parejas extends Component {
   //No funciona, en clasificación tb lo tengo q arreglar
-
+  componentDidMount() {
+    this.props.infoTorneoComenzadoParticipo();
+  }
   render() {
     const { torneoInformacion } = this.props.torneoInfo;
 
@@ -92,4 +94,7 @@ const mapStateToProps = state => ({
   torneoInfo: state.torneoInfo
 });
 
-export default connect(mapStateToProps)(Parejas);
+export default connect(
+  mapStateToProps,
+  { infoTorneoComenzadoParticipo }
+)(Parejas);

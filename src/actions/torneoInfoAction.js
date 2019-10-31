@@ -24,7 +24,7 @@ export const miRondaInfo = (torneoData, history) => dispatch => {
         type: GET_MI_RONDA_INFO,
         payload: res.data
       });
-      history.push("/torneo-apuntado-info");
+      history.push("/torneo-apuntado-info/id=" + torneoData.id);
     });
 };
 

@@ -3,13 +3,10 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import TextFieldGroup from "../common/TextFieldGroup";
-import {
-  registrarseTorneo,
-  seleccionTorneo
-} from "../../actions/apuntarseTorneoAction";
+import { registrarseTorneoPriv } from "../../actions/apuntarseTorneoAction";
 import "../../assets/Style.css";
 
-class ApuntarseTorneo extends Component {
+class ApuntarsePriv extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,17 +17,12 @@ class ApuntarseTorneo extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  componentDidMount() {
-    const { id } = this.props.match.params;
-    console.log("eeeeee", id);
-    this.props.seleccionTorneo(id);
-  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.error) {
       this.setState({ error: nextProps.error });
     }
   }
-
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -39,46 +31,31 @@ class ApuntarseTorneo extends Component {
     e.preventDefault();
 
     const infoRegistro = {
-      registerCodeData: this.state.registerCodeData
-    };
-    const email = {
+      registerCodeData: this.state.registerCodeData,
       emailUser2: this.state.emailUser2
     };
-    console.log("parámetros:", infoRegistro);
-
     //history sirve para redirigir. Para que funcione history tenemos que añadir withRouter en el componente que exportamos
     //console.log("El registerCode del torneo es: ", registerCodeData);
-    this.props.registrarseTorneo(infoRegistro, email, this.props.history);
+    this.props.registrarseTorneo(infoRegistro, this.props.history);
   }
   render() {
-    // SELECCION TORNEO MIRAR QUE NO FUNCIONAAAAA
-    // console.log("-------- MATCH ---------", this.props.match);
-    //7 const { torneoId } = this.props.match;
-    // this.props.seleccionTorneo(torneoId, this.props.history);
-    const { torneoSelected } = this.props.apuntarseTorneo;
     const { error } = this.state;
-    let torneo = torneoSelected;
-    console.log("El torneo seleccionado es:", torneo);
-
-    let registerCodeData = torneo.tournament.registerCode;
-    console.log("Register", registerCodeData);
-    this.state.registerCodeData = registerCodeData;
-    //this.setState({ registerCodeData: registerCodeData });
 
     return (
       <div className="apuntarse-torneo">
         <div className="container">
           <div className="col-md-8 m-auto">
             <h1 className="display-4 text-center">
-              Apúntate a {torneo.tournament.name}
+              Apúntate a un torneo privado
             </h1>
             <p className="lead text-center">
-              Rellena el email de tu pareja, recuerda que tiene que estar
-              registrado en la plataforma.
+              Rellena el email de tu pareja y el código de registro
+              correspondiente. Recuerda que tu pareja tiene que estar registrada
+              en la plataforma.
             </p>
             <form onSubmit={this.onSubmit.bind(this)}>
               <TextFieldGroup
-                placeholder="Nombre de tu pareja"
+                placeholder="Email de tu pareja"
                 name="emailUser2"
                 value={this.state.emailUser2}
                 onChange={this.onChange}
@@ -86,11 +63,13 @@ class ApuntarseTorneo extends Component {
                 info="tupareja@ejemplo.com"
               />
               <TextFieldGroup
-                placeholder="RegisterCode"
+                placeholder="Código de registro"
                 name="registerCodeData"
                 onChange={this.onChange}
                 value={this.state.registerCodeData}
-                type="hidden"
+                onChange={this.onChange}
+                error={error}
+                info="12codigo23de245registro"
               />
               <input
                 type="submit"
@@ -105,19 +84,15 @@ class ApuntarseTorneo extends Component {
   }
 }
 
-ApuntarseTorneo.propTypes = {
+ApuntarsePriv.propTypes = {
   registrarseTorneo: PropTypes.func.isRequired,
-  seleccionTorneo: PropTypes.func.isRequired,
-  apuntarseTorneo: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
   error: PropTypes.object
 };
 const mapStateToProps = state => ({
   apuntarseTorneo: state.apuntarseTorneo,
-  match: state.match,
   error: state.error
 });
 export default connect(
   mapStateToProps,
-  { registrarseTorneo, seleccionTorneo }
-)(withRouter(ApuntarseTorneo));
+  { registrarseTorneoPriv }
+)(withRouter(ApuntarsePriv));

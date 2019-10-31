@@ -65,21 +65,3 @@ export const logoutUser = () => dispatch => {
   // Set current user to {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
 };
-
-// export const getCurrentUser = userId => dispatch => {
-//   console.log("El userId en currentUSer es: ", userId);
-//   axios
-//     .get("/users/", userId)
-//     .then(res =>
-//       dispatch({
-//         type: GET_CURRENT_USER,
-//         payload: res.data
-//       })
-//     )
-//     .catch(err =>
-//       dispatch({
-//         type: GET_CURRENT_USER,
-//         payload: {}
-//       })
-//     );
-// };

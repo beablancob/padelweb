@@ -2,18 +2,20 @@ import axios from "axios";
 import { SET_SELECTED_TOURNAMENT, GET_ERRORS } from "./types";
 
 //Seleccion del torneo al que me quiero apuntar
-export const seleccionTorneo = (torneoData, history) => dispatch => {
-  axios.get("/tournaments/" + torneoData.id).then(res => {
+export const seleccionTorneo = (torneoId, history) => dispatch => {
+  console.log("En action de seleccion torneo: ", torneoId);
+
+  axios.get("/tournaments/" + torneoId).then(res => {
     dispatch({
       type: SET_SELECTED_TOURNAMENT,
       payload: res.data
     });
-    history.push("/apuntarse-torneo");
+    if (history) history.push("/apuntarse-torneo/" + torneoId);
   });
-  console.log("En action de seleccion torneo: ", torneoData);
+  console.log("+++++++++ seleccion torneo +++++++++++");
 };
 
-// Apuntarse a un torneo
+// Apuntarse a un torneo público
 export const registrarseTorneo = (infoRegistro, email, history) => dispatch => {
   console.log("Estoy en action: ", infoRegistro);
   console.log("EmailUser2 en action: ", email);
@@ -26,5 +28,24 @@ export const registrarseTorneo = (infoRegistro, email, history) => dispatch => {
         payload: err.response.data
       })
     );
-  history.push("/torneos-activos-user");
+  history.push("/mis-torneos");
+};
+
+// Apuntarse a un torneo privado
+export const registrarseTorneoPriv = (infoRegistro, history) => dispatch => {
+  console.log("Estoy en action: ", infoRegistro);
+  console.log("EmailUser2 en action: ", infoRegistro.email);
+  axios
+    .post(
+      "/tournaments/" + infoRegistro.registerCodeData + "/couples",
+      infoRegistro.email
+    )
+
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+  history.push("/mis-torneos");
 };

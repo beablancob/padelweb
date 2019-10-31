@@ -54,6 +54,7 @@ class TorneosActivosUser extends Component {
   render() {
     const { user } = this.props.auth;
     const { torneos, loading } = this.props.torneosActivosUser;
+    console.log("********************", this.props);
     let createTable;
     // this.props.getCurrentUser(user.id);
     console.log("el id del usuario es:", user.id);
@@ -108,8 +109,8 @@ class TorneosActivosUser extends Component {
               );
               j++;
               children.push(<td key={j}>{listTorneos[i].numeroParejas}</td>);
-              j++;
-              children.push(<td key={j}>{listTorneos[i].rondaActual}</td>);
+              // j++;
+              // children.push(<td key={j}>{listTorneos[i].rondaActual}</td>);
               j++;
               children.push(<td key={j}>{listTorneos[i].numeroRondas}</td>);
               j++;
@@ -222,83 +223,6 @@ class TorneosActivosUser extends Component {
                     }
                   }
                 }
-
-                // if (listTorneos[i].rondaActual != 0) {
-                //   children.push(
-                //     <td key={j}>
-                //       <Button
-                //         outline
-                //         color="warning"
-                //         onClick={this.onTorneoComenzadoClick.bind(
-                //           this,
-                //           listTorneos[i]
-                //         )}
-                //         className="btn"
-                //       >
-                //         Este torneo ya ha comenzado. No participas en él
-                //       </Button>
-                //     </td>
-                //   );
-                // } else {
-                //   for (var k = 0; k < listTorneos[i].couples.length; k++) {
-                //     console.log(
-                //       "Parejas del for del torneo i: ",
-                //       listTorneos[i].couples.length
-                //     );
-                //     console.log(
-                //       "user.id:",
-                //       user.id,
-                //       "user1Id: ",
-                //       listTorneos[i].couples[k].user1Id,
-                //       "user2Id: ",
-                //       listTorneos[i].couples[k].user2Id
-                //     );
-
-                //     if (
-                //       listTorneos[i].couples[k].user1Id === user.id ||
-                //       listTorneos[i].couples[k].user2Id === user.id
-                //     ) {
-                //       p = 0;
-                //       children.push(
-                //         <td key={j}>
-                //           <Button
-                //             outline
-                //             color="info"
-                //             onClick={this.onTorneoApuntadoClick.bind(
-                //               this,
-                //               listTorneos[i]
-                //             )}
-                //             className="btn"
-                //           >
-                //             Participas en este torneo
-                //           </Button>
-                //         </td>
-                //       );
-                //       break;
-                //     } else {
-                //       p++;
-                //       if (p === listTorneos[i].couples.length) {
-                //         p = 0;
-                //         children.push(
-                //           <td key={j}>
-                //             <Button
-                //               outline
-                //               color="success"
-                //               onClick={this.onSeleccionTorneoClick.bind(
-                //                 this,
-                //                 listTorneos[i]
-                //               )}
-                //               className="btn"
-                //             >
-                //               Apúntate a este torneo
-                //             </Button>
-                //           </td>
-                //         );
-                //         break;
-                //       }
-                //     }
-                //   }
-                // }
               }
 
               //Create the parent and add the children
@@ -324,7 +248,7 @@ class TorneosActivosUser extends Component {
                   <tr className="text-center">
                     <th>Nombre </th>
                     <th>Número de parejas </th>
-                    <th>Ronda actual </th>
+                    {/* <th>Ronda actual </th> */}
                     <th>Número de rondas </th>
                     <th>Apúntate </th>
                   </tr>

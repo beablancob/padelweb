@@ -15,7 +15,8 @@ class TorneoApuntadoInfo extends Component {
   render() {
     const { torneoInformacion } = this.props.torneoInfo;
     //const { error } = this.state;
-
+    let torneoIdPath =
+      "/torneo-apuntado-info/" + torneoInformacion.tournament.id + "/parejas/";
     console.log("El torneo seleccionado es:", torneoInformacion);
 
     //this.setState({ registerCodeData: registerCodeData });
@@ -25,15 +26,12 @@ class TorneoApuntadoInfo extends Component {
         <div className="container">
           <div className="col-md-10 m-auto">
             <h1 className="display-4 text-center">
-              Torneo {torneoInformacion.tournament.name}
+              Torneo " {torneoInformacion.tournament.name} "
             </h1>
 
             <Torneosbaruser />
             <Switch>
-              <PrivateRoute
-                path="/torneo-apuntado-info/parejas"
-                component={Parejas}
-              />
+              <PrivateRoute path={torneoIdPath} component={Parejas} />
               <PrivateRoute
                 path="/torneo-apuntado-info/clasificacion"
                 component={Clasificacion}

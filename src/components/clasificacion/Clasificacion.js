@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { miRondaInfo } from "../../actions/torneoInfoAction";
+import {
+  miRondaInfo,
+  infoTorneoComenzadoParticipo
+} from "../../actions/torneoInfoAction";
 
 class Clasificacion extends Component {
+  componentDidMount() {
+    this.props.infoTorneoComenzadoParticipo();
+  }
   render() {
     //miRondaInformacion es un json con parejas y partidos
     const { torneoInformacion, miRondaInformacion } = this.props.torneoInfo;
@@ -36,6 +42,7 @@ class Clasificacion extends Component {
               miRondaInformacion.partidos[k].numeroGrupo === grupo &&
               miRondaInformacion.partidos[k].numeroRonda === ronda
             ) {
+              console.log("info de la ronda: ", miRondaInformacion);
               children.push(
                 <td key={m}> {miRondaInformacion.partidos[k].couple1Id}</td>
               );
@@ -61,6 +68,7 @@ class Clasificacion extends Component {
                   {children}
                 </tr>
               );
+              children = [];
               children.push(
                 <td key={m}> {miRondaInformacion.partidos[k].couple2Id}</td>
               );
@@ -386,5 +394,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { miRondaInfo }
+  { miRondaInfo, infoTorneoComenzadoParticipo }
 )(Clasificacion);

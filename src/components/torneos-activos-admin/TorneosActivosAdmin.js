@@ -5,11 +5,29 @@ import { getCurrentAdminTournaments } from "../../actions/torneosActivosAdminAct
 import Spinner from "../common/Spinner";
 import "../../assets/Style.css";
 import { Link } from "react-router-dom";
+import { Button } from "reactstrap";
 
 class TorneosActivosAdmin extends Component {
+  constructor() {
+    super();
+    this.state = {
+      torneo: "",
+      errors: {}
+    };
+    this.onComenzarTorneoClick = this.onComenzarTorneoClick.bind(this);
+    this.onTorneoEnJuegoClick = this.onTorneoEnJuegoClick.bind(this);
+  }
+
   componentDidMount() {
     this.props.getCurrentAdminTournaments();
   }
+  onComenzarTorneoClick(torneoId) {
+    //this.props.seleccionTorneo(torneoId, this.props.history);
+  }
+  onTorneoEnJuegoClick(torneoId) {
+    //this.props.seleccionTorneo(torneoId, this.props.history);
+  }
+
   render() {
     const { user } = this.props.auth;
     const { torneosAdmin, loading } = this.props.torneosActivosAdmin;
@@ -48,7 +66,6 @@ class TorneosActivosAdmin extends Component {
           let table = [];
           var j = 0;
 
-          
           console.log("El torneo 0, nombre", listTorneos[0].name);
 
           createTable = () => {
@@ -60,16 +77,48 @@ class TorneosActivosAdmin extends Component {
                   {listTorneos[i].name}
                 </td>
               );
+
               j++;
-              children.push(<td key={j}>{listTorneos[i].numeroParejas}</td>);
-              j++;
-              children.push(<td key={j}>{listTorneos[i].rondaActual}</td>);
-              j++;
-              children.push(<td key={j}>{listTorneos[i].numeroRondas}</td>);
-              j++;
-              children.push(<td key={j}>{listTorneos[i].parejasSuben}</td>);
+              children.push(<td key={j}>{listTorneos[i].registerCode}</td>);
               console.log("El torneo i, nombre", listTorneos[i].name);
               j++;
+
+              if (listTorneos[i].rondaActual === 0) {
+                children.push(
+                  <td key={j}>
+                    <Button
+                      outline
+                      color="success"
+                      onClick={this.onComenzarTorneoClick.bind(
+                        this,
+                        listTorneos[i]
+                      )}
+                      className="btn"
+                    >
+                      Comenzar torneo
+                    </Button>
+                  </td>
+                );
+                j++;
+              } else {
+                children.push(
+                  <td key={j}>
+                    <Button
+                      outline
+                      color="info"
+                      onClick={this.onTorneoEnJuegoClick.bind(
+                        this,
+                        listTorneos[i]
+                      )}
+                      className="btn"
+                    >
+                      Info del torneo en juego
+                    </Button>
+                  </td>
+                );
+                j++;
+              }
+
               //Create the parent and add the children
               table.push(
                 <tr key={i} className="text-center">
@@ -86,10 +135,8 @@ class TorneosActivosAdmin extends Component {
                 <thead>
                   <tr>
                     <th>Nombre</th>
-                    <th>Número de parejas</th>
-                    <th>Ronda actual</th>
-                    <th>Número de rondas</th>
-                    <th>Nº de parejas que suben de grupo</th>
+                    <th>Codigo de registro</th>
+                    <th>Información</th>
                   </tr>
                 </thead>
                 <tbody>{createTable()}</tbody>
@@ -129,4 +176,3 @@ export default connect(
   mapStateToProps,
   { getCurrentAdminTournaments }
 )(TorneosActivosAdmin);
-

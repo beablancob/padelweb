@@ -23,7 +23,6 @@ class EditProfile extends Component {
   }
   componentDidMount() {
     this.props.getCurrentProfile();
-    console.log("componentDidMount");
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
@@ -33,13 +32,13 @@ class EditProfile extends Component {
       const profile = nextProps.profile.profile;
       profile.name = !isEmpty(profile.name) ? profile.name : "";
       profile.lastname = !isEmpty(profile.lastname) ? profile.lastname : "";
-      profile.password = !isEmpty(profile.password) ? profile.password : "";
+      profile.password1 = !isEmpty(profile.password1) ? profile.password1 : "";
 
       // Set component fields state
       this.setState({
         name: profile.name,
         lastname: profile.lastname,
-        password1: profile.password1
+        password: profile.password1
       });
     }
   }
@@ -49,33 +48,29 @@ class EditProfile extends Component {
   }
   onSubmit(e) {
     e.preventDefault();
-    if (this.state.password1 === this.state.password2) {
-      const newProfile = {
-        name: this.state.name,
-        lastname: this.state.lastname,
-        email: this.state.email,
-        password: this.state.password1
-      };
-      console.log(newProfile);
-      this.props.registerUser(newProfile);
-    } else {
-      console.log("//programar errror de q password1 =! password2");
-    }
+
+    const user = {
+      name: this.state.name,
+      lastname: this.state.lastname,
+      email: this.state.email,
+      password1: this.state.password1,
+      password2: this.state.password2
+    };
+    console.log(user);
+    console.log("Errores: ", this.state.errors);
+    this.props.registerUser(user);
   }
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
-    console.log("hola");
-
-    this.props.getCurrentProfile();
     //npm i classnames para instalar isInvalid y toda la pesca
     const { profile } = this.props.profile;
+    const { user } = this.props.auth;
     const { errors } = this.state; //const errors = this.state.errors es lo mismo!!
     //Las clases form-control etc van a estar siempre. Las is-invalid solo existen cuando hay un error, en el array de errores del estado.
     //Errors.name
-
     console.log("hola usuario:", profile);
 
     return (
@@ -87,7 +82,7 @@ class EditProfile extends Component {
 
               <form noValidate onSubmit={this.onSubmit}>
                 <TextFieldGroup
-                  placeholder="Nombre"
+                  placeholder={this.state.name}
                   name="name"
                   value={this.state.name}
                   onChange={this.onChange}
@@ -150,11 +145,13 @@ EditProfile.propTypes = {
   registerUser: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
 
+  auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
   profile: state.auth,
 
+  auth: state.auth,
   errors: state.errors
 });
 export default connect(
