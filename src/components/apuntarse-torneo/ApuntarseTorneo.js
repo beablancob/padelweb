@@ -8,6 +8,7 @@ import {
   seleccionTorneo
 } from "../../actions/apuntarseTorneoAction";
 import "../../assets/Style.css";
+import Spinner from "../common/Spinner";
 
 class ApuntarseTorneo extends Component {
   constructor(props) {
@@ -20,11 +21,19 @@ class ApuntarseTorneo extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  componentDidMount() {
+  // componentDidMount() {
+  //   const { id } = this.props.match.params;
+  //   console.log("DIDDDDDD", id);
+
+  //   this.props.seleccionTorneo(id);
+  // }
+  componentWillMount() {
     const { id } = this.props.match.params;
-    console.log("eeeeee", id);
+    console.log("WILLLLLLLLLLL", id);
+
     this.props.seleccionTorneo(id);
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.error) {
       this.setState({ error: nextProps.error });
@@ -51,20 +60,44 @@ class ApuntarseTorneo extends Component {
     this.props.registrarseTorneo(infoRegistro, email, this.props.history);
   }
   render() {
-    // SELECCION TORNEO MIRAR QUE NO FUNCIONAAAAA
-    // console.log("-------- MATCH ---------", this.props.match);
-    //7 const { torneoId } = this.props.match;
-    // this.props.seleccionTorneo(torneoId, this.props.history);
-    const { torneoSelected } = this.props.apuntarseTorneo;
+    const { torneoSelected, loading } = this.props.apuntarseTorneo;
     const { error } = this.state;
     let torneo = torneoSelected;
-    console.log("El torneo seleccionado es:", torneo);
 
-    let registerCodeData = torneo.tournament.registerCode;
-    console.log("Register", registerCodeData);
-    this.state.registerCodeData = registerCodeData;
-    //this.setState({ registerCodeData: registerCodeData });
-
+    let apuntarseContent;
+    if (loading) {
+      console.log("loading");
+      apuntarseContent = <Spinner />;
+    } else {
+      console.log("El torneo seleccionado es:", torneo);
+      let registerCodeData = torneo.tournament.registerCode;
+      console.log("Register", registerCodeData);
+      this.state.registerCodeData = registerCodeData;
+      apuntarseContent = (
+        <form onSubmit={this.onSubmit.bind(this)}>
+          <TextFieldGroup
+            placeholder="Nombre de tu pareja"
+            name="emailUser2"
+            value={this.state.emailUser2}
+            onChange={this.onChange}
+            error={error}
+            info="tupareja@ejemplo.com"
+          />
+          <TextFieldGroup
+            placeholder="RegisterCode"
+            name="registerCodeData"
+            onChange={this.onChange}
+            value={this.state.registerCodeData}
+            type="hidden"
+          />
+          <input
+            type="submit"
+            value="Enviar"
+            className="btn btn-info btn-block mt-4"
+          />
+        </form>
+      );
+    }
     return (
       <div className="apuntarse-torneo">
         <div className="container">
@@ -76,28 +109,7 @@ class ApuntarseTorneo extends Component {
               Rellena el email de tu pareja, recuerda que tiene que estar
               registrado en la plataforma.
             </p>
-            <form onSubmit={this.onSubmit.bind(this)}>
-              <TextFieldGroup
-                placeholder="Nombre de tu pareja"
-                name="emailUser2"
-                value={this.state.emailUser2}
-                onChange={this.onChange}
-                error={error}
-                info="tupareja@ejemplo.com"
-              />
-              <TextFieldGroup
-                placeholder="RegisterCode"
-                name="registerCodeData"
-                onChange={this.onChange}
-                value={this.state.registerCodeData}
-                type="hidden"
-              />
-              <input
-                type="submit"
-                value="Enviar"
-                className="btn btn-info btn-block mt-4"
-              />
-            </form>
+            {apuntarseContent}
           </div>
         </div>
       </div>

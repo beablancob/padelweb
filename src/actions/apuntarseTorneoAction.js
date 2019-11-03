@@ -1,9 +1,14 @@
 import axios from "axios";
-import { SET_SELECTED_TOURNAMENT, GET_ERRORS } from "./types";
+import {
+  SET_SELECTED_TOURNAMENT,
+  GET_ERRORS,
+  APUNTARSE_LOADING
+} from "./types";
 
 //Seleccion del torneo al que me quiero apuntar
 export const seleccionTorneo = (torneoId, history) => dispatch => {
   console.log("En action de seleccion torneo: ", torneoId);
+  dispatch(setApuntarseLoading());
 
   axios.get("/tournaments/" + torneoId).then(res => {
     dispatch({
@@ -11,8 +16,16 @@ export const seleccionTorneo = (torneoId, history) => dispatch => {
       payload: res.data
     });
     if (history) history.push("/apuntarse-torneo/" + torneoId);
+    console.log("res.data", res.data);
   });
   console.log("+++++++++ seleccion torneo +++++++++++");
+};
+
+// Apuntarse loading
+export const setApuntarseLoading = () => {
+  return {
+    type: APUNTARSE_LOADING
+  };
 };
 
 // Apuntarse a un torneo público

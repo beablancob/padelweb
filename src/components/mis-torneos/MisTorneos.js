@@ -44,13 +44,9 @@ class MisTorneos extends Component {
   render() {
     const { user } = this.props.auth;
     const { torneos, loading } = this.props.torneosActivosUser;
-    console.log("********************", this.props);
     let createTable;
-    // this.props.getCurrentUser(user.id);
-    console.log("el id del usuario es:", user.id);
     let torneosContent;
     console.log("Se esta cargando la pagina", loading);
-    //   console.log(torneos.length());
     if (loading) {
       torneosContent = <Spinner />;
     } else {
@@ -82,7 +78,6 @@ class MisTorneos extends Component {
             </div>
           );
         } else {
-          console.log("Existen torneos publicos: ", torneos.tournaments);
           console.log(
             "Las parejas del torneo 0 son:",
             torneos.tournaments[0].couples

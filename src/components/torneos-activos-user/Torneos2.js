@@ -26,14 +26,12 @@ class TorneosPublicos extends Component {
     this.props.seleccionTorneo(torneoId, this.props.history);
   }
   render() {
-    console.log("RENDER ********");
     const { user } = this.props.auth;
     const { torneos, loading } = this.props.torneosActivosUser;
     let createTable;
 
     let torneosContent;
     console.log("Se esta cargando la pagina", loading);
-    //   console.log(torneos.length());
     if (loading) {
       torneosContent = <Spinner />;
     } else {
@@ -53,7 +51,7 @@ class TorneosPublicos extends Component {
         if (torneos.tournaments.length === 0) {
           torneosContent = (
             <div>
-              <p className="lead text-muted">Bienvenido {user.name}</p>
+              <p className="lead text-muted">Bienvenido/a {user.name}</p>
               <p>
                 No hay ningún torneo activo de momento, ¡anímate y organiza uno
                 como administrador!
@@ -206,7 +204,7 @@ class TorneosPublicos extends Component {
           <div className="row">
             <div className="col md-12">
               <h1 className="display-4">Torneos públicos</h1>
-              <p className="lead text-muted">Bienvenido {user.name}</p>
+              <p className="lead text-muted">Bienvenido/a {user.name}</p>
               {torneosContent}
             </div>
           </div>
