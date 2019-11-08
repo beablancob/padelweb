@@ -49,12 +49,6 @@ class Sidebar extends Component {
               Organizar un torneo
             </Link>
           </li>
-
-          <li className="nav-item">
-            <Link className="nav-link" to="/edit-profile">
-              Ajustes de perfil
-            </Link>
-          </li>
         </ul>
       </div>
     );

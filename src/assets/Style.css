@@ -80,3 +80,55 @@
 .container-app {
   margin-left: 160px;
 }
+.link-button {
+  margin-top: 10px;
+  padding: 5px;
+  color: #2db92d;
+  border: #2db92d 1px solid;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: background 150ms;
+}
+.link-button:hover {
+  text-decoration: none;
+  background: #2db92d;
+  color: white;
+  transition: background 150ms;
+  transition: color 150ms;
+}
+.t-comenzado-link {
+  padding: 5px;
+  color: #ffcc00;
+  border: #ffcc00 1px solid;
+  border-radius: 20px;
+  transition: background 150ms;
+}
+.t-comenzado-link:hover {
+  text-decoration: none;
+  background: #ffcc00;
+  color: white;
+  transition: background 150ms;
+  transition: color 150ms;
+}
+
+.t-nocomenzado-link {
+  padding: 5px;
+  color: white;
+  background: #0099cc;
+  text-decoration: none;
+  border: #0099cc 1px solid;
+  border-radius: 20px;
+  transition: background 150ms;
+}
+
+.t-nocomenzado-link:hover {
+  text-decoration: none;
+  background: #0099cc;
+  color: white;
+  transition: background 150ms;
+  transition: color 150ms;
+}
+
+.table {
+  text-align: center;
+}

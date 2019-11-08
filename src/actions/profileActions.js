@@ -10,11 +10,11 @@ import {
 } from "./types";
 
 // Get current profile
-export const getCurrentProfile = () => dispatch => {
+export const getCurrentProfile = id => dispatch => {
   dispatch(setProfileLoading());
   console.log("****************getCurrentProfile de profileActions");
   // Pido al backend la info del usuario
-  axios.get("/users/:userId").then(res => {
+  axios.get("/users/" + id).then(res => {
     console.log("perfilInformacion;", res.data);
 
     dispatch({
@@ -25,16 +25,17 @@ export const getCurrentProfile = () => dispatch => {
 };
 
 // Delete account & profile
-export const deleteAccount = () => dispatch => {
+export const deleteAccount = (userId, history) => dispatch => {
   if (window.confirm("¿Estás seguro? ¡Esta acción no se puede deshacer!")) {
     axios
-      .delete("/users")
-      .then(res =>
+      .delete("/users/" + userId)
+      .then(res => {
         dispatch({
           type: SET_CURRENT_USER,
           payload: {}
-        })
-      )
+        });
+        history.push("/register");
+      })
       .catch(err =>
         dispatch({
           type: GET_ERRORS,

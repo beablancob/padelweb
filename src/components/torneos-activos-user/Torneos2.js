@@ -8,6 +8,7 @@ import "../../assets/Style.css";
 import { seleccionTorneo } from "../../actions/apuntarseTorneoAction";
 import { withRouter } from "react-router-dom";
 import { Button } from "reactstrap";
+import { Link } from "react-router-dom";
 
 class TorneosPublicos extends Component {
   constructor() {
@@ -84,19 +85,12 @@ class TorneosPublicos extends Component {
                 j++;
                 children.push(<td key={j}>{listTorneos[i].numeroRondas}</td>);
                 j++;
+                let myLink = "/apuntarse-torneo/" + listTorneos[i].id;
                 children.push(
-                  <td key={j}>
-                    <Button
-                      outline
-                      color="success"
-                      onClick={this.onTorneoApuntarseClick.bind(
-                        this,
-                        listTorneos[i].id
-                      )}
-                      className="btn"
-                    >
+                  <td key={j} id="pepe">
+                    <Link className="link-button" to={myLink}>
                       Apúntate a este torneo
-                    </Button>
+                    </Link>
                   </td>
                 );
               } else {
@@ -119,6 +113,12 @@ class TorneosPublicos extends Component {
                       ">>>>>>>>>>el usuario no pertenece a este torneo"
                     );
                     p++;
+                    console.log("valor de p", p);
+                    console.log(
+                      "couples.length",
+                      listTorneos[i].couples.length
+                    );
+
                     if (p === listTorneos[i].couples.length) {
                       p = 0;
                       if (listTorneos[i].rondaActual === 0) {
@@ -140,19 +140,12 @@ class TorneosPublicos extends Component {
                           <td key={j}>{listTorneos[i].numeroRondas}</td>
                         );
                         j++;
+                        let myLink = "/apuntarse-torneo/" + listTorneos[i].id;
                         children.push(
                           <td key={j}>
-                            <Button
-                              outline
-                              color="success"
-                              onClick={this.onTorneoApuntarseClick.bind(
-                                this,
-                                listTorneos[i].id
-                              )}
-                              className="btn"
-                            >
+                            <Link className="link-button" to={myLink}>
                               Apúntate a este torneo
-                            </Button>
+                            </Link>
                           </td>
                         );
                         break;
@@ -160,11 +153,12 @@ class TorneosPublicos extends Component {
                     }
                   }
                 }
+                p = 0;
               }
 
               //Create the parent and add the children
               table.push(
-                <tr key={i} className="text-center">
+                <tr key={i} className="table">
                   {children}
                 </tr>
               );
@@ -190,7 +184,7 @@ class TorneosPublicos extends Component {
                     <th>Apúntate </th>
                   </tr>
                 </thead>
-                <tbody>{createTable()}</tbody>
+                <tbody className="pepe">{createTable()}</tbody>
               </table>
             </div>
           );

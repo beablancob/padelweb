@@ -2,7 +2,7 @@ import { SET_SELECTED_TOURNAMENT, APUNTARSE_LOADING } from "../actions/types";
 
 const initialState = {
   torneoSelected: null,
-  loading: null
+  loading: true
 };
 export default function(state = initialState, action) {
   switch (action.type) {

@@ -23,17 +23,19 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Dashboard from "./dashboard/Dashboard";
 import EditProfile from "./edit-profile/EditProfile";
-import TorneosActivosUser from "./torneos-activos-user/TorneosActivosUser";
+//import TorneosActivosUser from "./torneos-activos-user/TorneosActivosUser";
 import Torneos2 from "./torneos-activos-user/Torneos2";
 import MisTorneos from "./mis-torneos/MisTorneos";
 
 import TorneosActivosAdmin from "./torneos-activos-admin/TorneosActivosAdmin";
 import CreateTournament from "./create-tournament/CreateTournament";
+import EditarTorneo from "./editar-torneo/EditarTorneo";
+
 import ApuntarseTorneo from "./apuntarse-torneo/ApuntarseTorneo";
 import ApuntarsePriv from "./ap-priv/ApuntarsePriv";
 
 import TorneoApuntadoInfo from "./torneo-apuntado-info/TorneoApuntadoInfo";
-import Dashboard2 from "./dashboard2/Dashboard2";
+//import Dashboard2 from "./dashboard2/Dashboard2";
 import TorneoNoComenzadoParticipo from "./torneo-nocomenzado-participo/TorneoNoComenzadoParticipo";
 
 //Con esto hacemos que aunque se refresque la página, nosotros sigamos con la sesión iniciada.
@@ -112,6 +114,11 @@ class App extends Component {
                   exact
                   path="/torneos-activos-admin"
                   component={TorneosActivosAdmin}
+                />
+                <PrivateRoute
+                  exact
+                  path="/editar-torneo"
+                  component={EditarTorneo}
                 />
 
                 <PrivateRoute

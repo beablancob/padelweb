@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   GET_CURRENT_ADMIN_TOURNAMENTS,
+  GET_CURRENT_ADMIN_TOURNAMENT,
   TOURNAMENTS_ADMIN_LOADING,
   GET_ERRORS
 } from "./types";
@@ -27,22 +28,16 @@ export const getCurrentAdminTournaments = () => dispatch => {
 
 //Get info from the current admin tournaments
 // TODO: tengo que poner como parametro el id ????
-export const getInfoCurrentAdminTournaments = () => dispatch => {
+export const selectEditarTorneo = (torneoId, history) => dispatch => {
   dispatch(setTournamentsLoading());
-  axios
-    .get("/admin/tournaments/")
-    .then(res =>
-      dispatch({
-        type: GET_CURRENT_ADMIN_TOURNAMENTS,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_CURRENT_ADMIN_TOURNAMENTS,
-        payload: {}
-      })
-    );
+  axios.get("/admin/tournaments/", torneoId).then(res => {
+    dispatch({
+      type: GET_CURRENT_ADMIN_TOURNAMENT,
+      payload: res.data
+    });
+    if (history) history.push("/editar-torneo/" + torneoId);
+    console.log("res.data", res.data);
+  });
 };
 
 // Profile loading

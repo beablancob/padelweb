@@ -12,11 +12,19 @@ import PrivateRoute from "../common/PrivateRoute";
 import { Switch } from "react-router-dom";
 
 class TorneoApuntadoInfo extends Component {
+  componentDidMount() {
+    //const { id } = this.props.match.params;
+    console.log(this.props.match.params);
+    console.log("DID MOUNT");
+
+    //  this.props.this.props.miRondaInfo(torneoData;
+    // console.log("DIDDDDDD", id);
+  }
   render() {
     const { torneoInformacion } = this.props.torneoInfo;
     //const { error } = this.state;
-    let torneoIdPath =
-      "/torneo-apuntado-info/" + torneoInformacion.tournament.id + "/parejas/";
+    // let torneoIdPath =
+    //   "/torneo-apuntado-info/" + torneoInformacion.tournament.id + "/parejas/";
     console.log("El torneo seleccionado es:", torneoInformacion);
 
     //this.setState({ registerCodeData: registerCodeData });
@@ -31,7 +39,10 @@ class TorneoApuntadoInfo extends Component {
 
             <Torneosbaruser />
             <Switch>
-              <PrivateRoute path={torneoIdPath} component={Parejas} />
+              <PrivateRoute
+                path="/torneo-apuntado-info/parejas"
+                component={Parejas}
+              />
               <PrivateRoute
                 path="/torneo-apuntado-info/clasificacion"
                 component={Clasificacion}
@@ -43,13 +54,16 @@ class TorneoApuntadoInfo extends Component {
     );
   }
 }
+// PrivateRoute path={torneoIdPath} component={Parejas} />
 
 TorneoApuntadoInfo.propTypes = {
   infoTorneoComenzadoParticipo: PropTypes.func.isRequired,
-  torneoInfo: PropTypes.object.isRequired
+  torneoInfo: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-  torneoInfo: state.torneoInfo
+  torneoInfo: state.torneoInfo,
+  match: state.match
 });
 export default connect(
   mapStateToProps,

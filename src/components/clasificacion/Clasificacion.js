@@ -7,9 +7,9 @@ import {
 } from "../../actions/torneoInfoAction";
 
 class Clasificacion extends Component {
-  componentDidMount() {
-    this.props.infoTorneoComenzadoParticipo();
-  }
+  // componentDidMount() {
+  //   this.props.infoTorneoComenzadoParticipo();
+  // }
   render() {
     //miRondaInformacion es un json con parejas y partidos
     const { torneoInformacion, miRondaInformacion } = this.props.torneoInfo;

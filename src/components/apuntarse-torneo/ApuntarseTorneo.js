@@ -18,20 +18,17 @@ class ApuntarseTorneo extends Component {
       registerCodeData: "",
       error: ""
     };
+    // this.props.apuntarseTorneo.loading = true;
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  // componentDidMount() {
-  //   const { id } = this.props.match.params;
-  //   console.log("DIDDDDDD", id);
-
-  //   this.props.seleccionTorneo(id);
-  // }
-  componentWillMount() {
+  componentDidMount() {
     const { id } = this.props.match.params;
-    console.log("WILLLLLLLLLLL", id);
+
+    console.log("DID MOUNT");
 
     this.props.seleccionTorneo(id);
+    console.log("DIDDDDDD", id);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -74,43 +71,43 @@ class ApuntarseTorneo extends Component {
       console.log("Register", registerCodeData);
       this.state.registerCodeData = registerCodeData;
       apuntarseContent = (
-        <form onSubmit={this.onSubmit.bind(this)}>
-          <TextFieldGroup
-            placeholder="Nombre de tu pareja"
-            name="emailUser2"
-            value={this.state.emailUser2}
-            onChange={this.onChange}
-            error={error}
-            info="tupareja@ejemplo.com"
-          />
-          <TextFieldGroup
-            placeholder="RegisterCode"
-            name="registerCodeData"
-            onChange={this.onChange}
-            value={this.state.registerCodeData}
-            type="hidden"
-          />
-          <input
-            type="submit"
-            value="Enviar"
-            className="btn btn-info btn-block mt-4"
-          />
-        </form>
+        <div>
+          <h1 className="display-4 text-center">
+            Apúntate a {torneo.tournament.name}
+          </h1>
+          <p className="lead text-center">
+            Rellena el email de tu pareja, recuerda que tiene que estar
+            registrado en la plataforma.
+          </p>
+          <form onSubmit={this.onSubmit.bind(this)}>
+            <TextFieldGroup
+              placeholder="Nombre de tu pareja"
+              name="emailUser2"
+              value={this.state.emailUser2}
+              onChange={this.onChange}
+              error={error}
+              info="tupareja@ejemplo.com"
+            />
+            <TextFieldGroup
+              placeholder="RegisterCode"
+              name="registerCodeData"
+              onChange={this.onChange}
+              value={this.state.registerCodeData}
+              type="hidden"
+            />
+            <input
+              type="submit"
+              value="Enviar"
+              className="btn btn-info btn-block mt-4"
+            />
+          </form>
+        </div>
       );
     }
     return (
       <div className="apuntarse-torneo">
         <div className="container">
-          <div className="col-md-8 m-auto">
-            <h1 className="display-4 text-center">
-              Apúntate a {torneo.tournament.name}
-            </h1>
-            <p className="lead text-center">
-              Rellena el email de tu pareja, recuerda que tiene que estar
-              registrado en la plataforma.
-            </p>
-            {apuntarseContent}
-          </div>
+          <div className="col-md-8 m-auto">{apuntarseContent}</div>
         </div>
       </div>
     );

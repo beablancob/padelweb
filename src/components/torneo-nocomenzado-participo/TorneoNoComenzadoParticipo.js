@@ -16,11 +16,7 @@ class TorneoNoComenzadoParticipo extends Component {
     let table = [];
     let j = 0;
     let createTable = () => {
-      for (
-        var i = 0;
-        i < torneoInformacion.tournament.couples.length - 1;
-        i++
-      ) {
+      for (var i = 0; i < torneoInformacion.tournament.couples.length; i++) {
         let children = [];
         console.log("i: ", i);
         console.log(torneoInformacion.tournament.couples.length);

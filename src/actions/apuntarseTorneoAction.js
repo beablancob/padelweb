@@ -34,6 +34,10 @@ export const registrarseTorneo = (infoRegistro, email, history) => dispatch => {
   console.log("EmailUser2 en action: ", email);
   axios
     .post("/tournaments/" + infoRegistro.registerCodeData + "/couples", email)
+    .then(res => {
+      console.log("RESPUESTA APUNTARSE", res);
+      history.push("/mis-torneos");
+    })
 
     .catch(err =>
       dispatch({
@@ -41,7 +45,6 @@ export const registrarseTorneo = (infoRegistro, email, history) => dispatch => {
         payload: err.response.data
       })
     );
-  history.push("/mis-torneos");
 };
 
 // Apuntarse a un torneo privado

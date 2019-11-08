@@ -12,6 +12,7 @@ import {
 } from "../../actions/torneoInfoAction";
 import { withRouter } from "react-router-dom";
 import { Button } from "reactstrap";
+import { Link } from "react-router-dom";
 
 class MisTorneos extends Component {
   constructor() {
@@ -154,8 +155,12 @@ class MisTorneos extends Component {
                       <td key={j}>{listTorneos[i].numeroRondas}</td>
                     );
                     j++;
+                    let myLink = "/torneo-apuntado-info/id=" + listTorneos[i];
                     children.push(
                       <td key={j}>
+                        <Link className="t-comenzado-link" to={myLink}>
+                          Comenzado
+                        </Link>
                         <Button
                           outline
                           color="warning"

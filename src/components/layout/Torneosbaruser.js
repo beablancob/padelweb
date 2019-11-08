@@ -3,20 +3,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Navbar, Nav, Container } from "reactstrap";
-import {
-  MDBNavbar,
-  MDBNavbarBrand,
-  MDBNavbarNav,
-  MDBNavItem,
-  MDBNavbarToggler,
-  MDBCollapse,
-  MDBDropdown,
-  MDBDropdownToggle,
-  MDBDropdownMenu,
-  MDBDropdownItem,
-  MDBIcon
-} from "mdbreact";
+import { Navbar, Nav, NavDropdown, Form, Container, Button } from "reactstrap";
+
 import { BrowserRouter as Router } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { miRondaInfo } from "../../actions/torneoInfoAction";
@@ -40,6 +28,33 @@ class Torneosbaruser extends Component {
 
     if (isAuthenticated) {
       return (
+        // <Navbar bg="light" expand="lg">
+        //   <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        //   <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        //   <Navbar.Collapse id="basic-navbar-nav">
+        //     <Nav className="mr-auto">
+        //       <Nav.Link href="#home">Home</Nav.Link>
+        //       <Nav.Link href="#link">Link</Nav.Link>
+        //       <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+        //         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+        //         <NavDropdown.Item href="#action/3.2">
+        //           Another action
+        //         </NavDropdown.Item>
+        //         <NavDropdown.Item href="#action/3.3">
+        //           Something
+        //         </NavDropdown.Item>
+        //         <NavDropdown.Divider />
+        //         <NavDropdown.Item href="#action/3.4">
+        //           Separated link
+        //         </NavDropdown.Item>
+        //       </NavDropdown>
+        //     </Nav>
+        //     <Form inline>
+        //       <Button variant="outline-success">Search</Button>
+        //     </Form>
+        //   </Navbar.Collapse>
+        // </Navbar>
+
         <nav className="navbar-torneo">
           <NavLink exact to="/torneo-apuntado-info/parejas">
             Parejas

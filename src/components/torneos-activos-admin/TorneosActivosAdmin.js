@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getCurrentAdminTournaments } from "../../actions/torneosActivosAdminActions";
+import {
+  getCurrentAdminTournaments,
+  selectEditarTorneo
+} from "../../actions/torneosActivosAdminActions";
 import Spinner from "../common/Spinner";
 import "../../assets/Style.css";
 import { Link } from "react-router-dom";
@@ -14,15 +17,15 @@ class TorneosActivosAdmin extends Component {
       torneo: "",
       errors: {}
     };
-    this.onComenzarTorneoClick = this.onComenzarTorneoClick.bind(this);
+    this.onEditarTorneoClick = this.onEditarTorneoClick.bind(this);
     this.onTorneoEnJuegoClick = this.onTorneoEnJuegoClick.bind(this);
   }
 
   componentDidMount() {
     this.props.getCurrentAdminTournaments();
   }
-  onComenzarTorneoClick(torneoId) {
-    //this.props.seleccionTorneo(torneoId, this.props.history);
+  onEditarTorneoClick(torneoId) {
+    this.props.selectEditarTorneo(torneoId, this.props.history);
   }
   onTorneoEnJuegoClick(torneoId) {
     //this.props.seleccionTorneo(torneoId, this.props.history);
@@ -89,13 +92,13 @@ class TorneosActivosAdmin extends Component {
                     <Button
                       outline
                       color="success"
-                      onClick={this.onComenzarTorneoClick.bind(
+                      onClick={this.onEditarTorneoClick.bind(
                         this,
                         listTorneos[i]
                       )}
                       className="btn"
                     >
-                      Comenzar torneo
+                      Editar torneo
                     </Button>
                   </td>
                 );
@@ -164,6 +167,7 @@ class TorneosActivosAdmin extends Component {
 
 TorneosActivosAdmin.propTypes = {
   getCurrentAdminTournaments: PropTypes.func.isRequired,
+  selectEditarTorneo: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   torneosActivosAdmin: PropTypes.object.isRequired
 };
@@ -174,5 +178,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentAdminTournaments }
+  { getCurrentAdminTournaments, selectEditarTorneo }
 )(TorneosActivosAdmin);
