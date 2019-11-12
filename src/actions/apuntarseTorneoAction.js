@@ -7,7 +7,6 @@ import {
 
 //Seleccion del torneo al que me quiero apuntar
 export const seleccionTorneo = (torneoId, history) => dispatch => {
-  console.log("En action de seleccion torneo: ", torneoId);
   dispatch(setApuntarseLoading());
 
   axios.get("/tournaments/" + torneoId).then(res => {
@@ -18,7 +17,9 @@ export const seleccionTorneo = (torneoId, history) => dispatch => {
     if (history) history.push("/apuntarse-torneo/" + torneoId);
     console.log("res.data", res.data);
   });
-  console.log("+++++++++ seleccion torneo +++++++++++");
+  console.log(
+    "+++++++++ seleccion torneo +++++++++++, despues del loading!! action"
+  );
 };
 
 // Apuntarse loading

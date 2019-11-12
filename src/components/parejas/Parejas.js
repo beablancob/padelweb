@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import "../../assets/Style.css";
+
 import Spinner from "../common/Spinner";
 import { infoTorneoComenzadoParticipo } from "../../actions/torneoInfoAction";
 class Parejas extends Component {
@@ -62,7 +64,7 @@ class Parejas extends Component {
           j++;
 
           table.push(
-            <tr key={i} className="text-center">
+            <tr key={i} className="table">
               {children}
             </tr>
           );
@@ -104,7 +106,6 @@ const mapStateToProps = state => ({
   torneoInfo: state.torneoInfo
 });
 
-export default connect(
-  mapStateToProps,
-  { infoTorneoComenzadoParticipo }
-)(Parejas);
+export default connect(mapStateToProps, { infoTorneoComenzadoParticipo })(
+  Parejas
+);

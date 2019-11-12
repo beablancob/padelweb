@@ -8,7 +8,6 @@ import {
 import Spinner from "../common/Spinner";
 import "../../assets/Style.css";
 import { Link } from "react-router-dom";
-import { Button } from "reactstrap";
 import { withRouter } from "react-router-dom";
 
 class TorneosActivosAdmin extends Component {

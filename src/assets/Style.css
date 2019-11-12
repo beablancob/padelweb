@@ -98,14 +98,14 @@
 }
 .t-comenzado-link {
   padding: 5px;
-  color: #ffcc00;
-  border: #ffcc00 1px solid;
+  color: #17a2b8;
+  border: #17a2b8 1px solid;
   border-radius: 20px;
   transition: background 150ms;
 }
 .t-comenzado-link:hover {
   text-decoration: none;
-  background: #ffcc00;
+  background: #17a2b8;
   color: white;
   transition: background 150ms;
   transition: color 150ms;
@@ -113,9 +113,7 @@
 
 .t-nocomenzado-link {
   padding: 5px;
-  color: white;
-  background: #17a2b8;
-  text-decoration: none;
+  color: #17a2b8;
   border: #17a2b8 1px solid;
   border-radius: 20px;
   transition: background 150ms;

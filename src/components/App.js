@@ -129,11 +129,11 @@ class App extends Component {
                 />
 
                 <PrivateRoute
-                  path="/torneo-apuntado-info"
+                  path="/torneo-apuntado-info/:id"
                   component={TorneoApuntadoInfo}
                 />
                 <PrivateRoute
-                  path="/torneo-nocomenzado-participo"
+                  path="/torneo-nocomenzado-participo/:id"
                   component={TorneoNoComenzadoParticipo}
                 />
                 <PrivateRoute path="/mis-torneos" component={MisTorneos} />

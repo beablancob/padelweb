@@ -2,15 +2,16 @@ import axios from "axios";
 import {
   SET_SELECTED_TOURNAMENT_INFO,
   GET_MI_RONDA_INFO,
-  INFO_LOADING
+  TORNEO_LOADING,
+  RONDA_LOADING
 } from "./types";
 
 // TORNEO EN EL QUE PARTICIPO Y QUE HA EMPEZADO
 
-export const infoTorneoComenzadoParticipo = torneoData => dispatch => {
-  dispatch(setInfoLoading());
+export const infoTorneoComenzadoParticipo = torneoId => dispatch => {
+  dispatch(setTorneoLoading());
 
-  axios.get("/tournaments/" + torneoData.id).then(res => {
+  axios.get("/tournaments/" + torneoId).then(res => {
     console.log("En action de info del torneo apuntado: ", res.data);
     dispatch({
       type: SET_SELECTED_TOURNAMENT_INFO,
@@ -20,7 +21,7 @@ export const infoTorneoComenzadoParticipo = torneoData => dispatch => {
 };
 
 export const miRondaInfo = (torneoData, history) => dispatch => {
-  dispatch(setInfoLoading());
+  dispatch(setRondaLoading());
 
   axios
     .get("/tournaments/" + torneoData.id + "/ronda/" + torneoData.rondaActual)
@@ -37,25 +38,29 @@ export const miRondaInfo = (torneoData, history) => dispatch => {
 };
 
 // TORNEO EN EL QUE PARTICIPO Y NO HA COMENZADO
-export const infoTorneoNoComenzadoParticipo = (
-  torneoData,
-  history
-) => dispatch => {
-  dispatch(setInfoLoading());
-
-  axios.get("/tournaments/" + torneoData.id).then(res => {
+export const infoTorneoNoComenzadoParticipo = torneoId => dispatch => {
+  console.log("HOALlasjdfoj");
+  dispatch(setTorneoLoading());
+  console.log("-------------x-------------");
+  axios.get("/tournaments/" + torneoId).then(res => {
     console.log("torneoInfo;", res.data);
     dispatch({
       type: SET_SELECTED_TOURNAMENT_INFO,
       payload: res.data
     });
-    history.push("/torneo-nocomenzado-participo");
   });
 };
 
 // Tournaments loading
-export const setInfoLoading = () => {
+export const setTorneoLoading = () => {
   return {
-    type: INFO_LOADING
+    type: TORNEO_LOADING
+  };
+};
+
+// Tournaments loading
+export const setRondaLoading = () => {
+  return {
+    type: RONDA_LOADING
   };
 };

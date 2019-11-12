@@ -2,7 +2,7 @@ import { GET_CURRENT_TOURNAMENTS, TOURNAMENTS_LOADING } from "../actions/types";
 
 const initialState = {
   torneos: null,
-  loading: false
+  loading: true
 };
 export default function(state = initialState, action) {
   switch (action.type) {

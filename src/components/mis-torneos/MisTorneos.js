@@ -5,11 +5,7 @@ import { connect } from "react-redux";
 import { getCurrentTournaments } from "../../actions/torneosActivosUserActions";
 import Spinner from "../common/Spinner";
 import "../../assets/Style.css";
-import {
-  infoTorneoComenzadoParticipo,
-  infoTorneoNoComenzadoParticipo,
-  miRondaInfo
-} from "../../actions/torneoInfoAction";
+
 import { withRouter } from "react-router-dom";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
@@ -22,41 +18,36 @@ class MisTorneos extends Component {
       errors: {}
     };
 
-    this.onTorneoComenzadoParticipoClick = this.onTorneoComenzadoParticipoClick.bind(
-      this
-    );
-    this.onTorneoNoComenzadoParticipoClick = this.onTorneoNoComenzadoParticipoClick.bind(
-      this
-    );
+    // this.onTorneoComenzadoParticipoClick = this.onTorneoComenzadoParticipoClick.bind(
+    //   this
+    // );
+    // this.onTorneoNoComenzadoParticipoClick = this.onTorneoNoComenzadoParticipoClick.bind(
+    //   this
+    // );
   }
   componentDidMount() {
     this.props.getCurrentTournaments();
   }
 
-  onTorneoComenzadoParticipoClick(torneoData) {
-    this.props.infoTorneoComenzadoParticipo(torneoData);
+  // onTorneoComenzadoParticipoClick(torneoData) {
+  //   this.props.infoTorneoComenzadoParticipo(torneoData);
 
-    this.props.miRondaInfo(torneoData, this.props.history);
-  }
-  onTorneoNoComenzadoParticipoClick(torneoData) {
-    this.props.infoTorneoNoComenzadoParticipo(torneoData, this.props.history);
-  }
+  //   this.props.miRondaInfo(torneoData, this.props.history);
+  // }
+
+  // onTorneoNoComenzadoParticipoClick(torneoData) {
+  //   // this.props.infoTorneoNoComenzadoParticipo(torneoData, this.props.history);
+  // }
 
   render() {
     const { user } = this.props.auth;
     const { torneos, loading } = this.props.torneosActivosUser;
     let createTable;
     let torneosContent;
-    console.log("Se esta cargando la pagina", loading);
     if (loading) {
       torneosContent = <Spinner />;
     } else {
-      console.log("CACACA", torneos);
       if (torneos === null) {
-        console.log("Hola bea");
-        console.log("Nombre del usuario:", user);
-
-        // User is logged
         torneosContent = (
           <div>
             <p className="lead text-muted">Bienvenido/a {user.name} </p>
@@ -79,10 +70,6 @@ class MisTorneos extends Component {
             </div>
           );
         } else {
-          console.log(
-            "Las parejas del torneo 0 son:",
-            torneos.tournaments[0].couples
-          );
           let listTorneos = torneos.tournaments;
           let table = [];
           var j = 0;
@@ -122,21 +109,37 @@ class MisTorneos extends Component {
                       <td key={j}>{listTorneos[i].numeroRondas}</td>
                     );
                     j++;
+                    console.log(
+                      "-------------------x------------------- MIS TORNEOS",
+                      listTorneos[i].id
+                    );
+                    let myLink =
+                      "/torneo-nocomenzado-participo/" + listTorneos[i].id;
                     children.push(
                       <td key={j}>
-                        <Button
-                          outline
-                          color="info"
-                          onClick={this.onTorneoNoComenzadoParticipoClick.bind(
-                            this,
-                            listTorneos[i]
-                          )}
-                          className="btn"
+                        <Link
+                          className="link-button t-comenzado-link"
+                          to={myLink}
                         >
-                          No comenzado
-                        </Button>
+                          Torneo no comenzado
+                        </Link>
                       </td>
                     );
+                    // children.push(
+                    //   <td key={j}>
+                    //     <Button
+                    //       outline
+                    //       color="info"
+                    //       onClick={this.onTorneoNoComenzadoParticipoClick.bind(
+                    //         this,
+                    //         listTorneos[i]
+                    //       )}
+                    //       className="btn"
+                    //     >
+                    //       No comenzado
+                    //     </Button>
+                    //   </td>
+                    // );
                     break;
                   } else {
                     children.push(
@@ -148,30 +151,18 @@ class MisTorneos extends Component {
                     children.push(
                       <td key={j}>{listTorneos[i].numeroParejas}</td>
                     );
-                    // j++;
-                    // children.push(<td key={j}>{listTorneos[i].rondaActual}</td>);
+
                     j++;
                     children.push(
                       <td key={j}>{listTorneos[i].numeroRondas}</td>
                     );
                     j++;
-                    let myLink = "/torneo-apuntado-info/id=" + listTorneos[i];
+                    let myLink2 = "/torneo-apuntado-info/" + listTorneos[i].id;
                     children.push(
                       <td key={j}>
-                        <Link className="t-comenzado-link" to={myLink}>
+                        <Link className="t-comenzado-link" to={myLink2}>
                           Comenzado
                         </Link>
-                        <Button
-                          outline
-                          color="warning"
-                          onClick={this.onTorneoComenzadoParticipoClick.bind(
-                            this,
-                            listTorneos[i]
-                          )}
-                          className="btn"
-                        >
-                          Comenzado
-                        </Button>
                       </td>
                     );
                     break;
@@ -179,7 +170,7 @@ class MisTorneos extends Component {
                 }
               }
               table.push(
-                <tr key={i} className="text-center">
+                <tr key={i} className="text-center table">
                   {children}
                 </tr>
               );
@@ -229,9 +220,6 @@ class MisTorneos extends Component {
 }
 MisTorneos.propTypes = {
   getCurrentTournaments: PropTypes.func.isRequired,
-  infoTorneoNoComenzadoParticipo: PropTypes.func.isRequired,
-  infoTorneoComenzadoParticipo: PropTypes.func.isRequired,
-  miRondaInfo: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   torneosActivosUser: PropTypes.object.isRequired
 };
@@ -240,12 +228,6 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    getCurrentTournaments,
-    infoTorneoComenzadoParticipo,
-    infoTorneoNoComenzadoParticipo,
-    miRondaInfo
-  }
-)(withRouter(MisTorneos));
+export default connect(mapStateToProps, {
+  getCurrentTournaments
+})(withRouter(MisTorneos));

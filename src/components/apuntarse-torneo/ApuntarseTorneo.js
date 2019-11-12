@@ -24,8 +24,9 @@ class ApuntarseTorneo extends Component {
   }
   componentDidMount() {
     const { id } = this.props.match.params;
+    console.log("-------------------x------------------- apuntarseTorneo");
 
-    console.log("DID MOUNT");
+    console.log("DID MOUNT", this.props.match);
 
     this.props.seleccionTorneo(id);
     console.log("DIDDDDDD", id);
@@ -66,6 +67,9 @@ class ApuntarseTorneo extends Component {
       console.log("loading");
       apuntarseContent = <Spinner />;
     } else {
+      console.log(
+        "-------------------x------------------- apuntarseNO MAS LOADING"
+      );
       console.log("El torneo seleccionado es:", torneo);
       let registerCodeData = torneo.tournament.registerCode;
       console.log("Register", registerCodeData);
@@ -126,7 +130,6 @@ const mapStateToProps = state => ({
   match: state.match,
   error: state.error
 });
-export default connect(
-  mapStateToProps,
-  { registrarseTorneo, seleccionTorneo }
-)(withRouter(ApuntarseTorneo));
+export default connect(mapStateToProps, { registrarseTorneo, seleccionTorneo })(
+  withRouter(ApuntarseTorneo)
+);

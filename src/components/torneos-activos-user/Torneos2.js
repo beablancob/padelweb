@@ -140,6 +140,9 @@ class TorneosPublicos extends Component {
                           <td key={j}>{listTorneos[i].numeroRondas}</td>
                         );
                         j++;
+                        console.log(
+                          "-------------------x------------------- torneos2"
+                        );
                         let myLink = "/apuntarse-torneo/" + listTorneos[i].id;
                         children.push(
                           <td key={j}>
@@ -148,6 +151,7 @@ class TorneosPublicos extends Component {
                             </Link>
                           </td>
                         );
+
                         break;
                       }
                     }
@@ -219,10 +223,7 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    getCurrentTournaments,
-    seleccionTorneo
-  }
-)(withRouter(TorneosPublicos));
+export default connect(mapStateToProps, {
+  getCurrentTournaments,
+  seleccionTorneo
+})(withRouter(TorneosPublicos));

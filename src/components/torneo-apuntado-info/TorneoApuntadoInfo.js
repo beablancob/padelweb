@@ -10,45 +10,47 @@ import Torneosbaruser from "../layout/Torneosbaruser";
 import { Router } from "react-router-dom";
 import PrivateRoute from "../common/PrivateRoute";
 import { Switch } from "react-router-dom";
+import Spinner from "../common/Spinner";
 
 class TorneoApuntadoInfo extends Component {
   componentDidMount() {
-    //const { id } = this.props.match.params;
-    console.log(this.props.match.params);
-    console.log("DID MOUNT");
-
-    //  this.props.this.props.miRondaInfo(torneoData;
-    // console.log("DIDDDDDD", id);
+    console.log("DIDDDD**********", this.props.match.params);
+    const { id } = this.props.match.params;
+    this.props.infoTorneoComenzadoParticipo(id);
   }
-  render() {
-    const { torneoInformacion } = this.props.torneoInfo;
-    //const { error } = this.state;
-    // let torneoIdPath =
-    //   "/torneo-apuntado-info/" + torneoInformacion.tournament.id + "/parejas/";
-    console.log("El torneo seleccionado es:", torneoInformacion);
 
-    //this.setState({ registerCodeData: registerCodeData });
+  render() {
+    const { torneoInformacion, loadingTorneo } = this.props.torneoInfo;
+
+    let infoContent;
+    if (loadingTorneo) {
+      infoContent = <Spinner />;
+    } else {
+      infoContent = (
+        <div>
+          <h1 className="display-4 text-center">
+            Torneo " {torneoInformacion.tournament.name} "
+          </h1>
+
+          <Torneosbaruser />
+          <Switch>
+            <PrivateRoute
+              path="/torneo-apuntado-info/parejas/"
+              component={Parejas}
+            />
+            <PrivateRoute
+              path="/torneo-apuntado-info/clasificacion/:id"
+              component={Clasificacion}
+            />
+          </Switch>
+        </div>
+      );
+    }
 
     return (
       <div className="info-torneo">
         <div className="container">
-          <div className="col-md-10 m-auto">
-            <h1 className="display-4 text-center">
-              Torneo " {torneoInformacion.tournament.name} "
-            </h1>
-
-            <Torneosbaruser />
-            <Switch>
-              <PrivateRoute
-                path="/torneo-apuntado-info/parejas"
-                component={Parejas}
-              />
-              <PrivateRoute
-                path="/torneo-apuntado-info/clasificacion"
-                component={Clasificacion}
-              />
-            </Switch>
-          </div>
+          <div className="col-md-10 m-auto">{infoContent}</div>
         </div>
       </div>
     );
@@ -65,7 +67,6 @@ const mapStateToProps = state => ({
   torneoInfo: state.torneoInfo,
   match: state.match
 });
-export default connect(
-  mapStateToProps,
-  { infoTorneoComenzadoParticipo }
-)(TorneoApuntadoInfo);
+export default connect(mapStateToProps, { infoTorneoComenzadoParticipo })(
+  withRouter(TorneoApuntadoInfo)
+);

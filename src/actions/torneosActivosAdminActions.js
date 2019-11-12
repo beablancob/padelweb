@@ -77,7 +77,7 @@ export const getAdminTournament = torneoId => dispatch => {
 // Edit tournament
 export const torneoEditado = (torneo, torneoId) => dispatch => {
   axios
-    .put("/tournaments/" + torneoId, torneo)
+    .put("/admin/tournaments/" + torneoId, torneo)
 
     .catch(err =>
       dispatch({
@@ -87,19 +87,33 @@ export const torneoEditado = (torneo, torneoId) => dispatch => {
     );
 };
 
-// Delete tournament
+// Delete account & profile
 export const eliminarTorneo = (torneoId, history) => dispatch => {
-  if (window.confirm("¿Estás seguro? ¡Esta acción no se puede deshacer!")) {
-    axios.delete("/tournament/" + torneoId);
+  axios
+    .delete("/admin/tournaments/" + torneoId)
+    .then(res => {
+      history.push("/torneos-activos-admin");
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
 
-    history
-      .push("/torneos-activos-admin")
+export const comenzarTorneo = (torneoId, history) => dispatch => {
+  console.log("COMENZAR TORNEO ACTIONS");
 
-      .catch(err =>
-        dispatch({
-          type: GET_ERRORS,
-          payload: err.response.data
-        })
-      );
-  }
+  axios
+    .put("/admin/tournaments/" + torneoId + "/start")
+    .then(res => {
+      history.push("/torneos-activos-admin");
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
 };
