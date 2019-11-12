@@ -115,11 +115,6 @@ class App extends Component {
                   path="/torneos-activos-admin"
                   component={TorneosActivosAdmin}
                 />
-                <PrivateRoute
-                  exact
-                  path="/editar-torneo"
-                  component={EditarTorneo}
-                />
 
                 <PrivateRoute
                   exact
@@ -127,6 +122,11 @@ class App extends Component {
                   component={ApuntarseTorneo}
                 />
                 <PrivateRoute exact path="/ap-priv" component={ApuntarsePriv} />
+                <PrivateRoute
+                  exact
+                  path="/editar-torneo/:id"
+                  component={EditarTorneo}
+                />
 
                 <PrivateRoute
                   path="/torneo-apuntado-info"

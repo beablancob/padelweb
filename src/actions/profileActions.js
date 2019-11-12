@@ -23,7 +23,18 @@ export const getCurrentProfile = id => dispatch => {
     });
   });
 };
+// Register User
+export const editedUser = (userId, editedUser) => dispatch => {
+  axios
+    .put("/users/" + userId.id, editedUser)
 
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
 // Delete account & profile
 export const deleteAccount = (userId, history) => dispatch => {
   if (window.confirm("¿Estás seguro? ¡Esta acción no se puede deshacer!")) {

@@ -83,15 +83,15 @@
 .link-button {
   margin-top: 10px;
   padding: 5px;
-  color: #2db92d;
-  border: #2db92d 1px solid;
+  color: #17a2b8;
+  border: #17a2b8 1px solid;
   border-radius: 20px;
   text-decoration: none;
   transition: background 150ms;
 }
 .link-button:hover {
   text-decoration: none;
-  background: #2db92d;
+  background: #17a2b8;
   color: white;
   transition: background 150ms;
   transition: color 150ms;
@@ -114,16 +114,16 @@
 .t-nocomenzado-link {
   padding: 5px;
   color: white;
-  background: #0099cc;
+  background: #17a2b8;
   text-decoration: none;
-  border: #0099cc 1px solid;
+  border: #17a2b8 1px solid;
   border-radius: 20px;
   transition: background 150ms;
 }
 
 .t-nocomenzado-link:hover {
   text-decoration: none;
-  background: #0099cc;
+  background: #17a2b8;
   color: white;
   transition: background 150ms;
   transition: color 150ms;

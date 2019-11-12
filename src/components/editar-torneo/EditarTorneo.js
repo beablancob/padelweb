@@ -4,11 +4,13 @@ import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListBoolean from "../common/SelectListBoolean";
-import isEmpty from "../../validation/is-empty";
+import Spinner from "../common/Spinner";
 
-import { selectEditarTorneo } from "../../actions/torneosActivosAdminActions";
-
-//TODO: Algo falla que no se pone nada en la página principal. El id mirarlo
+import {
+  selectEditarTorneo,
+  torneoEditado,
+  eliminarTorneo
+} from "../../actions/torneosActivosAdminActions";
 
 class EditarTorneo extends Component {
   constructor(props) {
@@ -28,34 +30,21 @@ class EditarTorneo extends Component {
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onDeleteClick = this.onDeleteClick.bind(this);
   }
   componentDidMount() {
+    console.log("ESTOY EN COMPONENT DID MOUNTTT");
+    console.log(this.props.match);
     const { id } = this.props.match.params;
     this.props.selectEditarTorneo(id);
   }
   componentWillReceiveProps(nextProps) {
+    console.log("ESTOY EN WILL RECEIVE PROPS", nextProps);
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
     if (nextProps.torneosActivosAdmin.torneoAdmin) {
-      const torneo = nextProps.torneosActivosAdmin.torneoAdmin;
-      torneo.name = !isEmpty(torneo.name) ? torneo.name : "";
-      torneo.numeroParejas = !isEmpty(torneo.numeroParejas)
-        ? torneo.numeroParejas
-        : "";
-      torneo.parejasPorGrupo = !isEmpty(torneo.parejasPorGrupo)
-        ? torneo.parejasPorGrupo
-        : "";
-      torneo.publico = !isEmpty(torneo.publico) ? torneo.publico : "";
-      torneo.puntosPG = !isEmpty(torneo.puntosPG) ? torneo.puntosPG : "";
-      torneo.puntosPP = !isEmpty(torneo.puntosPP) ? torneo.puntosPP : "";
-      torneo.idaYvuelta = !isEmpty(torneo.idaYvuelta) ? torneo.idaYvuelta : "";
-      torneo.numeroRondas = !isEmpty(torneo.numeroRondas)
-        ? torneo.numeroRondas
-        : "";
-      torneo.parejasSuben = !isEmpty(torneo.parejasSuben)
-        ? torneo.parejasSuben
-        : "";
+      const torneo = nextProps.torneosActivosAdmin.torneoAdmin.tournament;
 
       // Set component fields state
       this.setState({
@@ -72,10 +61,14 @@ class EditarTorneo extends Component {
     }
   }
 
+  onDeleteClick(torneoId) {
+    this.props.eliminarTorneo(torneoId, this.props.history);
+  }
+
   onSubmit(e) {
     e.preventDefault();
-
-    const tournamentData = {
+    const torneoId = this.props.torneosActivosAdmin.torneoAdmin.tournament.id;
+    const torneo = {
       name: this.state.name,
       numeroParejas: this.state.numeroParejas,
       parejasPorGrupo: this.state.parejasPorGrupo,
@@ -86,8 +79,8 @@ class EditarTorneo extends Component {
       numeroRondas: this.state.numeroRondas,
       parejasSuben: this.state.parejasSuben
     };
-    //history sirve para redirigir. Para que funcione history tenemos que añadir withRouter en el componente que exportamos
-    this.props.editarTorneo(tournamentData, this.props.history);
+    console.log("TORNEO IDDDDDD", torneoId);
+    this.props.torneoEditado(torneo, torneoId);
   }
 
   onChange(e) {
@@ -95,20 +88,129 @@ class EditarTorneo extends Component {
   }
 
   render() {
-    console.log("********EDITR TORNEO*********");
+    console.log("ESTOY EN EL RENDER");
     const { errors } = this.state;
-    const { torneoAdmin } = this.state.torneosActivosAdmin;
-    console.log("TORNEO INFO", torneoAdmin);
-    const options2 = [
-      { label: "Si", value: true },
-      { label: "No", value: false }
-    ];
+    const { loading2, torneoAdmin } = this.props.torneosActivosAdmin;
+    console.log("params", this.props.match.params);
+    console.log(this.props.torneosActivosAdmin);
+    let editContent;
+    if (loading2) {
+      console.log("loading");
+      editContent = <Spinner />;
+    } else {
+      const options2 = [
+        { label: "Si", value: true },
+        { label: "No", value: false }
+      ];
 
-    // Select options for type of tournament
-    const options1 = [
-      { label: "Público", value: true },
-      { label: "Privado", value: false }
-    ];
+      // Select options for type of tournament
+      const options1 = [
+        { label: "Público", value: true },
+        { label: "Privado", value: false }
+      ];
+      editContent = (
+        <form onSubmit={this.onSubmit}>
+          <label> Nombre del torneo</label>
+          <TextFieldGroup
+            placeholder={this.state.name}
+            name="name"
+            value={this.state.name}
+            onChange={this.onChange}
+            error={errors.name}
+          />
+
+          <label> Numero de parejas máximo del torneo</label>
+          <TextFieldGroup
+            placeholder={this.state.numeroParejas}
+            name="numeroParejas"
+            type="number"
+            min="2"
+            max="200"
+            value={this.state.numeroParejas}
+            onChange={this.onChange}
+            error={errors.numeroParejas}
+          />
+
+          <label>Número de parejas por grupo</label>
+          <TextFieldGroup
+            placeholder="Elige el número de parejas por grupo que va a haber en cada ronda"
+            name="parejasPorGrupo"
+            type="number"
+            min="2"
+            max="100"
+            value={this.state.parejasPorGrupo}
+            onChange={this.onChange}
+            error={errors.parejasPorGrupo}
+          />
+
+          <label>Elige el tipo de torneo que quieres</label>
+          <SelectListBoolean
+            name="publico"
+            value={this.state.publico}
+            onChange={this.onChange}
+            options={options1}
+            error={errors.publico}
+          />
+
+          <label> Puntos por partido ganado</label>
+          <TextFieldGroup
+            placeholder="Puntos por partido ganado"
+            name="puntosPG"
+            value={this.state.puntosPG}
+            onChange={this.onChange}
+            error={errors.puntosPG}
+          />
+
+          <label> Puntos por partido perdido</label>
+          <TextFieldGroup
+            placeholder="Puntos por partido perdido"
+            name="puntosPP"
+            type="number"
+            value={this.state.puntosPP}
+            onChange={this.onChange}
+            error={errors.puntosPP}
+          />
+
+          <label> Elige si quieres que los partidos sean de ida y vuelta</label>
+          <SelectListBoolean
+            name="idaYvuelta"
+            valueb={this.state.idaYvuelta}
+            onChange={this.onChange}
+            options={options2}
+            error={errors.idaYvuelta}
+          />
+
+          <label> Número de rondas que va a tener el torneo</label>
+          <TextFieldGroup
+            placeholder="Elige el número de rondas que va a tener el torneo"
+            name="numeroRondas"
+            type="number"
+            min="1"
+            max="500"
+            value={this.state.numeroRondas}
+            onChange={this.onChange}
+            error={errors.numeroRondas}
+          />
+
+          <label> Número de parejas que suben al terminar una ronda</label>
+          <TextFieldGroup
+            placeholder="Elige el número de parejas que suben al terminar una ronda"
+            name="parejasSuben"
+            type="number"
+            min="1"
+            max="20"
+            value={this.state.parejasSuben}
+            onChange={this.onChange}
+            error={errors.parejasSuben}
+          />
+          <input
+            type="submit"
+            value="Enviar"
+            className="btn btn-info btn-block mt-4"
+          />
+        </form>
+      );
+    }
 
     return (
       <div className="create-profile">
@@ -119,94 +221,7 @@ class EditarTorneo extends Component {
               <p className="lead text-center">
                 Rellena el siguiente formulario
               </p>
-              <form onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  placeholder={this.state.name}
-                  name="name"
-                  value={this.state.name}
-                  onChange={this.onChange}
-                  error={errors.name}
-                />
-                <TextFieldGroup
-                  placeholder={this.state.numeroParejas}
-                  name="numeroParejas"
-                  type="number"
-                  min="2"
-                  max="200"
-                  value={this.state.numeroParejas}
-                  onChange={this.onChange}
-                  error={errors.numeroParejas}
-                />
-                <TextFieldGroup
-                  placeholder="Elige el número de parejas por grupo que va a haber en cada ronda"
-                  name="parejasPorGrupo"
-                  type="number"
-                  min="2"
-                  max="100"
-                  value={this.state.parejasPorGrupo}
-                  onChange={this.onChange}
-                  error={errors.parejasPorGrupo}
-                  info="Parejas por grupo"
-                />
-                <SelectListBoolean
-                  name="publico"
-                  value={this.state.publico}
-                  onChange={this.onChange}
-                  options={options1}
-                  error={errors.publico}
-                  info="Elige el tipo de torneo que quieres"
-                />
-                <TextFieldGroup
-                  placeholder="Puntos por partido ganado"
-                  name="puntosPG"
-                  value={this.state.puntosPG}
-                  onChange={this.onChange}
-                  error={errors.puntosPG}
-                  info="Puntos por PG"
-                />
-                <TextFieldGroup
-                  placeholder="Puntos por partido perdido"
-                  name="puntosPP"
-                  type="number"
-                  value={this.state.puntosPP}
-                  onChange={this.onChange}
-                  error={errors.puntosPP}
-                  info="Puntos por PP"
-                />
-                <SelectListBoolean
-                  name="idaYvuelta"
-                  valueb={this.state.idaYvuelta}
-                  onChange={this.onChange}
-                  options={options2}
-                  error={errors.idaYvuelta}
-                  info="Elige si quieres que los partidos sean de ida y vuelta"
-                />
-                <TextFieldGroup
-                  placeholder="Elige el número de rondas que va a tener el torneo"
-                  name="numeroRondas"
-                  type="number"
-                  min="1"
-                  max="500"
-                  value={this.state.numeroRondas}
-                  onChange={this.onChange}
-                  error={errors.numeroRondas}
-                />
-                <TextFieldGroup
-                  placeholder="Elige el número de parejas que suben al terminar una ronda"
-                  name="parejasSuben"
-                  type="number"
-                  min="1"
-                  max="20"
-                  value={this.state.parejasSuben}
-                  onChange={this.onChange}
-                  error={errors.parejasSuben}
-                />
-                <input
-                  type="submit"
-                  value="Enviar"
-                  className="btn btn-info btn-block mt-4"
-                />
-              </form>
+              {editContent}
             </div>
           </div>
         </div>
@@ -216,19 +231,24 @@ class EditarTorneo extends Component {
 }
 
 EditarTorneo.propTypes = {
+  match: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   torneosActivosAdmin: PropTypes.object.isRequired,
-  selectEditarTorneo: PropTypes.func.isRequired
+  selectEditarTorneo: PropTypes.func.isRequired,
+  torneoEditado: PropTypes.func.isRequired,
+  eliminarTorneo: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
+  match: state.match,
+
   errors: state.errors,
   torneosActivosAdmin: state.torneosActivosAdmin
 });
 
 export default connect(
   mapStateToProps,
-  { selectEditarTorneo }
+  { selectEditarTorneo, torneoEditado, eliminarTorneo }
 )(withRouter(EditarTorneo));
 
 //TODO: mirar la fecha!!!! tipo fecha??? calendario ahi??

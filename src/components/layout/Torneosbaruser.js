@@ -54,6 +54,25 @@ class Torneosbaruser extends Component {
         //     </Form>
         //   </Navbar.Collapse>
         // </Navbar>
+        // <div className="btn-group mb-4" role="group">
+        //   <Link to="/torneo-apuntado-info/parejas" className="btn btn-light">
+        //     <i className="fas fa-user-circle text-info mr-1"></i> Edit Profile
+        //   </Link>
+        //   <Link
+        //     to="/torneo-apuntado-info/clasificacion"
+        //     className="btn btn-light"
+        //   >
+        //     <i className="fab fa-black-tie text-info mr-1"></i>
+        //     Add Experience
+        //   </Link>
+        //   <Link
+        //     to="/torneo-apuntado-info/resultado-partido-pareja"
+        //     className="btn btn-light"
+        //   >
+        //     <i className="fas fa-graduation-cap text-info mr-1"></i>
+        //     Add Education
+        //   </Link>
+        // </div>
 
         <nav className="navbar-torneo">
           <NavLink exact to="/torneo-apuntado-info/parejas">

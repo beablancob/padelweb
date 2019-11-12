@@ -9,6 +9,7 @@ import Spinner from "../common/Spinner";
 import "../../assets/Style.css";
 import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
+import { withRouter } from "react-router-dom";
 
 class TorneosActivosAdmin extends Component {
   constructor() {
@@ -17,18 +18,10 @@ class TorneosActivosAdmin extends Component {
       torneo: "",
       errors: {}
     };
-    this.onEditarTorneoClick = this.onEditarTorneoClick.bind(this);
-    this.onTorneoEnJuegoClick = this.onTorneoEnJuegoClick.bind(this);
   }
 
   componentDidMount() {
     this.props.getCurrentAdminTournaments();
-  }
-  onEditarTorneoClick(torneoId) {
-    this.props.selectEditarTorneo(torneoId, this.props.history);
-  }
-  onTorneoEnJuegoClick(torneoId) {
-    //this.props.seleccionTorneo(torneoId, this.props.history);
   }
 
   render() {
@@ -44,7 +37,6 @@ class TorneosActivosAdmin extends Component {
 
       if (torneosAdmin === null) {
         console.log("El admin no tiene torneos activos");
-        // User is logged
         torneosContent = (
           <div>
             <p className="lead text-muted">Bienvenido {user.name} </p>
@@ -87,36 +79,37 @@ class TorneosActivosAdmin extends Component {
               j++;
 
               if (listTorneos[i].rondaActual === 0) {
+                let myLink = "/editar-torneo/" + listTorneos[i].id;
                 children.push(
                   <td key={j}>
-                    <Button
-                      outline
-                      color="success"
-                      onClick={this.onEditarTorneoClick.bind(
-                        this,
-                        listTorneos[i]
-                      )}
-                      className="btn"
-                    >
+                    <Link className="link-button" to={myLink}>
                       Editar torneo
-                    </Button>
+                    </Link>
                   </td>
                 );
+                // children.push(
+                //   <td key={j}>
+                //     <Button
+                //       outline
+                //       color="success"
+                //       onClick={this.onEditarTorneoClick.bind(
+                //         this,
+                //         listTorneos[i]
+                //       )}
+                //       className="btn"
+                //     >
+                //       Editar torneo
+                //     </Button>
+                //   </td>
+                // );
                 j++;
               } else {
+                let myLink = "/ver-torneo/" + listTorneos[i].id;
                 children.push(
                   <td key={j}>
-                    <Button
-                      outline
-                      color="info"
-                      onClick={this.onTorneoEnJuegoClick.bind(
-                        this,
-                        listTorneos[i]
-                      )}
-                      className="btn"
-                    >
+                    <Link className="link-button" to={myLink}>
                       Info del torneo en juego
-                    </Button>
+                    </Link>
                   </td>
                 );
                 j++;
@@ -124,7 +117,7 @@ class TorneosActivosAdmin extends Component {
 
               //Create the parent and add the children
               table.push(
-                <tr key={i} className="text-center">
+                <tr key={i} className="table">
                   {children}
                 </tr>
               );
@@ -179,4 +172,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getCurrentAdminTournaments, selectEditarTorneo }
-)(TorneosActivosAdmin);
+)(withRouter(TorneosActivosAdmin));

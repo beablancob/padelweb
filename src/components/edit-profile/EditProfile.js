@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { registerUser } from "../../actions/authAction";
 import TextFieldGroup from "../common/TextFieldGroup";
-import { getCurrentProfile, deleteAccount } from "../../actions/profileActions";
+import {
+  getCurrentProfile,
+  deleteAccount,
+  editedUser
+} from "../../actions/profileActions";
 import isEmpty from "../../validation/is-empty";
-import Spinner from "../common/Spinner";
 
 class EditProfile extends Component {
   constructor() {
@@ -17,6 +19,7 @@ class EditProfile extends Component {
       email: "",
       password1: "",
       password2: "",
+      id: "",
       errors: {}
     };
     this.onChange = this.onChange.bind(this);
@@ -24,12 +27,11 @@ class EditProfile extends Component {
   }
   componentDidMount() {
     const { user } = this.props.auth;
-    this.props.getCurrentProfile(user.id);
-
     // Set component fields state
     this.setState({
       name: user.name,
       lastname: user.lastname,
+      email: user.email,
       password: user.password1
     });
   }
@@ -37,19 +39,6 @@ class EditProfile extends Component {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
-    // if (nextProps.profile.profile) {
-    //   const profile = nextProps.profile.profile;
-    //   profile.name = !isEmpty(profile.name) ? profile.name : "";
-    //   profile.lastname = !isEmpty(profile.lastname) ? profile.lastname : "";
-    //   profile.password1 = !isEmpty(profile.password1) ? profile.password1 : "";
-
-    //   // Set component fields state
-    //   this.setState({
-    //     name: profile.name,
-    //     lastname: profile.lastname,
-    //     password: profile.password1
-    //   });
-    // }
   }
   onDeleteClick(e) {
     e.preventDefault();
@@ -57,17 +46,18 @@ class EditProfile extends Component {
   }
   onSubmit(e) {
     e.preventDefault();
-
-    const user = {
+    const { user } = this.props.auth;
+    const userId = { id: user.id };
+    const editedUser = {
       name: this.state.name,
       lastname: this.state.lastname,
       email: this.state.email,
       password1: this.state.password1,
       password2: this.state.password2
     };
-    console.log(user);
+    console.log("datos q envio a actions", userId, editedUser);
     console.log("Errores: ", this.state.errors);
-    this.props.registerUser(user);
+    this.props.editedUser(userId, editedUser);
   }
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -80,56 +70,6 @@ class EditProfile extends Component {
     const { errors } = this.state; //const errors = this.state.errors es lo mismo!!
     //Las clases form-control etc van a estar siempre. Las is-invalid solo existen cuando hay un error, en el array de errores del estado.
     //Errors.name
-    //console.log("hola usuario:", profile);
-    let editProfileContent;
-    if (loading) {
-      editProfileContent = <Spinner />;
-    } else {
-      editProfileContent = (
-        <form noValidate onSubmit={this.onSubmit}>
-          <TextFieldGroup
-            placeholder={this.state.name}
-            name="name"
-            value={this.state.name}
-            onChange={this.onChange}
-            error={errors.name}
-          />
-          <TextFieldGroup
-            placeholder="Apellido"
-            name="apellidos"
-            value={this.state.lastname}
-            onChange={this.onChange}
-            error={errors.lastname}
-          />
-
-          <TextFieldGroup
-            placeholder={this.state.email}
-            name="email"
-            type="email"
-            value={this.state.email}
-            onChange={this.onChange}
-            error={errors.email}
-          />
-          <TextFieldGroup
-            placeholder="Password"
-            name="password1"
-            type="password"
-            value={this.state.password1}
-            onChange={this.onChange}
-            error={errors.password1}
-          />
-          <TextFieldGroup
-            placeholder="Confirm Password"
-            name="password2"
-            type="password"
-            value={this.state.password2}
-            onChange={this.onChange}
-            error={errors.password2}
-          />
-          <input type="submit" className="btn btn-info btn-block mt-4" />
-        </form>
-      );
-    }
 
     return (
       <div className="register">
@@ -137,6 +77,49 @@ class EditProfile extends Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <h1 className="display-4 text-center">Edita tu perfil</h1>
+
+              <form noValidate onSubmit={this.onSubmit}>
+                <TextFieldGroup
+                  placeholder={this.state.name}
+                  name="name"
+                  value={this.state.name}
+                  onChange={this.onChange}
+                  error={errors.name}
+                />
+                <TextFieldGroup
+                  placeholder={this.state.lastname}
+                  name="lastname"
+                  value={this.state.lastname}
+                  onChange={this.onChange}
+                  error={errors.lastname}
+                />
+
+                <TextFieldGroup
+                  placeholder={this.state.email}
+                  name="email"
+                  type="email"
+                  value={this.state.email}
+                  onChange={this.onChange}
+                  error={errors.email}
+                />
+                <TextFieldGroup
+                  placeholder={this.state.password}
+                  name="password1"
+                  type="password"
+                  value={this.state.password1}
+                  onChange={this.onChange}
+                  error={errors.password1}
+                />
+                <TextFieldGroup
+                  placeholder="Confirm Password"
+                  name="password2"
+                  type="password"
+                  value={this.state.password2}
+                  onChange={this.onChange}
+                  error={errors.password2}
+                />
+                <input type="submit" className="btn btn-info btn-block mt-4" />
+              </form>
             </div>
           </div>
           <div style={{ marginBottom: "60px" }} />
@@ -157,7 +140,7 @@ class EditProfile extends Component {
 EditProfile.propTypes = {
   deleteAccount: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
-  registerUser: PropTypes.func.isRequired,
+  editedUser: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
 
   auth: PropTypes.object.isRequired,
@@ -171,5 +154,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { registerUser, getCurrentProfile, deleteAccount }
+  { editedUser, getCurrentProfile, deleteAccount }
 )(withRouter(EditProfile));
