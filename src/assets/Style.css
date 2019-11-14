@@ -96,6 +96,22 @@
   transition: background 150ms;
   transition: color 150ms;
 }
+.link-parejas {
+  margin-top: 100px;
+  padding: 5px;
+  color: #17a2b8;
+  border: #17a2b8 1px solid;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: background 150ms;
+}
+.link-parejas:hover {
+  text-decoration: none;
+  background: #17a2b8;
+  color: white;
+  transition: background 150ms;
+  transition: color 150ms;
+}
 .t-comenzado-link {
   padding: 5px;
   color: #17a2b8;

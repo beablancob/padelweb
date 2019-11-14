@@ -25,6 +25,7 @@ export const getCurrentProfile = id => dispatch => {
 };
 // Register User
 export const editedUser = (userId, editedUser) => dispatch => {
+  console.log("editedUser", editedUser);
   axios
     .put("/users/" + userId.id, editedUser)
 
@@ -34,6 +35,7 @@ export const editedUser = (userId, editedUser) => dispatch => {
         payload: err.response.data
       })
     );
+  window.alert("¡Ajustes cambiados!");
 };
 // Delete account & profile
 export const deleteAccount = (userId, history) => dispatch => {

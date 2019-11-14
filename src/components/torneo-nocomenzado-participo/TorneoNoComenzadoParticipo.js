@@ -83,8 +83,8 @@ class TorneoNoComenzadoParticipo extends Component {
             <table>
               <thead>
                 <tr>
-                  <th>Componente 1 </th>
-                  <th>Componente 2 </th>
+                  <th>Jugador 1 </th>
+                  <th>Jugador 2 </th>
                 </tr>
               </thead>
               <tbody>{createTable()}</tbody>

@@ -32,8 +32,9 @@ class EditProfile extends Component {
       name: user.name,
       lastname: user.lastname,
       email: user.email,
-      password: user.password1
+      password1: user.password1
     });
+    console.log("hey", this.state.password1);
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
@@ -42,7 +43,8 @@ class EditProfile extends Component {
   }
   onDeleteClick(e) {
     e.preventDefault();
-    this.props.deleteAccount();
+    const { user } = this.props.auth;
+    this.props.deleteAccount(user.id, this.props.history);
   }
   onSubmit(e) {
     e.preventDefault();
@@ -79,6 +81,7 @@ class EditProfile extends Component {
               <h1 className="display-4 text-center">Edita tu perfil</h1>
 
               <form noValidate onSubmit={this.onSubmit}>
+                <label>Nombre</label>
                 <TextFieldGroup
                   placeholder={this.state.name}
                   name="name"
@@ -86,6 +89,8 @@ class EditProfile extends Component {
                   onChange={this.onChange}
                   error={errors.name}
                 />
+
+                <label>Apellido</label>
                 <TextFieldGroup
                   placeholder={this.state.lastname}
                   name="lastname"
@@ -93,7 +98,7 @@ class EditProfile extends Component {
                   onChange={this.onChange}
                   error={errors.lastname}
                 />
-
+                <label>Correo electrónico</label>
                 <TextFieldGroup
                   placeholder={this.state.email}
                   name="email"
@@ -102,8 +107,10 @@ class EditProfile extends Component {
                   onChange={this.onChange}
                   error={errors.email}
                 />
+
+                <label>Nueva contraseña</label>
                 <TextFieldGroup
-                  placeholder={this.state.password}
+                  placeholder={this.state.password1}
                   name="password1"
                   type="password"
                   value={this.state.password1}
@@ -152,7 +159,8 @@ const mapStateToProps = state => ({
   auth: state.auth,
   errors: state.errors
 });
-export default connect(
-  mapStateToProps,
-  { editedUser, getCurrentProfile, deleteAccount }
-)(withRouter(EditProfile));
+export default connect(mapStateToProps, {
+  editedUser,
+  getCurrentProfile,
+  deleteAccount
+})(withRouter(EditProfile));

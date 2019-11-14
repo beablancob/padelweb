@@ -3,21 +3,28 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import "../../assets/Style.css";
-
+import { withRouter } from "react-router-dom";
 import Spinner from "../common/Spinner";
 import { infoTorneoComenzadoParticipo } from "../../actions/torneoInfoAction";
+
 class Parejas extends Component {
   //No funciona, en clasificación tb lo tengo q arreglar
   // componentDidMount() {
   //   this.props.infoTorneoComenzadoParticipo();
   // }
   render() {
-    const { torneoInformacion, loading } = this.props.torneoInfo;
-    let parejasContent;
-    console.log("LOADING PAREJAS", loading);
+    const {
+      torneoInformacion,
+      loadingTorneo,
+      miRondaInformacion
+    } = this.props.torneoInfo;
 
-    if (loading) {
-      console.log("kjsdhfiusalfhgsuiflfghsjdhfjash", loading);
+    console.log(">>>>>>>>>>>>>>RONDAaa", miRondaInformacion);
+    let parejasContent;
+    console.log("LOADING PAREJAS", loadingTorneo);
+
+    if (loadingTorneo) {
+      console.log("kjsdhfiusalfhgsuiflfghsjdhfjash", loadingTorneo);
       parejasContent = <Spinner />;
     } else {
       console.log(
@@ -78,8 +85,8 @@ class Parejas extends Component {
           <table>
             <thead>
               <tr>
-                <th>Componente 1 </th>
-                <th>Componente 2 </th>
+                <th className="text-center">Jugador 1 </th>
+                <th className="text-center">Jugador 2 </th>
               </tr>
             </thead>
             <tbody>{createTable()}</tbody>
@@ -91,7 +98,7 @@ class Parejas extends Component {
     return (
       <div className="info-torneo">
         <div className="container">
-          <h2>Lista de parejas apuntadas en el torneo</h2>
+          <h2>Lista de parejas apuntadas al torneo</h2>
 
           {parejasContent}
         </div>
@@ -100,12 +107,15 @@ class Parejas extends Component {
   }
 }
 Parejas.propTypes = {
-  torneoInfo: PropTypes.object.isRequired
+  torneoInfo: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  infoTorneoComenzadoParticipo: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
-  torneoInfo: state.torneoInfo
+  torneoInfo: state.torneoInfo,
+  match: state.match
 });
 
 export default connect(mapStateToProps, { infoTorneoComenzadoParticipo })(
-  Parejas
+  withRouter(Parejas)
 );

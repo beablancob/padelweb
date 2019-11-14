@@ -1,10 +1,10 @@
 // rcc
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Navbar, Nav, NavDropdown, Form, Container, Button } from "reactstrap";
-
 import { BrowserRouter as Router } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { miRondaInfo } from "../../actions/torneoInfoAction";
@@ -13,19 +13,11 @@ import "../../assets/Style.css";
 import "../../assets/Style.css";
 
 class Torneosbaruser extends Component {
-  constructor() {
-    super();
-    this.onMiRondaInfo = this.onMiRondaInfo.bind(this);
-  }
-
-  onMiRondaInfo(rondaActual, id) {
-    this.props.miRondaInfo(rondaActual, id);
-  }
-
   render() {
     console.log("El componente se usa ¡barra de torneos!");
-    const { isAuthenticated } = this.props.auth;
+    console.log("------------x------------", this.props.match.params);
 
+    const { isAuthenticated } = this.props.auth;
     if (isAuthenticated) {
       return (
         // <Navbar bg="light" expand="lg">
@@ -75,14 +67,17 @@ class Torneosbaruser extends Component {
         // </div>
 
         <nav className="navbar-torneo">
-          <NavLink exact to="/torneo-apuntado-info/parejas">
+          <NavLink exact to="/torneo-apuntado-info/:id/parejas">
             Parejas
           </NavLink>
           <NavLink exact to="/torneo-apuntado-info/clasificacion">
-            Clasificacion
+            Clasificacion de la ronda
           </NavLink>
-          <NavLink exact to="/torneo-apuntado-info/resultado-partido-pareja">
+          <NavLink exact to="/torneo-apuntado-info/subir-resultado/">
             Sube el resultado de un partido
+          </NavLink>
+          <NavLink exact to="/torneo-apuntado-info/grupos">
+            Grupos de la ronda
           </NavLink>
         </nav>
       );
@@ -91,14 +86,16 @@ class Torneosbaruser extends Component {
 }
 //Si tiene dispatch, lo añado aqui como una funcion. Sino, no.
 Torneosbaruser.propTypes = {
+  match: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   torneoInfo: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth,
-  torneoInfo: state.torneoInfo
+  torneoInfo: state.torneoInfo,
+  match: state.match
 });
-export default connect(mapStateToProps)(Torneosbaruser);
+export default connect(mapStateToProps)(withRouter(Torneosbaruser));
 
 {
   // return (

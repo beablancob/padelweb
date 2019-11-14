@@ -183,10 +183,9 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(
-  mapStateToProps,
-  { createTournament }
-)(withRouter(CreateTournament));
+export default connect(mapStateToProps, { createTournament })(
+  withRouter(CreateTournament)
+);
 
 //TODO: mirar la fecha!!!! tipo fecha??? calendario ahi??
 

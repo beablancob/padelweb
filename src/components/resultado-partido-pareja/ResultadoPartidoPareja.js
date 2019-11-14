@@ -5,61 +5,60 @@ import { connect } from "react-redux";
 import Spinner from "../common/Spinner";
 import { withRouter } from "react-router-dom";
 import { parejaContrincante } from "../../actions/resultadoPartidoAction";
+import { infoTorneoComenzadoParticipo } from "../../actions/torneoInfoAction";
 
 class ResultadoPartidoPareja extends Component {
-  //No funciona, en clasificación tb lo tengo q arreglar
-  constructor() {
-    super();
-    this.onSeleccionPareja = this.onSeleccionPareja.bind(this);
-  }
-  onSeleccionPareja(pareja) {
-    this.props.parejaContrincante(pareja, this.props.history);
-  }
+  // componentDidMount() {
+  //   const { torneoInformacion } = this.props.torneoInfo;
+  //   let torneoId = torneoInformacion.tournament.id;
+  //   console.log(torneoId);
+  //   this.props.infoTorneoComenzadoParticipo(torneoId);
+  // }
   render() {
-    const { torneoInfo, miRondaInformacion } = this.props.torneoApuntadoInfo;
+    const { torneoInformacion } = this.props.torneoInfo;
+    let torneoInfo = torneoInformacion;
     const { user } = this.props.auth;
-    console.log("hola caracola");
-    console.log("Esta es la info del torneo ", torneoInfo);
-    console.log(torneoInfo.tournament.couples);
     let table = [];
     let miParejaId;
     let miGrupo;
-    let j = 0;
+    let k = 0;
+    let parejasContent;
     let createTable = () => {
-      for (var i = 0; torneoInfo.tournament.couples.length - 1; i++) {
+      for (var i = 0; i < torneoInfo.tournament.couples.length; i++) {
         let parejasGrupo = [];
-
+        console.log(
+          "kdjhfsfh",
+          torneoInfo.tournament.couples[i].user1Id,
+          user.id
+        );
         if (
-          torneoInfo.tournament.couples[i].user1Name === user.id ||
-          torneoInfo.tournament.couples[i].user2Name === user.id
+          torneoInfo.tournament.couples[i].user1Id === user.id ||
+          torneoInfo.tournament.couples[i].user2Id === user.id
         ) {
           miParejaId = torneoInfo.tournament.couples[i].id;
           miGrupo = torneoInfo.tournament.couples[i].grupoActual;
         }
         if (miGrupo != null) {
-          if (
-            torneoInfo.tournament.couples[i].user1Name != user.id &&
-            torneoInfo.tournament.couples[i].user2Name != user.id
-          ) {
-            if (torneoInfo.tournament.couples[i].grupoActual === miGrupo) {
-              parejasGrupo.push(
-                <td
-                  key={j}
-                  onClick={this.seleccionPareja.bind(
-                    this,
-                    torneoInfo.tournament.couples[i]
-                  )}
-                >
-                  {torneoInfo.tournament.couples[i].user1Name}y
-                  {torneoInfo.tournament.couples[i].user2Name}
-                </td>
-              );
-              j++;
-            }
+          if (torneoInfo.tournament.couples[i].grupoActual === miGrupo) {
+            let myLink =
+              "torneo-apuntado-info/resultado-partido" +
+              torneoInfo.tournament.couples[i].id;
+            parejasGrupo.push(
+              <td key={k} className="text-center">
+                <Link className="link-parejas" to={myLink}>
+                  {torneoInfo.tournament.couples[i].user1Name}{" "}
+                  {torneoInfo.tournament.couples[i].user1LastName} y{" "}
+                  {torneoInfo.tournament.couples[i].user2Name}{" "}
+                  {torneoInfo.tournament.couples[i].user2LastName}
+                </Link>
+              </td>
+            );
+
+            k++;
           }
         }
         table.push(
-          <tr key={i} className="text-center">
+          <tr key={i} className="table">
             {parejasGrupo}
           </tr>
         );
@@ -69,10 +68,10 @@ class ResultadoPartidoPareja extends Component {
 
     parejasContent = (
       <div>
-        <table>
+        <table className="text-align text-center">
           <thead>
             <tr>
-              <th>Parejas</th>
+              <th>Parejas de tu grupo</th>
             </tr>
           </thead>
           <tbody>{createTable()}</tbody>
@@ -82,19 +81,22 @@ class ResultadoPartidoPareja extends Component {
 
     return (
       <div>
-        <h1>Elige la pareja contra la que has jugado de tu grupo</h1>
-        {parejasContents}
+        <h1>Elige la pareja contra la que has jugado</h1>
+        {parejasContent}
       </div>
     );
   }
 }
 ResultadoPartidoPareja.propTypes = {
-  torneoApuntadoInfo: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  torneoInfo: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+  infoTorneoComenzadoParticipo: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
-  torneoApuntadoInfo: state.torneoApuntadoInfo,
+  torneoInfo: state.torneoInfo,
   auth: state.auth
 });
 
-export default connect(mapStateToProps)(withRouter(ResultadoPartidoPareja));
+export default connect(mapStateToProps, { infoTorneoComenzadoParticipo })(
+  withRouter(ResultadoPartidoPareja)
+);

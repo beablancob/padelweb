@@ -168,7 +168,7 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { getCurrentAdminTournaments, selectEditarTorneo }
-)(withRouter(TorneosActivosAdmin));
+export default connect(mapStateToProps, {
+  getCurrentAdminTournaments,
+  selectEditarTorneo
+})(withRouter(TorneosActivosAdmin));

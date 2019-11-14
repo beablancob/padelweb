@@ -6,7 +6,7 @@ import Spinner from "../common/Spinner";
 import { withRouter } from "react-router-dom";
 import { miRondaInfo } from "../../actions/torneoInfoAction";
 
-class Grupos extends Component {
+class Grupos2 extends Component {
   componentDidMount() {
     const { torneoInformacion } = this.props.torneoInfo;
     this.props.miRondaInfo(torneoInformacion);
@@ -32,39 +32,41 @@ class Grupos extends Component {
       if (miRondaInformacion === null) {
         gruposContent = <p>Todavía no hay información de la ronda</p>;
       } else {
+        console.log(miRondaInformacion.partidos);
+        let table = [];
+        let j = 0;
         let createTable = () => {
-          let table = [];
-          let k = 0;
-          let m = 0;
-
-          for (let i = 0; i < miRondaInformacion.partidos.length; i++) {
+          for (var i = 0; i < miRondaInformacion.partidos.length - 1; i++) {
             let children = [];
-            for (let j = 0; j < 2; j++) {
-              let myLink =
-                "/torneo-apuntado-info/grupos/" +
-                torneoInformacion.tournament.id +
-                "/" +
-                j;
-              children.push(
-                <td key={k}>
-                  <Link className="link-button" to={myLink}>
-                    {`Grupo ${j}`}
-                  </Link>
-                </td>
-              );
-              k++;
-            }
-            k = 0;
-            table.push(<tr key={m}>{children}</tr>);
-            m++;
+
+            children.push(
+              <td key={j} className="text-left">
+                {miRondaInformacion.partidos[i].numeroGrupo}
+              </td>
+            );
+            table.push(
+              <tr key={i} className="text-center">
+                {children}
+              </tr>
+            );
           }
-          m = 0;
+          console.log("table en Grupos", table);
           return table;
         };
+
         gruposContent = (
-          <table>
-            <tbody>{createTable()}</tbody>
-          </table>
+          <div>
+            <table>
+              <caption>Grupo</caption>
+              <thead>
+                <tr>
+                  <th>Pareja </th>
+                  <th>Jugadores</th>
+                </tr>
+              </thead>
+              <tbody>{createTable()}</tbody>
+            </table>
+          </div>
         );
       }
     }
@@ -73,13 +75,14 @@ class Grupos extends Component {
       <div className="info-torneo">
         <div className="container">
           <h2>Lista de grupos de la ronda en juego</h2>
+
           {gruposContent}
         </div>
       </div>
     );
   }
 }
-Grupos.propTypes = {
+Grupos2.propTypes = {
   torneoInfo: PropTypes.object.isRequired,
   miRondaInfo: PropTypes.func.isRequired
 };
@@ -87,4 +90,4 @@ const mapStateToProps = state => ({
   torneoInfo: state.torneoInfo
 });
 
-export default connect(mapStateToProps, { miRondaInfo })(withRouter(Grupos));
+export default connect(mapStateToProps, { miRondaInfo })(withRouter(Grupos2));

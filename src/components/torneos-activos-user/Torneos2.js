@@ -95,64 +95,68 @@ class TorneosPublicos extends Component {
                 );
               } else {
                 for (var k = 0; k < listTorneos[i].couples.length; k++) {
-                  console.log("--------Análisis torneo", listTorneos[i].name);
-                  console.log(
-                    "user.id:",
-                    user.id,
-                    "user1Id: ",
-                    listTorneos[i].couples[k].user1Id,
-                    "user2Id: ",
-                    listTorneos[i].couples[k].user2Id
-                  );
-
                   if (
-                    listTorneos[i].couples[k].user1Id !== user.id &&
-                    listTorneos[i].couples[k].user2Id !== user.id
+                    listTorneos[i].couples.length < listTorneos[i].numeroParejas
                   ) {
+                    console.log("--------Análisis torneo", listTorneos[i].name);
                     console.log(
-                      ">>>>>>>>>>el usuario no pertenece a este torneo"
+                      "user.id:",
+                      user.id,
+                      "user1Id: ",
+                      listTorneos[i].couples[k].user1Id,
+                      "user2Id: ",
+                      listTorneos[i].couples[k].user2Id
                     );
-                    p++;
-                    console.log("valor de p", p);
-                    console.log(
-                      "couples.length",
-                      listTorneos[i].couples.length
-                    );
 
-                    if (p === listTorneos[i].couples.length) {
-                      p = 0;
-                      if (listTorneos[i].rondaActual === 0) {
-                        console.log(
-                          "<<<<<<<<LA RONDA ACTUAL ES 0, ME PUEDO APUNTAR!!!!!!>>>>>>>>>>>>"
-                        );
-                        children.push(
-                          <td key={j} className="text-left">
-                            {listTorneos[i].name}
-                          </td>
-                        );
-                        j++;
-                        children.push(
-                          <td key={j}>{listTorneos[i].numeroParejas}</td>
-                        );
+                    if (
+                      listTorneos[i].couples[k].user1Id !== user.id &&
+                      listTorneos[i].couples[k].user2Id !== user.id
+                    ) {
+                      console.log(
+                        ">>>>>>>>>>el usuario no pertenece a este torneo"
+                      );
+                      p++;
+                      console.log("valor de p", p);
+                      console.log(
+                        "couples.length",
+                        listTorneos[i].couples.length
+                      );
 
-                        j++;
-                        children.push(
-                          <td key={j}>{listTorneos[i].numeroRondas}</td>
-                        );
-                        j++;
-                        console.log(
-                          "-------------------x------------------- torneos2"
-                        );
-                        let myLink = "/apuntarse-torneo/" + listTorneos[i].id;
-                        children.push(
-                          <td key={j}>
-                            <Link className="link-button" to={myLink}>
-                              Apúntate a este torneo
-                            </Link>
-                          </td>
-                        );
+                      if (p === listTorneos[i].couples.length) {
+                        p = 0;
+                        if (listTorneos[i].rondaActual === 0) {
+                          console.log(
+                            "<<<<<<<<LA RONDA ACTUAL ES 0, ME PUEDO APUNTAR!!!!!!>>>>>>>>>>>>"
+                          );
+                          children.push(
+                            <td key={j} className="text-left">
+                              {listTorneos[i].name}
+                            </td>
+                          );
+                          j++;
+                          children.push(
+                            <td key={j}>{listTorneos[i].numeroParejas}</td>
+                          );
 
-                        break;
+                          j++;
+                          children.push(
+                            <td key={j}>{listTorneos[i].numeroRondas}</td>
+                          );
+                          j++;
+                          console.log(
+                            "-------------------x------------------- torneos2"
+                          );
+                          let myLink = "/apuntarse-torneo/" + listTorneos[i].id;
+                          children.push(
+                            <td key={j}>
+                              <Link className="link-button" to={myLink}>
+                                Apúntate a este torneo
+                              </Link>
+                            </td>
+                          );
+
+                          break;
+                        }
                       }
                     }
                   }

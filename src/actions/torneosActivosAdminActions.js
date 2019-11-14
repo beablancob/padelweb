@@ -70,14 +70,15 @@ export const getAdminTournament = torneoId => dispatch => {
       type: GET_CURRENT_ADMIN_TOURNAMENT,
       payload: res.data
     });
-    console.log("info del torneo en actions", res.data);
+    //  console.log("info del torneo en actions", res.data);
   });
 };
 
 // Edit tournament
-export const torneoEditado = (torneo, torneoId) => dispatch => {
+export const torneoEditado = (torneo, torneoId, history) => dispatch => {
   axios
     .put("/admin/tournaments/" + torneoId, torneo)
+    .then(res => history.push("/torneos-activos-admin/"))
 
     .catch(err =>
       dispatch({

@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
-import { infoTorneoComenzadoParticipo } from "../../actions/torneoInfoAction";
+import {
+  infoTorneoComenzadoParticipo,
+  miRondaInfo
+} from "../../actions/torneoInfoAction";
 import "../../assets/Style.css";
 import Parejas from "../parejas/Parejas";
 import Clasificacion from "../clasificacion/Clasificacion";
@@ -11,6 +14,9 @@ import { Router } from "react-router-dom";
 import PrivateRoute from "../common/PrivateRoute";
 import { Switch } from "react-router-dom";
 import Spinner from "../common/Spinner";
+import Grupos from "../grupos/Grupos";
+import Grupo from "../grupo/Grupo";
+import ResultadoPartidoPareja from "../resultado-partido-pareja/ResultadoPartidoPareja";
 
 class TorneoApuntadoInfo extends Component {
   componentDidMount() {
@@ -20,7 +26,12 @@ class TorneoApuntadoInfo extends Component {
   }
 
   render() {
-    const { torneoInformacion, loadingTorneo } = this.props.torneoInfo;
+    const {
+      torneoInformacion,
+      loadingTorneo,
+      miRondaInformacion
+    } = this.props.torneoInfo;
+    console.log("HOLAAA", torneoInformacion, miRondaInformacion);
 
     let infoContent;
     if (loadingTorneo) {
@@ -35,12 +46,24 @@ class TorneoApuntadoInfo extends Component {
           <Torneosbaruser />
           <Switch>
             <PrivateRoute
-              path="/torneo-apuntado-info/parejas/"
+              path="/torneo-apuntado-info/:id/parejas/"
               component={Parejas}
             />
             <PrivateRoute
-              path="/torneo-apuntado-info/clasificacion/:id"
+              path="/torneo-apuntado-info/:id/clasificacion/"
               component={Clasificacion}
+            />
+            <PrivateRoute
+              path="/torneo-apuntado-info/grupos/"
+              component={Grupos}
+            />
+            <PrivateRoute
+              path="/torneo-apuntado-info/subir-resultado/"
+              component={ResultadoPartidoPareja}
+            />
+            <PrivateRoute
+              path="/torneo-apuntado-info/grupos/:idtorneo/:idgrupo/"
+              component={Grupo}
             />
           </Switch>
         </div>
@@ -61,12 +84,14 @@ class TorneoApuntadoInfo extends Component {
 TorneoApuntadoInfo.propTypes = {
   infoTorneoComenzadoParticipo: PropTypes.func.isRequired,
   torneoInfo: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
+  miRondaInfo: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   torneoInfo: state.torneoInfo,
   match: state.match
 });
-export default connect(mapStateToProps, { infoTorneoComenzadoParticipo })(
-  withRouter(TorneoApuntadoInfo)
-);
+export default connect(mapStateToProps, {
+  infoTorneoComenzadoParticipo,
+  miRondaInfo
+})(withRouter(TorneoApuntadoInfo));

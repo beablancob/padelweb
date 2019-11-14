@@ -20,11 +20,17 @@ export const infoTorneoComenzadoParticipo = torneoId => dispatch => {
   });
 };
 
-export const miRondaInfo = (torneoData, history) => dispatch => {
+export const miRondaInfo = torneoData => dispatch => {
+  console.log("ACTION MI RONDA INFO", torneoData);
   dispatch(setRondaLoading());
 
   axios
-    .get("/tournaments/" + torneoData.id + "/ronda/" + torneoData.rondaActual)
+    .get(
+      "/tournaments/" +
+        torneoData.tournament.id +
+        "/ronda/" +
+        torneoData.tournament.rondaActual
+    )
 
     .then(res => {
       console.log("devuelve: ", res.data);
@@ -33,17 +39,14 @@ export const miRondaInfo = (torneoData, history) => dispatch => {
         type: GET_MI_RONDA_INFO,
         payload: res.data
       });
-      history.push("/torneo-apuntado-info/id=" + torneoData.id);
+      // history.push("/torneo-apuntado-info/id=" + torneoData.id);
     });
 };
 
 // TORNEO EN EL QUE PARTICIPO Y NO HA COMENZADO
 export const infoTorneoNoComenzadoParticipo = torneoId => dispatch => {
-  console.log("HOALlasjdfoj");
   dispatch(setTorneoLoading());
-  console.log("-------------x-------------");
   axios.get("/tournaments/" + torneoId).then(res => {
-    console.log("torneoInfo;", res.data);
     dispatch({
       type: SET_SELECTED_TOURNAMENT_INFO,
       payload: res.data

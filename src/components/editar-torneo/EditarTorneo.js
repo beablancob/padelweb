@@ -90,7 +90,7 @@ class EditarTorneo extends Component {
       parejasSuben: this.state.parejasSuben
     };
     console.log("TORNEO IDDDDDD", torneoId);
-    this.props.torneoEditado(torneo, torneoId);
+    this.props.torneoEditado(torneo, torneoId, this.props.history);
   }
 
   onChange(e) {

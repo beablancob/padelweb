@@ -5,8 +5,6 @@ import { connect } from "react-redux";
 import Spinner from "../common/Spinner";
 
 class ResultadoPartido extends Component {
-  //No funciona, en clasificación tb lo tengo q arreglar
-
   render() {
     const { torneoInfo, miRondaInformacion } = this.props.torneoApuntadoInfo;
     const { parejaSelected } = this.props.resultadoPartido;
@@ -19,8 +17,8 @@ class ResultadoPartido extends Component {
 
     for (var i = 0; torneoInfo.tournament.couples.length - 1; i++) {
       if (
-        torneoInfo.tournament.couples[i].user1Name === user.id ||
-        torneoInfo.tournament.couples[i].user2Name === user.id
+        torneoInfo.tournament.couples[i].user1Id === user.id ||
+        torneoInfo.tournament.couples[i].user2Id === user.id
       ) {
         miParejaId = torneoInfo.tournament.couples[i].id;
         break;
@@ -34,8 +32,8 @@ class ResultadoPartido extends Component {
     let grupo;
     for (var i = 0; torneoInfo.tournament.couples.length - 1; i++) {
       if (
-        torneoInfo.tournament.couples[i].user1Name === user.id ||
-        torneoInfo.tournament.couples[i].user2Name === user.id
+        torneoInfo.tournament.couples[i].user1Id === user.id ||
+        torneoInfo.tournament.couples[i].user2Id === user.id
       ) {
         grupo = torneoInfo.tournament.couples[i].grupo;
       }
