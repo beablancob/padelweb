@@ -1,3 +1,4 @@
+// YA NO ME HACE FALTA ESTE COMPONENTE
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -9,7 +10,7 @@ import { miRondaInfo } from "../../actions/torneoInfoAction";
 class Grupo extends Component {
   componentDidMount() {
     const { torneoInformacion } = this.props.torneoInfo;
-    this.props.miRondaInfo(torneoInformacion);
+    this.props.miRondaInfo(torneoInformacion.tournament.rondaActual);
   }
   render() {
     const {

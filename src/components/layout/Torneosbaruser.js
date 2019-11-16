@@ -18,66 +18,26 @@ class Torneosbaruser extends Component {
     console.log("------------x------------", this.props.match.params);
 
     const { isAuthenticated } = this.props.auth;
+    const { id } = this.props.match.params;
+    let myLink1 = "/torneo-apuntado-info/" + id + "/parejas";
+    let myLink2 = "/torneo-apuntado-info/" + id + "/clasificacion";
+    let myLink3 = "/torneo-apuntado-info/" + id + "/grupo-actual";
+    let myLink4 = "/torneo-apuntado-info/" + id + "/clasificacion-general";
+
     if (isAuthenticated) {
       return (
-        // <Navbar bg="light" expand="lg">
-        //   <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-        //   <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        //   <Navbar.Collapse id="basic-navbar-nav">
-        //     <Nav className="mr-auto">
-        //       <Nav.Link href="#home">Home</Nav.Link>
-        //       <Nav.Link href="#link">Link</Nav.Link>
-        //       <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-        //         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-        //         <NavDropdown.Item href="#action/3.2">
-        //           Another action
-        //         </NavDropdown.Item>
-        //         <NavDropdown.Item href="#action/3.3">
-        //           Something
-        //         </NavDropdown.Item>
-        //         <NavDropdown.Divider />
-        //         <NavDropdown.Item href="#action/3.4">
-        //           Separated link
-        //         </NavDropdown.Item>
-        //       </NavDropdown>
-        //     </Nav>
-        //     <Form inline>
-        //       <Button variant="outline-success">Search</Button>
-        //     </Form>
-        //   </Navbar.Collapse>
-        // </Navbar>
-        // <div className="btn-group mb-4" role="group">
-        //   <Link to="/torneo-apuntado-info/parejas" className="btn btn-light">
-        //     <i className="fas fa-user-circle text-info mr-1"></i> Edit Profile
-        //   </Link>
-        //   <Link
-        //     to="/torneo-apuntado-info/clasificacion"
-        //     className="btn btn-light"
-        //   >
-        //     <i className="fab fa-black-tie text-info mr-1"></i>
-        //     Add Experience
-        //   </Link>
-        //   <Link
-        //     to="/torneo-apuntado-info/resultado-partido-pareja"
-        //     className="btn btn-light"
-        //   >
-        //     <i className="fas fa-graduation-cap text-info mr-1"></i>
-        //     Add Education
-        //   </Link>
-        // </div>
-
         <nav className="navbar-torneo">
-          <NavLink exact to="/torneo-apuntado-info/:id/parejas">
+          <NavLink exact to={myLink1}>
             Parejas
           </NavLink>
-          <NavLink exact to="/torneo-apuntado-info/clasificacion">
-            Clasificacion de la ronda
+          <NavLink exact to={myLink2}>
+            Clasificación de la ronda actual
           </NavLink>
-          <NavLink exact to="/torneo-apuntado-info/subir-resultado/">
-            Sube el resultado de un partido
+          <NavLink exact to={myLink3}>
+            Grupo actual
           </NavLink>
-          <NavLink exact to="/torneo-apuntado-info/grupos">
-            Grupos de la ronda
+          <NavLink exact to={myLink4}>
+            Clasificación General
           </NavLink>
         </nav>
       );

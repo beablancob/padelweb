@@ -96,6 +96,33 @@
   transition: background 150ms;
   transition: color 150ms;
 }
+
+.resultado-button {
+  margin-top: 50px;
+  padding: 3px;
+  color: #17a2b8;
+  border: #17a2b8 1px solid;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: background 150ms;
+}
+
+.resultado-button:hover {
+  text-decoration: none;
+  background: #17a2b8;
+  color: white;
+  transition: background 150ms;
+  transition: color 150ms;
+}
+.td-link {
+  text-align: center;
+  width: 200px;
+}
+
+.td-pareja {
+  text-align: left;
+  width: 300px;
+}
 .link-parejas {
   margin-top: 100px;
   padding: 5px;
@@ -145,4 +172,5 @@
 
 .table {
   text-align: center;
+  border-spacing: 2px;
 }

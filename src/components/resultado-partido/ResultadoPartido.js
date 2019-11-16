@@ -3,104 +3,201 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../common/Spinner";
+import { withRouter } from "react-router-dom";
+import TextFieldGroup from "../common/TextFieldGroup";
+
+import { miRondaInfo, subirResultado } from "../../actions/torneoInfoAction";
 
 class ResultadoPartido extends Component {
-  render() {
-    const { torneoInfo, miRondaInformacion } = this.props.torneoApuntadoInfo;
-    const { parejaSelected } = this.props.resultadoPartido;
-    const { user } = this.props.auth;
-
-    console.log("Esta es la info del torneo ", torneoInfo);
-    console.log(torneoInfo.tournament.couples);
-
-    let miParejaId;
-
-    for (var i = 0; torneoInfo.tournament.couples.length - 1; i++) {
-      if (
-        torneoInfo.tournament.couples[i].user1Id === user.id ||
-        torneoInfo.tournament.couples[i].user2Id === user.id
-      ) {
-        miParejaId = torneoInfo.tournament.couples[i].id;
-        break;
-      }
-    }
-
-    let ResultadoPartidoContent;
-    let table = [];
-    let j = 0;
-    let couple1;
-    let grupo;
-    for (var i = 0; torneoInfo.tournament.couples.length - 1; i++) {
-      if (
-        torneoInfo.tournament.couples[i].user1Id === user.id ||
-        torneoInfo.tournament.couples[i].user2Id === user.id
-      ) {
-        grupo = torneoInfo.tournament.couples[i].grupo;
-      }
-    }
-
-    let createTable = () => {
-      for (var i = 0; torneoInfo.tournament.couples.length - 1; i++) {
-        let children = [];
-        console.log("hola", i, torneoInfo.tournament.couples[i].user1Name);
-        console.log("adios", torneoInfo.tournament.couples[i].user2Name);
-
-        children.push(
-          <td key={j} className="text-left">
-            {torneoInfo.tournament.couples[i].user1Name}
-          </td>
-        );
-        j++;
-        children.push(
-          <td key={j}>{torneoInfo.tournament.couples[i].user2Name}</td>
-        );
-        j++;
-
-        table.push(
-          <tr key={i} className="text-center">
-            {children}
-          </tr>
-        );
-      }
-
-      return table;
+  constructor() {
+    super();
+    this.state = {
+      sets: "",
+      set1c1: "",
+      set1c2: "",
+      set2c1: "",
+      set2c2: "",
+      set3c1: "",
+      set3c2: "",
+      errors: {}
     };
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+  componentDidMount() {
+    console.log(this.props.match.params);
+    const { torneoInformacion } = this.props.torneoInfo;
+    console.log(torneoInformacion);
+    this.props.miRondaInfo(torneoInformacion);
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+  onSubmit(e) {
+    e.preventDefault();
+    let arraySets = [];
+    arraySets.push(this.state.set1c1);
+    arraySets.push(this.state.set2c1);
+    arraySets.push(this.state.set3c1);
+    arraySets.push(this.state.set1c2);
+    arraySets.push(this.state.set2c2);
+    arraySets.push(this.state.set3c2);
+    const resultado = {
+      sets: arraySets
+    };
+    const { partidoId, id } = this.props.match.params;
+    console.log("datos q envio a actions", arraySets);
+    console.log("Errores: ", this.state.errors);
+    this.props.subirResultado(partidoId, id, resultado, this.props.history);
+  }
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
 
-    ResultadoPartidoContent = (
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <th>Parejas </th>
-              <th>Set 1 </th>
-              <th>Set 2 </th>
-              <th>Set 3 </th>
-            </tr>
-          </thead>
-          <tbody>{createTable()}</tbody>
-        </table>
-      </div>
-    );
+  render() {
+    let ResultadoContent;
+    const { id, partidoId } = this.props.match.params;
+    let idPartido = partidoId;
+    console.log("HOLA", this.props.match.params);
+    const {
+      torneoInformacion,
+      loadingRonda,
+      miRondaInformacion
+    } = this.props.torneoInfo;
+    const { errors } = this.state;
+    if (loadingRonda) {
+      ResultadoContent = <Spinner />;
+    } else {
+      let pareja1 = null;
+      let pareja2 = null;
+      //   let partidoId = partidoId;
+      console.log("idPartido", idPartido);
+      console.log("partidos[0].id", miRondaInformacion.partidos[0].id);
+      for (var i = 0; i < miRondaInformacion.partidos.length; i++) {
+        console.log("ids", miRondaInformacion.partidos[i].id, idPartido);
+        let idString = miRondaInformacion.partidos[i].id.toString();
+
+        if (idPartido === idString) {
+          console.log(
+            "HOLA HAN COINCIDIDO",
+            idPartido,
+            miRondaInformacion.partidos[i].id
+          );
+
+          pareja1 = miRondaInformacion.partidos[i].couple1FullName;
+          pareja2 = miRondaInformacion.partidos[i].couple2FullName;
+          console.log(pareja1, pareja2);
+          break;
+        }
+      }
+      ResultadoContent = (
+        <div className="container">
+          <form noValidate onSubmit={this.onSubmit}>
+            <div className="row">
+              <div className="col"> {pareja1}</div>
+              <div className="col"> {pareja2}</div>
+            </div>
+            <div className="row">
+              <div className="col">
+                {" "}
+                <TextFieldGroup
+                  placeholder="Set 1"
+                  name="set1c1"
+                  value={this.state.set1c1}
+                  onChange={this.onChange}
+                  error={errors.set1c1}
+                />
+              </div>
+              <div className="col">
+                {" "}
+                <TextFieldGroup
+                  placeholder="Set 1"
+                  name="set1c2"
+                  value={this.state.set1c2}
+                  onChange={this.onChange}
+                  error={errors.set1c2}
+                />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col">
+                <TextFieldGroup
+                  placeholder="Set 2"
+                  name="set2c1"
+                  value={this.state.set2c1}
+                  onChange={this.onChange}
+                  error={errors.set2c1}
+                />
+              </div>
+              <div className="col">
+                {" "}
+                <TextFieldGroup
+                  placeholder="Set 2"
+                  name="set2c2"
+                  value={this.state.set2c2}
+                  onChange={this.onChange}
+                  error={errors.set2c2}
+                />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col">
+                {" "}
+                <TextFieldGroup
+                  placeholder="Set 3"
+                  name="set3c1"
+                  value={this.state.set3c1}
+                  onChange={this.onChange}
+                  error={errors.set3c1}
+                />
+              </div>
+              <div className="col">
+                {" "}
+                <TextFieldGroup
+                  placeholder="Set 3"
+                  name="set3c2"
+                  value={this.state.set3c2}
+                  onChange={this.onChange}
+                  error={errors.set3c2}
+                />
+              </div>
+            </div>
+
+            <input type="submit" className="btn btn-info btn-block mt-4" />
+          </form>
+        </div>
+      );
+    }
     return (
       <div className="info-torneo">
         <div className="container">
-          <h2>Sube el resultado de la jornada actual</h2>
+          <h2>Sube el resultado de tu partido</h2>
 
-          {ResultadoPartidoContent}
+          {ResultadoContent}
         </div>
       </div>
     );
   }
 }
 ResultadoPartido.propTypes = {
-  torneoApuntadoInfo: PropTypes.object.isRequired,
+  torneoInfo: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
-  resultadoPartido: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
+  miRondaInfo: PropTypes.func.isRequired,
+  subirResultado: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-  torneoApuntadoInfo: state.torneoApuntadoInfo,
+  torneoInfo: state.torneoInfo,
   auth: state.auth,
-  resultadoPartido: state.resultadoPartido
+  match: state.match,
+  errors: state.errors
 });
 
-export default connect(mapStateToProps)(ResultadoPartido);
+export default connect(mapStateToProps, { miRondaInfo, subirResultado })(
+  withRouter(ResultadoPartido)
+);

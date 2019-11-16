@@ -2,7 +2,9 @@ import axios from "axios";
 import {
   SET_SELECTED_TOURNAMENT,
   GET_ERRORS,
-  APUNTARSE_LOADING
+  APUNTARSE_LOADING,
+  SET_SELECTED_ADMIN_TOURNAMENT,
+  REGISTRO_ADMIN_LOADING
 } from "./types";
 
 //Seleccion del torneo al que me quiero apuntar
@@ -51,12 +53,54 @@ export const registrarseTorneo = (infoRegistro, email, history) => dispatch => {
 // Apuntarse a un torneo privado
 export const registrarseTorneoPriv = (infoRegistro, history) => dispatch => {
   console.log("Estoy en action: ", infoRegistro);
-  console.log("EmailUser2 en action: ", infoRegistro.email);
+  console.log("EmailUser2 en action: ", infoRegistro.emailUser2);
   axios
     .post(
       "/tournaments/" + infoRegistro.registerCodeData + "/couples",
-      infoRegistro.email
+      infoRegistro
     )
+    .then(res => {
+      console.log("RESPUESTA APUNTARSE", res);
+      history.push("/mis-torneos");
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+//Seleccion del torneo al que me quiero apuntar
+export const seleccionTorneoAdmin = (torneoId, history) => dispatch => {
+  dispatch(setRegistroAdminLoading());
+
+  axios.get("/admin/tournaments/" + torneoId).then(res => {
+    dispatch({
+      type: SET_SELECTED_ADMIN_TOURNAMENT,
+      payload: res.data
+    });
+    if (history) history.push("/apuntarse-torneo/" + torneoId);
+    console.log("res.data", res.data);
+  });
+  console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+};
+
+// Apuntarse loading
+export const setRegistroAdminLoading = () => {
+  return {
+    type: REGISTRO_ADMIN_LOADING
+  };
+};
+// Registrar una pareja a mi torneo
+export const registrarAdminTorneo = (torneoId, email, history) => dispatch => {
+  console.log("EmailUser en action: ", email);
+  axios
+    .post("/admin/tournaments/" + torneoId + "/couples", email)
+    .then(res => {
+      console.log("RESPUESTA APUNTARSE", res);
+      history.push("/torneos-activos-admin");
+    })
 
     .catch(err =>
       dispatch({
@@ -64,5 +108,4 @@ export const registrarseTorneoPriv = (infoRegistro, history) => dispatch => {
         payload: err.response.data
       })
     );
-  history.push("/mis-torneos");
 };

@@ -14,9 +14,10 @@ import { Router } from "react-router-dom";
 import PrivateRoute from "../common/PrivateRoute";
 import { Switch } from "react-router-dom";
 import Spinner from "../common/Spinner";
-import Grupos from "../grupos/Grupos";
+import GrupoActual from "../grupo-actual/GrupoActual";
 import Grupo from "../grupo/Grupo";
-import ResultadoPartidoPareja from "../resultado-partido-pareja/ResultadoPartidoPareja";
+import ResultadoPartido from "../resultado-partido/ResultadoPartido";
+import ClasificacionGeneral from "../clasificacion-general/ClasificacionGeneral";
 
 class TorneoApuntadoInfo extends Component {
   componentDidMount() {
@@ -40,7 +41,7 @@ class TorneoApuntadoInfo extends Component {
       infoContent = (
         <div>
           <h1 className="display-4 text-center">
-            Torneo " {torneoInformacion.tournament.name} "
+            Torneo {torneoInformacion.tournament.name}
           </h1>
 
           <Torneosbaruser />
@@ -54,17 +55,22 @@ class TorneoApuntadoInfo extends Component {
               component={Clasificacion}
             />
             <PrivateRoute
-              path="/torneo-apuntado-info/grupos/"
-              component={Grupos}
+              exact
+              path="/torneo-apuntado-info/:id/grupo-actual/:partidoId/subir-resultado"
+              component={ResultadoPartido}
             />
             <PrivateRoute
-              path="/torneo-apuntado-info/subir-resultado/"
-              component={ResultadoPartidoPareja}
+              exact
+              path="/torneo-apuntado-info/:id/grupo-actual/"
+              component={GrupoActual}
             />
             <PrivateRoute
-              path="/torneo-apuntado-info/grupos/:idtorneo/:idgrupo/"
-              component={Grupo}
+              exact
+              path="/torneo-apuntado-info/:id/clasificacion-general/"
+              component={ClasificacionGeneral}
             />
+            {/* let myLink = "/torneo-apuntado-info/" + torneo.id + "/grupo-actual/"
+            + partidos[i].id + "/subir-resultado"; */}
           </Switch>
         </div>
       );

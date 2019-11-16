@@ -1,10 +1,11 @@
+// YA NO ME HACE FALTA ESTE COMPONENTE
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import Spinner from "../common/Spinner";
+import Spinner from "../../common/Spinner";
 import { withRouter } from "react-router-dom";
-import { miRondaInfo } from "../../actions/torneoInfoAction";
+import { miRondaInfo } from "../../../actions/torneoInfoAction";
 
 class Grupos extends Component {
   componentDidMount() {

@@ -19,7 +19,7 @@ class Parejas extends Component {
       miRondaInformacion
     } = this.props.torneoInfo;
 
-    console.log(">>>>>>>>>>>>>>RONDAaa", miRondaInformacion);
+    console.log(">>>>>>>>>>>>>>", torneoInformacion);
     let parejasContent;
     console.log("LOADING PAREJAS", loadingTorneo);
 

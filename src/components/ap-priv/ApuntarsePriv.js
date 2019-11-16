@@ -34,9 +34,11 @@ class ApuntarsePriv extends Component {
       registerCodeData: this.state.registerCodeData,
       emailUser2: this.state.emailUser2
     };
+
+    console.log("Info registro", infoRegistro);
     //history sirve para redirigir. Para que funcione history tenemos que añadir withRouter en el componente que exportamos
     //console.log("El registerCode del torneo es: ", registerCodeData);
-    this.props.registrarseTorneo(infoRegistro, this.props.history);
+    this.props.registrarseTorneoPriv(infoRegistro, this.props.history);
   }
   render() {
     const { error } = this.state;
@@ -92,7 +94,6 @@ const mapStateToProps = state => ({
   apuntarseTorneo: state.apuntarseTorneo,
   error: state.error
 });
-export default connect(
-  mapStateToProps,
-  { registrarseTorneoPriv }
-)(withRouter(ApuntarsePriv));
+export default connect(mapStateToProps, { registrarseTorneoPriv })(
+  withRouter(ApuntarsePriv)
+);

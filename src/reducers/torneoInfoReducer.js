@@ -1,7 +1,9 @@
 import {
   SET_SELECTED_TOURNAMENT_INFO,
   GET_MI_RONDA_INFO,
-  TORNEO_LOADING,
+  TORNEO_COMENZADO_LOADING,
+  TORNEO_NO_COMENZADO_LOADING,
+  SET_TORNEO_NC_INFO,
   RONDA_LOADING
 } from "../actions/types";
 
@@ -9,7 +11,8 @@ const initialState = {
   torneoInformacion: null,
   loadingTorneo: true,
   loadingRonda: true,
-
+  torneoNoComenzado: null,
+  loadingTNC: true,
   miRondaInformacion: null
 };
 
@@ -21,6 +24,12 @@ export default function(state = initialState, action) {
         torneoInformacion: action.payload,
         loadingTorneo: false
       };
+    case SET_TORNEO_NC_INFO:
+      return {
+        ...state,
+        torneoNoComenzado: action.payload,
+        loadingTNC: false
+      };
 
     case GET_MI_RONDA_INFO:
       return {
@@ -28,10 +37,15 @@ export default function(state = initialState, action) {
         miRondaInformacion: action.payload,
         loadingRonda: false
       };
-    case TORNEO_LOADING:
+    case TORNEO_COMENZADO_LOADING:
       return {
         ...state,
         loadingTorneo: true
+      };
+    case TORNEO_NO_COMENZADO_LOADING:
+      return {
+        ...state,
+        loadingTNC: true
       };
     case RONDA_LOADING:
       return {

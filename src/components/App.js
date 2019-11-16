@@ -30,6 +30,9 @@ import MisTorneos from "./mis-torneos/MisTorneos";
 import TorneosActivosAdmin from "./torneos-activos-admin/TorneosActivosAdmin";
 import CreateTournament from "./create-tournament/CreateTournament";
 import EditarTorneo from "./editar-torneo/EditarTorneo";
+import RegistrarPareja from "./registrar-pareja/RegistrarPareja";
+
+import VerTorneo from "./administrador-torneo/ver-torneo/VerTorneo";
 
 import ApuntarseTorneo from "./apuntarse-torneo/ApuntarseTorneo";
 import ApuntarsePriv from "./ap-priv/ApuntarsePriv";
@@ -109,6 +112,11 @@ class App extends Component {
                   path="/create-tournament"
                   component={CreateTournament}
                 />
+                <PrivateRoute
+                  exact
+                  path="/ver-torneo/:id"
+                  component={VerTorneo}
+                />
 
                 <PrivateRoute
                   exact
@@ -131,6 +139,10 @@ class App extends Component {
                 <PrivateRoute
                   path="/torneo-apuntado-info/:id"
                   component={TorneoApuntadoInfo}
+                />
+                <PrivateRoute
+                  path="/registro-pareja/:id"
+                  component={RegistrarPareja}
                 />
                 <PrivateRoute
                   path="/torneo-nocomenzado-participo/:id"

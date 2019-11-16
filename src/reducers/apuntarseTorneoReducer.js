@@ -1,8 +1,15 @@
-import { SET_SELECTED_TOURNAMENT, APUNTARSE_LOADING } from "../actions/types";
+import {
+  SET_SELECTED_TOURNAMENT,
+  APUNTARSE_LOADING,
+  REGISTRO_ADMIN_LOADING,
+  SET_SELECTED_ADMIN_TOURNAMENT
+} from "../actions/types";
 
 const initialState = {
   torneoSelected: null,
-  loading: true
+  loading: true,
+  torneoAdminSelected: null,
+  loadingAdmin: true
 };
 export default function(state = initialState, action) {
   switch (action.type) {
@@ -17,6 +24,18 @@ export default function(state = initialState, action) {
         ...state,
         torneoSelected: action.payload,
         loading: false
+      };
+    case REGISTRO_ADMIN_LOADING:
+      return {
+        ...state,
+        loadingAdmin: true
+      };
+    case SET_SELECTED_ADMIN_TOURNAMENT:
+      console.log("Estas en el reducer ADMIN", action.payload);
+      return {
+        ...state,
+        torneoAdminSelected: action.payload,
+        loadingAdmin: false
       };
 
     default:

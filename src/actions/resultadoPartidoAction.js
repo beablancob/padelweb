@@ -1,3 +1,5 @@
+// YA PUEDO ELIMINAR ESTE COMPONENTE
+
 import axios from "axios";
 import { SET_PAREJA_CONTRINCANTE, GET_ERRORS } from "./types";
 

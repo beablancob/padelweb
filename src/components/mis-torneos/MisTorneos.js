@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 // import { getCurrentUser } from "../../actions/authAction";
-import { getCurrentTournaments } from "../../actions/torneosActivosUserActions";
+import { getMyCurrentTournaments } from "../../actions/torneosActivosUserActions";
 import Spinner from "../common/Spinner";
 import "../../assets/Style.css";
 
@@ -26,7 +26,7 @@ class MisTorneos extends Component {
     // );
   }
   componentDidMount() {
-    this.props.getCurrentTournaments();
+    this.props.getMyCurrentTournaments();
   }
 
   // onTorneoComenzadoParticipoClick(torneoData) {
@@ -41,13 +41,15 @@ class MisTorneos extends Component {
 
   render() {
     const { user } = this.props.auth;
-    const { torneos, loading } = this.props.torneosActivosUser;
+    const { myTorneos, myLoading } = this.props.torneosActivosUser;
     let createTable;
     let torneosContent;
-    if (loading) {
+    if (myLoading) {
       torneosContent = <Spinner />;
     } else {
-      if (torneos === null) {
+      console.log(myTorneos);
+
+      if (myTorneos === null) {
         torneosContent = (
           <div>
             <p className="lead text-muted">Bienvenido/a {user.name} </p>
@@ -58,7 +60,7 @@ class MisTorneos extends Component {
           </div>
         );
       } else {
-        if (torneos.tournaments.length === 0) {
+        if (myTorneos.tournaments.length === 0) {
           console.log("Nombre del usuario:", user.name);
 
           torneosContent = (
@@ -70,7 +72,8 @@ class MisTorneos extends Component {
             </div>
           );
         } else {
-          let listTorneos = torneos.tournaments;
+          let listTorneos = myTorneos.tournaments;
+          let listCouples = myTorneos.couples;
           let table = [];
           var j = 0;
           var p = 0;
@@ -219,7 +222,7 @@ class MisTorneos extends Component {
   }
 }
 MisTorneos.propTypes = {
-  getCurrentTournaments: PropTypes.func.isRequired,
+  getMyCurrentTournaments: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   torneosActivosUser: PropTypes.object.isRequired
 };
@@ -229,5 +232,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  getCurrentTournaments
+  getMyCurrentTournaments
 })(withRouter(MisTorneos));

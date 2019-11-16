@@ -4,7 +4,9 @@ import {
   GET_CURRENT_ADMIN_TOURNAMENT,
   TOURNAMENTS_ADMIN_LOADING,
   TOURNAMENT_ADMIN_LOADING,
-  GET_ERRORS
+  GET_ERRORS,
+  GET_ADMIN_TOURNAMENT_ROUNDS,
+  ROUNDS_LOADING
 } from "./types";
 
 // Get current admin tournaments
@@ -117,4 +119,24 @@ export const comenzarTorneo = (torneoId, history) => dispatch => {
         payload: err.response.data
       })
     );
+};
+
+export const getRoundsTournament = id => dispatch => {
+  console.log(id);
+  dispatch(setRoundsLoading());
+  axios
+    .get(axios.get("/admin/tournaments/" + id + "/previousRounds"))
+    .then(res => {
+      dispatch({
+        type: GET_ADMIN_TOURNAMENT_ROUNDS,
+        payload: res.data
+      });
+      console.log("info del torneo en actions", res.data);
+    });
+};
+
+export const setRoundsLoading = () => {
+  return {
+    type: ROUNDS_LOADING
+  };
 };

@@ -1,3 +1,4 @@
+// YA NO ME HACE FALTA ESTE COMPONENTE
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";

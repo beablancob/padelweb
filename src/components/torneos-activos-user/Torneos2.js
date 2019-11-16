@@ -17,20 +17,16 @@ class TorneosPublicos extends Component {
       torneo: "",
       errors: {}
     };
-    this.onTorneoApuntarseClick = this.onTorneoApuntarseClick.bind(this);
   }
   componentDidMount() {
     this.props.getCurrentTournaments();
   }
 
-  onTorneoApuntarseClick(torneoId) {
-    this.props.seleccionTorneo(torneoId, this.props.history);
-  }
   render() {
     const { user } = this.props.auth;
     const { torneos, loading } = this.props.torneosActivosUser;
     let createTable;
-
+    console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< TORNEOS", torneos);
     let torneosContent;
     console.log("Se esta cargando la pagina", loading);
     if (loading) {

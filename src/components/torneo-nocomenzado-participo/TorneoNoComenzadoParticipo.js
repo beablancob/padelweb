@@ -18,46 +18,43 @@ class TorneoNoComenzadoParticipo extends Component {
     this.props.infoTorneoNoComenzadoParticipo(id);
   }
   render() {
-    const {
-      torneoInformacion,
-      loadingTorneo,
-      loadingRonda
-    } = this.props.torneoInfo;
+    const { torneoNoComenzado, loadingTNC } = this.props.torneoInfo;
     console.log("***************", this.props.match);
     let torneoContent;
-    if (loadingTorneo) {
+    console.log("loadingTNC", loadingTNC);
+    if (loadingTNC) {
       torneoContent = <Spinner />;
     } else {
-      console.log("Esta es la info del torneo ", torneoInformacion);
-      console.log(torneoInformacion.tournament.couples);
+      console.log("Esta es la info del torneo ", torneoNoComenzado);
+      console.log(torneoNoComenzado.tournament.couples);
 
       let parejasContent;
       let table = [];
       let j = 0;
       let createTable = () => {
-        for (var i = 0; i < torneoInformacion.tournament.couples.length; i++) {
+        for (var i = 0; i < torneoNoComenzado.tournament.couples.length; i++) {
           let children = [];
           console.log("i: ", i);
-          console.log(torneoInformacion.tournament.couples.length);
+          console.log(torneoNoComenzado.tournament.couples.length);
           console.log(
             "hola",
             i,
-            torneoInformacion.tournament.couples[i].user1Name
+            torneoNoComenzado.tournament.couples[i].user1Name
           );
           console.log(
             "adios",
             i,
-            torneoInformacion.tournament.couples[i].user2Name
+            torneoNoComenzado.tournament.couples[i].user2Name
           );
 
           children.push(
             <td key={j} className="text-left">
-              {torneoInformacion.tournament.couples[i].user1Name}
+              {torneoNoComenzado.tournament.couples[i].user1Name}
             </td>
           );
           j++;
           children.push(
-            <td key={j}>{torneoInformacion.tournament.couples[i].user2Name}</td>
+            <td key={j}>{torneoNoComenzado.tournament.couples[i].user2Name}</td>
           );
           j++;
 
@@ -74,7 +71,7 @@ class TorneoNoComenzadoParticipo extends Component {
       torneoContent = (
         <div>
           <h1 className="display-4 text-center">
-            Torneo {torneoInformacion.tournament.name}
+            Torneo {torneoNoComenzado.tournament.name}
           </h1>
           <p>El torneo todavía no ha comenzado.</p>
           <p>Te mostramos la lista de parejas apuntadas de momento</p>
