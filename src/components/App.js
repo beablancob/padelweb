@@ -32,7 +32,7 @@ import CreateTournament from "./create-tournament/CreateTournament";
 import EditarTorneo from "./editar-torneo/EditarTorneo";
 import RegistrarPareja from "./registrar-pareja/RegistrarPareja";
 
-import VerTorneo from "./administrador-torneo/ver-torneo/VerTorneo";
+import VerTorneo from "./ver-torneo/VerTorneo";
 
 import ApuntarseTorneo from "./apuntarse-torneo/ApuntarseTorneo";
 import ApuntarsePriv from "./ap-priv/ApuntarsePriv";
@@ -112,11 +112,7 @@ class App extends Component {
                   path="/create-tournament"
                   component={CreateTournament}
                 />
-                <PrivateRoute
-                  exact
-                  path="/ver-torneo/:id"
-                  component={VerTorneo}
-                />
+                <PrivateRoute path="/ver-torneo/:id" component={VerTorneo} />
 
                 <PrivateRoute
                   exact

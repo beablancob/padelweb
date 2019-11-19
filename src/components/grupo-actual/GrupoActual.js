@@ -62,7 +62,7 @@ class GrupoActual extends Component {
         let parejas = miRondaInformacion.parejas;
         let partidos = miRondaInformacion.partidos;
 
-        for (var i = 0; i < parejas.length - 1; i++) {
+        for (var i = 0; i < parejas.length; i++) {
           if (
             parejas[i].user1Id === user.id ||
             parejas[i].user2Id === user.id
@@ -97,117 +97,27 @@ class GrupoActual extends Component {
                     "----------------------",
                     partidos[i].parejaEditedId
                   );
-                  // Comenzamos con los resultados de los partidos
-                  // Si la parejaEditedId sigue sin tener valor asignado, boton para subir resultado
-                  if (partidos[i].parejaEditedId === null) {
-                    let myLink =
-                      "/torneo-apuntado-info/" +
-                      torneo.id +
-                      "/grupo-actual/" +
-                      partidos[i].id +
-                      "/subir-resultado";
-                    children.push(
-                      <td key={j} className="td-link">
-                        <Link className="resultado-button" to={myLink}>
-                          Subir resultado
-                        </Link>
-                      </td>
-                    );
-                    j++;
-                    //Si la parejaEditedId no está a null miramos si se ha confirmado el resultado
-                  } else {
-                    // Si no se ha confirmado el resultado
+
+                  // 1.1. no pertenezco a la pareza
+                  if (
+                    miParejaId !== partidos[i].couple1Id &&
+                    miParejaId !== partidos[i].couple2Id
+                  ) {
+                    console.log("pareja", miParejaId, partidos[i].couple1Id);
+                    console.log("partido jugado:", partidos[i].jugado);
                     if (
                       partidos[i].jugado === null ||
                       partidos[i].jugado === false
                     ) {
-                      // Y parejaEditedId coincide con mi id, esperamos a que la otra pareja confirme el resultado
-                      if (partidos[i].parejaEditedId === miParejaId) {
-                        children.push(
-                          <td key={j} className="td-pareja">
-                            Esperando a que se confirme el resultado
-                          </td>
-                        );
-                        j++;
-                        // Si no coincide con mi id, soy yo la que tengo q confirmar el resultado HACER UN MODAL
-                      } else {
-                        children.push(
-                          <td key={j} className="text-center">
-                            Confirma el resultado
-                            {/* <div>
-                              <Button
-                                onClick={() => {
-                                  this.handleModal();
-                                }}
-                              >
-                                Confirmar resultado
-                              </Button>
-                              <Modal show={this.state.show}>
-                                <Modal.Header closeButton>
-                                  Confirma el resultado del partido
-                                </Modal.Header>
-                                <Modal.Body>
-                                  <div className="row">
-                                    <div className="col">
-                                      {partidos[i].couple1FullName}
-                                    </div>
-                                    <div className="col">
-                                      {partidos[i].set1Couple1}
-                                    </div>
-                                    <div className="col">
-                                      {partidos[i].set2Couple1}
-                                    </div>
-                                    <div className="col">
-                                      {partidos[i].set3Couple1}
-                                    </div>
-                                  </div>
-                                  <div className="row">
-                                    <div className="col">
-                                      {partidos[i].couple2FullName}
-                                    </div>
-                                    <div className="col">
-                                      {partidos[i].set1Couple2}
-                                    </div>
-                                    <div className="col">
-                                      {partidos[i].set2Couple2}
-                                    </div>
-                                    <div className="col">
-                                      {partidos[i].set3Couple2}
-                                    </div>
-                                  </div>
-                                </Modal.Body>
-                                <Modal.Footer>
-                                  <Button
-                                    outline
-                                    color="success"
-                                    onClick={this.onAceptar.bind(
-                                      this,
-                                      partidos[i].id
-                                    )}
-                                    className="btn"
-                                  >
-                                    Aceptar
-                                  </Button>
-                                  <Button
-                                    outline
-                                    color="success"
-                                    onClick={this.onRechazar.bind(
-                                      this,
-                                      partidos[i].id
-                                    )}
-                                    className="btn"
-                                  >
-                                    Rechazar
-                                  </Button>
-                                </Modal.Footer>
-                              </Modal>
-                            </div> */}
-                          </td>
-                        );
-                      }
+                      children.push(
+                        <td key={j} className="text-center">
+                          Partido sin jugar
+                        </td>
+                      );
+                      j++;
                     } else {
                       children.push(
-                        <td key={j} className="text-left">
+                        <td key={j} className="text-center">
                           {partidos[i].set1Couple1}-{partidos[i].set1Couple2}{" "}
                           {partidos[i].set2Couple1}-{partidos[i].set2Couple2}{" "}
                           {partidos[i].set3Couple1}-{partidos[i].set3Couple2}
@@ -215,7 +125,246 @@ class GrupoActual extends Component {
                       );
                       j++;
                     }
+                  } else {
+                    // 1.2. Si pertenezco a la pareja
+
+                    // 2.1 Si parejaEditedId no tiene valor, boton para subir resultado
+                    if (partidos[i].parejaEditedId === null) {
+                      let myLink =
+                        "/torneo-apuntado-info/" +
+                        torneo.id +
+                        "/grupo-actual/" +
+                        partidos[i].id +
+                        "/subir-resultado";
+                      children.push(
+                        <td key={j} className="td-link">
+                          <Link className="resultado-button" to={myLink}>
+                            Subir resultado
+                          </Link>
+                        </td>
+                      );
+                      j++;
+
+                      //Si la parejaEditedId no está a null miramos si se ha confirmado el resultado
+                    } else {
+                      if (miParejaId === partidos[i].parejaEditedId) {
+                        if (
+                          partidos[i].jugado === null ||
+                          partidos[i].jugado === false
+                        ) {
+                          console.log("HOLA");
+                          children.push(
+                            <td key={j} className="td-link">
+                              Falta confirmación del resultado
+                            </td>
+                          );
+                          j++;
+                        } else {
+                          children.push(
+                            <td key={j} className="text-center">
+                              {partidos[i].set1Couple1}-
+                              {partidos[i].set1Couple2}{" "}
+                              {partidos[i].set2Couple1}-
+                              {partidos[i].set2Couple2}{" "}
+                              {partidos[i].set3Couple1}-
+                              {partidos[i].set3Couple2}
+                            </td>
+                          );
+                          j++;
+                        }
+                      } else {
+                        if (
+                          partidos[i].jugado === null ||
+                          partidos[i].jugado === false
+                        ) {
+                          console.log("HOLA");
+                          let myLink =
+                            "/torneo-apuntado-info/" +
+                            torneo.id +
+                            "/grupo-actual/" +
+                            partidos[i].id +
+                            "/confirmacion-resultado";
+                          children.push(
+                            <td key={j} className="td-link">
+                              <Link className="resultado-button" to={myLink}>
+                                Confirma el resultado
+                              </Link>
+                            </td>
+                          );
+                          j++;
+                        } else {
+                          children.push(
+                            <td key={j} className="text-center">
+                              {partidos[i].set1Couple1}-
+                              {partidos[i].set1Couple2}{" "}
+                              {partidos[i].set2Couple1}-
+                              {partidos[i].set2Couple2}{" "}
+                              {partidos[i].set3Couple1}-
+                              {partidos[i].set3Couple2}
+                            </td>
+                          );
+                          j++;
+                        }
+                      }
+                    }
                   }
+                  // //si pertenezco a una de las parejas del partido en cuestión
+                  // if (
+                  //   miParejaId === partidos[i].couple1Id ||
+                  //   miParejaId === partidos[i].couple1Id
+                  // ) {
+                  //   // Comenzamos con los resultados de los partidos
+                  //   // Si la parejaEditedId sigue sin tener valor asignado, boton para subir resultado
+
+                  //   if (partidos[i].parejaEditedId === null) {
+                  //     let myLink =
+                  //       "/torneo-apuntado-info/" +
+                  //       torneo.id +
+                  //       "/grupo-actual/" +
+                  //       partidos[i].id +
+                  //       "/subir-resultado";
+                  //     children.push(
+                  //       <td key={j} className="td-link">
+                  //         <Link className="resultado-button" to={myLink}>
+                  //           Subir resultado
+                  //         </Link>
+                  //       </td>
+                  //     );
+                  //     j++;
+                  //     break;
+                  //     //Si la parejaEditedId no está a null miramos si se ha confirmado el resultado
+                  //   } else {
+                  //     // Si no se ha confirmado el resultado
+                  //     if (
+                  //       partidos[i].jugado === null ||
+                  //       partidos[i].jugado === false
+                  //     ) {
+                  //       console.log(
+                  //         "parejaEdited, miPareja",
+                  //         partidos[i].parejaEditedId,
+                  //         miParejaId
+                  //       );
+                  //       // Y parejaEditedId coincide con mi id, esperamos a que la otra pareja confirme el resultado
+                  //       if (partidos[i].parejaEditedId === miParejaId) {
+                  //         children.push(
+                  //           <td key={j} className="text-center">
+                  //             Esperando a que se confirme el resultado
+                  //           </td>
+                  //         );
+                  //         j++;
+                  //         break;
+                  //         // Si no coincide con mi id, soy yo la que tengo q confirmar el resultado HACER UN MODAL
+                  //       } else {
+                  //         children.push(
+                  //           <td key={j} className="text-center">
+                  //             Confirma el resultado
+                  //             {/* <div>
+                  //               <Button
+                  //                 onClick={() => {
+                  //                   this.handleModal();
+                  //                 }}
+                  //               >
+                  //                 Confirmar resultado
+                  //               </Button>
+                  //               <Modal show={this.state.show}>
+                  //                 <Modal.Header closeButton>
+                  //                   Confirma el resultado del partido
+                  //                 </Modal.Header>
+                  //                 <Modal.Body>
+                  //                   <div className="row">
+                  //                     <div className="col">
+                  //                       {partidos[i].couple1FullName}
+                  //                     </div>
+                  //                     <div className="col">
+                  //                       {partidos[i].set1Couple1}
+                  //                     </div>
+                  //                     <div className="col">
+                  //                       {partidos[i].set2Couple1}
+                  //                     </div>
+                  //                     <div className="col">
+                  //                       {partidos[i].set3Couple1}
+                  //                     </div>
+                  //                   </div>
+                  //                   <div className="row">
+                  //                     <div className="col">
+                  //                       {partidos[i].couple2FullName}
+                  //                     </div>
+                  //                     <div className="col">
+                  //                       {partidos[i].set1Couple2}
+                  //                     </div>
+                  //                     <div className="col">
+                  //                       {partidos[i].set2Couple2}
+                  //                     </div>
+                  //                     <div className="col">
+                  //                       {partidos[i].set3Couple2}
+                  //                     </div>
+                  //                   </div>
+                  //                 </Modal.Body>
+                  //                 <Modal.Footer>
+                  //                   <Button
+                  //                     outline
+                  //                     color="success"
+                  //                     onClick={this.onAceptar.bind(
+                  //                       this,
+                  //                       partidos[i].id
+                  //                     )}
+                  //                     className="btn"
+                  //                   >
+                  //                     Aceptar
+                  //                   </Button>
+                  //                   <Button
+                  //                     outline
+                  //                     color="success"
+                  //                     onClick={this.onRechazar.bind(
+                  //                       this,
+                  //                       partidos[i].id
+                  //                     )}
+                  //                     className="btn"
+                  //                   >
+                  //                     Rechazar
+                  //                   </Button>
+                  //                 </Modal.Footer>
+                  //               </Modal>
+                  //             </div> */}
+                  //           </td>
+                  //         );
+                  //         break;
+                  //       }
+                  //     } else {
+                  //       children.push(
+                  //         <td key={j} className="text-left">
+                  //           {partidos[i].set1Couple1}-{partidos[i].set1Couple2}{" "}
+                  //           {partidos[i].set2Couple1}-{partidos[i].set2Couple2}{" "}
+                  //           {partidos[i].set3Couple1}-{partidos[i].set3Couple2}
+                  //         </td>
+                  //       );
+                  //       j++;
+                  //       break;
+                  //     }
+                  //   }
+                  // } else {
+                  //   if (
+                  //     partidos[i].jugado === null ||
+                  //     partidos[i].jugado === false
+                  //   ) {
+                  //     children.push(
+                  //       <td key={j} className="text-center">
+                  //         Partido sin jugar
+                  //       </td>
+                  //     );
+                  //     j++;
+                  //   } else {
+                  //     children.push(
+                  //       <td key={j} className="text-left">
+                  //         {partidos[i].set1Couple1}-{partidos[i].set1Couple2}{" "}
+                  //         {partidos[i].set2Couple1}-{partidos[i].set2Couple2}{" "}
+                  //         {partidos[i].set3Couple1}-{partidos[i].set3Couple2}
+                  //       </td>
+                  //     );
+                  //     j++;
+                  //   }
+                  // }
+
                   children.push(
                     <td key={j} className="td-pareja">
                       {partidos[i].couple2FullName}

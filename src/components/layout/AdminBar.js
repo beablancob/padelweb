@@ -9,8 +9,6 @@ import { NavLink } from "react-router-dom";
 import { miRondaInfo } from "../../actions/torneoInfoAction";
 import "../../assets/Style.css";
 
-import "../../assets/Style.css";
-
 class AdminBar extends Component {
   render() {
     console.log("El componente se usa ¡barra de torneos!");
@@ -18,18 +16,19 @@ class AdminBar extends Component {
 
     const { isAuthenticated } = this.props.auth;
     const { id } = this.props.match.params;
-    let myLink1 = "/ver-torneo/" + id + "/grupos";
+    console.log(id);
+    let link1 = "/ver-torneo/" + id + "/grupos";
 
-    let myLink2 = "/ver-torneo/" + id + "/clasificacion-general";
-
+    let link2 = "/ver-torneo/" + id + "/clasif-general/";
+    console.log(link2);
     if (isAuthenticated) {
       return (
         <nav className="navbar-torneo">
-          <NavLink exact to={myLink1}>
+          <NavLink exact to={link1}>
             Grupos
           </NavLink>
 
-          <NavLink exact to={myLink2}>
+          <NavLink exact to={link2}>
             Clasificación General
           </NavLink>
         </nav>

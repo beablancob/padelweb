@@ -61,9 +61,23 @@ export const infoTorneoNoComenzadoParticipo = torneoId => dispatch => {
 };
 
 export const subirResultado = (partidoId, id, sets, history) => dispatch => {
+  console.log("actions de actualizar resultado");
+
   axios
     .put("/partidos/" + partidoId, sets)
-    .then(res => history.push("torneo-apuntado-info/" + id + "grupo-actual"))
+    .then(res => history.push("/torneo-apuntado-info/" + id + "/grupo-actual"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+export const confirmarResultado = (partidoId, id, history) => dispatch => {
+  console.log("actions de confirm resultado");
+  axios
+    .put("/partidos/" + partidoId + "/confirmResult")
+    .then(res => history.push("/torneo-apuntado-info/" + id + "/grupo-actual"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

@@ -20,6 +20,7 @@ class Clasificacion extends Component {
     console.log(torneo.tournament);
     let couples = torneo.couples;
     let j = 0;
+    let m = 500;
     let numGrupos;
     for (let i = 0; i < couples.length - 1; i++) {
       numGrupos = couples[i].grupoActual;
@@ -37,7 +38,7 @@ class Clasificacion extends Component {
       for (let i = 0; i < parejas.length; i++) {
         let children = [];
         //Inner loop to create children
-
+        j++;
         children.push(
           <td key={j} className="text-left">
             {parejas[i].user1Name} {parejas[i].user1LastName}
@@ -111,9 +112,15 @@ class Clasificacion extends Component {
           </td>
         );
         j++;
+        m++;
 
         //Create the parent and add the children
-        table.push(<tr className="table">{children}</tr>);
+        table.push(
+          <tr key={m} className="table">
+            {children}
+          </tr>
+        );
+        m++;
       }
       return table;
     };

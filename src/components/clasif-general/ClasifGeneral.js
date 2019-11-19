@@ -6,25 +6,32 @@ import "../../assets/Style.css";
 import { withRouter } from "react-router-dom";
 import Spinner from "../common/Spinner";
 
-class ClasificacionGeneral extends Component {
+class ClasifGeneral extends Component {
   render() {
+    console.log("hola");
     const { torneoInformacion, loadingTorneo } = this.props.torneoInfo;
+    const {
+      roundsLoading,
+      rounds,
+      loading2,
+      torneoAdmin
+    } = this.props.torneosActivosAdmin;
 
     let clasificacionGeneralContent;
+    console.log("CLASIFICACION GENERAL ADMIN", torneoAdmin);
 
-    if (loadingTorneo) {
+    if (loading2) {
       clasificacionGeneralContent = <Spinner />;
     } else {
       console.log(
         "**********************Estoy en ClasificacionGeneral, info del torneo ",
-        torneoInformacion
+        torneoAdmin
       );
-      console.log(torneoInformacion.tournament.couples);
-
+      console.log(torneoAdmin.tournament.couples);
       let table = [];
       let j = 0;
       let createTable = () => {
-        let torneo = torneoInformacion.tournament;
+        let torneo = torneoAdmin.tournament;
         for (var i = 0; i < torneo.couples.length; i++) {
           let children = [];
           children.push(
@@ -146,13 +153,13 @@ class ClasificacionGeneral extends Component {
     );
   }
 }
-ClasificacionGeneral.propTypes = {
-  torneoInfo: PropTypes.object.isRequired,
+ClasifGeneral.propTypes = {
+  torneosActivosAdmin: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-  torneoInfo: state.torneoInfo,
+  torneosActivosAdmin: state.torneosActivosAdmin,
   match: state.match
 });
 
-export default connect(mapStateToProps)(withRouter(ClasificacionGeneral));
+export default connect(mapStateToProps)(withRouter(ClasifGeneral));

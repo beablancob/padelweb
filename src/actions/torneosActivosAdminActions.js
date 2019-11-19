@@ -66,8 +66,9 @@ export const createTournament = (tournamentData, history) => dispatch => {
 };
 
 export const getAdminTournament = torneoId => dispatch => {
+  console.log("getAdminTournament", torneoId);
   dispatch(setTournamentLoading());
-  axios.get(axios.get("/admin/tournaments/", torneoId)).then(res => {
+  axios.get("/admin/tournaments/" + torneoId).then(res => {
     dispatch({
       type: GET_CURRENT_ADMIN_TOURNAMENT,
       payload: res.data
@@ -122,17 +123,15 @@ export const comenzarTorneo = (torneoId, history) => dispatch => {
 };
 
 export const getRoundsTournament = id => dispatch => {
-  console.log(id);
+  console.log("en actions", id);
   dispatch(setRoundsLoading());
-  axios
-    .get(axios.get("/admin/tournaments/" + id + "/previousRounds"))
-    .then(res => {
-      dispatch({
-        type: GET_ADMIN_TOURNAMENT_ROUNDS,
-        payload: res.data
-      });
-      console.log("info del torneo en actions", res.data);
+  axios.get("/admin/tournaments/" + id + "/previousRounds").then(res => {
+    dispatch({
+      type: GET_ADMIN_TOURNAMENT_ROUNDS,
+      payload: res.data
     });
+    console.log("info del torneo en actions", res.data);
+  });
 };
 
 export const setRoundsLoading = () => {

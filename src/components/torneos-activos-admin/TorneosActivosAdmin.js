@@ -1,3 +1,5 @@
+// Hacer link a torneo comenzado
+
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -115,6 +117,7 @@ class TorneosActivosAdmin extends Component {
                 // );
                 j++;
               } else {
+                console.log("listTorneosid", listTorneos[i].id);
                 let myLink = "/ver-torneo/" + listTorneos[i].id;
                 children.push(
                   <td key={j}>

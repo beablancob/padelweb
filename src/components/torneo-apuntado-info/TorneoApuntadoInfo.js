@@ -15,9 +15,9 @@ import PrivateRoute from "../common/PrivateRoute";
 import { Switch } from "react-router-dom";
 import Spinner from "../common/Spinner";
 import GrupoActual from "../grupo-actual/GrupoActual";
-import Grupo from "../grupo/Grupo";
 import ResultadoPartido from "../resultado-partido/ResultadoPartido";
 import ClasificacionGeneral from "../clasificacion-general/ClasificacionGeneral";
+import ConfirmacionResultado from "../confirmacion-resultado/ConfirmacionResultado";
 
 class TorneoApuntadoInfo extends Component {
   componentDidMount() {
@@ -69,6 +69,12 @@ class TorneoApuntadoInfo extends Component {
               path="/torneo-apuntado-info/:id/clasificacion-general/"
               component={ClasificacionGeneral}
             />
+
+            <PrivateRoute
+              exact
+              path="/torneo-apuntado-info/:id/grupo-actual/:partidoId/confirmacion-resultado"
+              component={ConfirmacionResultado}
+            />
             {/* let myLink = "/torneo-apuntado-info/" + torneo.id + "/grupo-actual/"
             + partidos[i].id + "/subir-resultado"; */}
           </Switch>
@@ -85,7 +91,6 @@ class TorneoApuntadoInfo extends Component {
     );
   }
 }
-// PrivateRoute path={torneoIdPath} component={Parejas} />
 
 TorneoApuntadoInfo.propTypes = {
   infoTorneoComenzadoParticipo: PropTypes.func.isRequired,
