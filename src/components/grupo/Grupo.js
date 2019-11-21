@@ -9,44 +9,49 @@ import { miRondaInfo } from "../../actions/torneoInfoAction";
 
 class Grupo extends Component {
   componentDidMount() {
-    const { torneoInformacion } = this.props.torneoInfo;
-    this.props.miRondaInfo(torneoInformacion.tournament.rondaActual);
+    const { id, numGrupo } = this.props.match.params;
+    console.log(id);
   }
   render() {
-    const {
-      torneoInformacion,
-      miRondaInformacion,
-      loadingRonda
-    } = this.props.torneoInfo;
+    const { torneoAdmin, loading2 } = this.props.torneosActivosAdmin;
     console.log("+++++++++++++++++++++++++++", this.props.match.params);
+    const { id, numGrupo } = this.props.match.params;
 
-    console.log(">>>>>>>>>>>>", miRondaInformacion, torneoInformacion);
+    console.log(">>>>>>>>>>>>", loading2, torneoAdmin);
 
     let gruposContent;
 
-    if (loadingRonda) {
+    if (loading2) {
       gruposContent = <Spinner />;
     } else {
-      if (miRondaInformacion === null) {
+      if (torneoAdmin === null) {
         gruposContent = <p>Todavía no hay información de la ronda</p>;
       } else {
-        console.log(miRondaInformacion.partidos);
+        console.log(torneoAdmin.tournament);
         let table = [];
         let j = 0;
+        let couples = torneoAdmin.tournament.couple;
         let createTable = () => {
-          for (var i = 0; i < miRondaInformacion.partidos.length - 1; i++) {
+          for (var i = 0; i < couples.length; i++) {
             let children = [];
-
-            children.push(
-              <td key={j} className="text-left">
-                {miRondaInformacion.partidos[i].numeroGrupo}
-              </td>
-            );
-            table.push(
-              <tr key={i} className="text-center">
-                {children}
-              </tr>
-            );
+            let numeroGrupo = numGrupo - 1;
+            if (numGrupo === couples[i].grupoActual) {
+              children.push(
+                <td key={j} className="text-left">
+                  {couples[i].grupoActual}
+                </td>
+              );
+              children.push(
+                <td key={j} className="text-left">
+                  {couples[i].juegosGanados}
+                </td>
+              );
+              table.push(
+                <tr key={i} className="text-center">
+                  {children}
+                </tr>
+              );
+            }
           }
           console.log("table en Grupos", table);
           return table;
@@ -81,12 +86,12 @@ class Grupo extends Component {
   }
 }
 Grupo.propTypes = {
-  torneoInfo: PropTypes.object.isRequired,
+  torneosActivosAdmin: PropTypes.object.isRequired,
   miRondaInfo: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-  torneoInfo: state.torneoInfo,
+  torneosActivosAdmin: state.torneosActivosAdmin,
   match: state.match
 });
 

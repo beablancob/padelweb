@@ -9,7 +9,6 @@ import Spinner from "../common/Spinner";
 class ClasifGeneral extends Component {
   render() {
     console.log("hola");
-    const { torneoInformacion, loadingTorneo } = this.props.torneoInfo;
     const {
       roundsLoading,
       rounds,

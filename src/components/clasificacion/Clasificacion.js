@@ -24,7 +24,8 @@ class Clasificacion extends Component {
     let numGrupos;
     for (let i = 0; i < couples.length - 1; i++) {
       numGrupos = couples[i].grupoActual;
-      if (couples[i + 1].grupo > numGrupos) {
+
+      if (couples[i + 1].grupoActual > numGrupos) {
         numGrupos = couples[i + 1].grupoActual;
       }
       numGrupos += 1;

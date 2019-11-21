@@ -12,6 +12,7 @@ import { Router } from "react-router-dom";
 import PrivateRoute from "../common/PrivateRoute";
 import { Switch } from "react-router-dom";
 import Spinner from "../common/Spinner";
+import Grupo from "../grupo/Grupo";
 
 import Grupos from "../grupos/Grupos";
 import AdminBar from "../layout/AdminBar";
@@ -49,27 +50,23 @@ class VerTorneo extends Component {
             </h1>
 
             <AdminBar />
-            <Switch>
-              {/* 
+
             <Switch>
               <PrivateRoute
                 exact
                 path="/ver-torneo/:id/clasif-general/"
                 component={ClasifGeneral}
-              /> */}
+              />
               <PrivateRoute
                 exact
                 path="/ver-torneo/:id/grupos"
                 component={Grupos}
               />
-              {/* <PrivateRoute
+              <PrivateRoute
                 exact
                 path="/ver-torneo/:id/grupos/:numGrupo/clasificacion"
                 component={Grupo}
-              /> */}
-
-              {/* let myLink = "/torneo-apuntado-info/" + torneo.id + "/grupo-actual/"
-                    + partidos[i].id + "/subir-resultado"; */}
+              />
             </Switch>
           </div>
         );

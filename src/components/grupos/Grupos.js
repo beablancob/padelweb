@@ -6,55 +6,60 @@ import { connect } from "react-redux";
 import Spinner from "../common/Spinner";
 import { withRouter } from "react-router-dom";
 import { miRondaInfo } from "../../actions/torneoInfoAction";
+import "../../assets/Style.css";
 
 class Grupos extends Component {
-  componentDidMount() {
-    const { torneoInformacion } = this.props.torneoInfo;
-    this.props.miRondaInfo(torneoInformacion);
-  }
   render() {
     const {
-      torneoInformacion,
-      miRondaInformacion,
-      loadingRonda
-    } = this.props.torneoInfo;
+      roundsLoading,
+      rounds,
+      loading2,
+      torneoAdmin
+    } = this.props.torneosActivosAdmin;
 
     console.log(
       ">>>>>>>>>>>><Estoy en Grupos, info de la ronda<<<<<<<<<<<<<",
-      miRondaInformacion,
-      torneoInformacion
+      torneoAdmin
     );
+    const { id } = this.props.match.params;
 
     let gruposContent;
 
-    if (loadingRonda) {
+    if (loading2) {
       gruposContent = <Spinner />;
     } else {
-      if (miRondaInformacion === null) {
-        gruposContent = <p>Todavía no hay información de la ronda</p>;
+      if (torneoAdmin === null) {
+        gruposContent = <p>Todavía no hay información del torneo</p>;
       } else {
+        console.log("HEY YOU", torneoAdmin.tournament);
+        let couples = torneoAdmin.tournament.couples;
+        let numGrupos;
+        for (let i = 0; i < couples.length - 1; i++) {
+          numGrupos = couples[i].grupoActual;
+          if (couples[i + 1].grupoActual > numGrupos) {
+            numGrupos = couples[i + 1].grupoActual;
+          }
+          numGrupos += 1;
+        }
         let createTable = () => {
           let table = [];
           let k = 0;
           let m = 0;
 
-          for (let i = 0; i < miRondaInformacion.partidos.length; i++) {
+          for (let i = 0; i < numGrupos; i++) {
             let children = [];
-            for (let j = 0; j < 2; j++) {
-              let myLink =
-                "/torneo-apuntado-info/grupos/" +
-                torneoInformacion.tournament.id +
-                "/" +
-                j;
-              children.push(
-                <td key={k}>
-                  <Link className="link-button" to={myLink}>
-                    {`Grupo ${j}`}
-                  </Link>
-                </td>
-              );
-              k++;
-            }
+            let numGrupo = i + 1;
+            let myLink =
+              "/ver-torneo/" + id + "/grupos/" + numGrupo + "/clasificacion";
+            children.push(
+              <td key={k} className="grupos">
+                <Link className="link-button" to={myLink}>
+                  {`Grupo ${numGrupo}`}
+                </Link>
+              </td>
+            );
+            k++;
+
             k = 0;
             table.push(<tr key={m}>{children}</tr>);
             m++;
@@ -81,11 +86,11 @@ class Grupos extends Component {
   }
 }
 Grupos.propTypes = {
-  torneoInfo: PropTypes.object.isRequired,
+  torneosActivosAdmin: PropTypes.object.isRequired,
   miRondaInfo: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
-  torneoInfo: state.torneoInfo
+  torneosActivosAdmin: state.torneosActivosAdmin
 });
 
 export default connect(mapStateToProps, { miRondaInfo })(withRouter(Grupos));

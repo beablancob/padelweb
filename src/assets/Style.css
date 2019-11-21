@@ -80,8 +80,11 @@
 .container-app {
   margin-left: 160px;
 }
+.grupo {
+  margin: 5px 5px 5px 5px;
+}
 .link-button {
-  margin-top: 10px;
+  margin-top: 5px;
   padding: 5px;
   color: #17a2b8;
   border: #17a2b8 1px solid;
