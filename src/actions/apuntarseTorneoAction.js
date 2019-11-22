@@ -83,6 +83,7 @@ export const seleccionTorneoAdmin = (torneoId, history) => dispatch => {
     if (history) history.push("/apuntarse-torneo/" + torneoId);
     console.log("res.data", res.data);
   });
+
   console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 };
 
@@ -100,6 +101,43 @@ export const registrarAdminTorneo = (torneoId, email, history) => dispatch => {
     .then(res => {
       console.log("RESPUESTA APUNTARSE", res);
       history.push("/torneos-activos-admin");
+    })
+
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+export const editarParejaTorneoAdmin = (
+  id,
+  idPareja,
+  emails,
+  history
+) => dispatch => {
+  axios
+    .put("/admin/tournaments/" + id + "/couples/" + idPareja, emails)
+    .then(res => {
+      console.log("RESPUESTA editar", res);
+      history.push("/torneos-activos-admin/" + id + "/ver-parejas");
+    })
+
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+export const eliminarParejaAdmin = (id, idPareja, history) => dispatch => {
+  axios
+    .delete("/admin/tournaments/" + id + "/couples/" + idPareja)
+    .then(res => {
+      console.log("RESPUESTA eliminar", res);
+      history.push("/torneos-activos-admin/" + id + "/ver-parejas");
     })
 
     .catch(err =>

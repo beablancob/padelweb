@@ -5,17 +5,25 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../common/Spinner";
 import { withRouter } from "react-router-dom";
-import { miRondaInfo } from "../../actions/torneoInfoAction";
+import { avanzarRonda } from "../../actions/torneosActivosAdminActions";
+import { Button } from "react-bootstrap";
 import "../../assets/Style.css";
 
 class Grupos extends Component {
+  constructor(props) {
+    super(props);
+    this.onAvanzarRondaClick = this.onAvanzarRondaClick.bind(this);
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+  onAvanzarRondaClick(id) {
+    this.props.avanzarRonda(id, this.props.history);
+  }
   render() {
-    const {
-      roundsLoading,
-      rounds,
-      loading2,
-      torneoAdmin
-    } = this.props.torneosActivosAdmin;
+    const { loading2, torneoAdmin } = this.props.torneosActivosAdmin;
 
     console.log(
       ">>>>>>>>>>>><Estoy en Grupos, info de la ronda<<<<<<<<<<<<<",
@@ -68,9 +76,24 @@ class Grupos extends Component {
           return table;
         };
         gruposContent = (
-          <table>
-            <tbody>{createTable()}</tbody>
-          </table>
+          <div className="row">
+            <div className="col">
+              <table>
+                <tbody>{createTable()}</tbody>
+              </table>
+            </div>
+
+            <div className="col">
+              <p>COMPROBAR SI SE HAN JUGADO TODOS LOS PARTIDOS DE LA RONDA</p>
+              <Button
+                variant="outline-info"
+                color="success"
+                onClick={this.onAvanzarRondaClick.bind(this, id)}
+              >
+                Avanzar ronda
+              </Button>
+            </div>
+          </div>
         );
       }
     }
@@ -87,10 +110,10 @@ class Grupos extends Component {
 }
 Grupos.propTypes = {
   torneosActivosAdmin: PropTypes.object.isRequired,
-  miRondaInfo: PropTypes.func.isRequired
+  avanzarRonda: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   torneosActivosAdmin: state.torneosActivosAdmin
 });
 
-export default connect(mapStateToProps, { miRondaInfo })(withRouter(Grupos));
+export default connect(mapStateToProps, { avanzarRonda })(withRouter(Grupos));

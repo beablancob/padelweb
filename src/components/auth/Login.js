@@ -48,7 +48,8 @@ class Login extends Component {
   }
 
   render() {
-    const { errors } = this.state;
+    const { error } = this.state.errors;
+    console.log("error", error);
 
     return (
       <div className="login">
@@ -66,7 +67,6 @@ class Login extends Component {
                   type="email"
                   value={this.state.email}
                   onChange={this.onChange}
-                  error={errors.email}
                 />
                 <TextFieldGroup
                   placeholder="Password"
@@ -74,10 +74,10 @@ class Login extends Component {
                   type="password"
                   value={this.state.password}
                   onChange={this.onChange}
-                  error={errors.password}
                 />
 
                 <input type="submit" className="btn btn-info btn-block mt-4" />
+                <p className="errores">{error ? error.msg.toString() : null}</p>
               </form>
             </div>
           </div>
@@ -96,7 +96,4 @@ const mapStateToProps = state => ({
   auth: state.auth,
   errors: state.errors
 });
-export default connect(
-  mapStateToProps,
-  { loginUser }
-)(withRouter(Login));
+export default connect(mapStateToProps, { loginUser })(withRouter(Login));

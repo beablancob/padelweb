@@ -66,7 +66,7 @@ class ResultadoPartido extends Component {
       loadingRonda,
       miRondaInformacion
     } = this.props.torneoInfo;
-    const { errors } = this.state;
+    const { error } = this.state.errors;
     if (loadingRonda) {
       ResultadoContent = <Spinner />;
     } else {
@@ -107,7 +107,6 @@ class ResultadoPartido extends Component {
                   name="set1c1"
                   value={this.state.set1c1}
                   onChange={this.onChange}
-                  error={errors.set1c1}
                 />
               </div>
               <div className="col">
@@ -117,7 +116,6 @@ class ResultadoPartido extends Component {
                   name="set1c2"
                   value={this.state.set1c2}
                   onChange={this.onChange}
-                  error={errors.set1c2}
                 />
               </div>
             </div>
@@ -129,7 +127,6 @@ class ResultadoPartido extends Component {
                   name="set2c1"
                   value={this.state.set2c1}
                   onChange={this.onChange}
-                  error={errors.set2c1}
                 />
               </div>
               <div className="col">
@@ -139,7 +136,6 @@ class ResultadoPartido extends Component {
                   name="set2c2"
                   value={this.state.set2c2}
                   onChange={this.onChange}
-                  error={errors.set2c2}
                 />
               </div>
             </div>
@@ -152,7 +148,6 @@ class ResultadoPartido extends Component {
                   name="set3c1"
                   value={this.state.set3c1}
                   onChange={this.onChange}
-                  error={errors.set3c1}
                 />
               </div>
               <div className="col">
@@ -162,12 +157,12 @@ class ResultadoPartido extends Component {
                   name="set3c2"
                   value={this.state.set3c2}
                   onChange={this.onChange}
-                  error={errors.set3c2}
                 />
               </div>
             </div>
 
             <input type="submit" className="btn btn-info btn-block mt-4" />
+            <p className="errores">{error ? error.error.toString() : null}</p>
           </form>
         </div>
       );

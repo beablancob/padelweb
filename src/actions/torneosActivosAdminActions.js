@@ -122,6 +122,11 @@ export const comenzarTorneo = (torneoId, history) => dispatch => {
     );
 };
 
+export const avanzarRonda = (id, history) => dispatch => {
+  console.log("avanzar ronda");
+  axios.post("/admin/tournaments/" + id + "/nextRound");
+};
+
 export const getRoundsTournament = id => dispatch => {
   console.log("en actions", id);
   dispatch(setRoundsLoading());

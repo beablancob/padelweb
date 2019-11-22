@@ -56,7 +56,8 @@ class CreateTournament extends Component {
   }
 
   render() {
-    const { errors } = this.state;
+    const { error } = this.state.errors;
+    console.log("******************+", error);
 
     const options2 = [
       { label: "Si", value: true },
@@ -84,7 +85,6 @@ class CreateTournament extends Component {
                   name="name"
                   value={this.state.name}
                   onChange={this.onChange}
-                  error={errors.name}
                 />
                 <TextFieldGroup
                   placeholder="Elige el número de parejas que van a participar"
@@ -94,7 +94,6 @@ class CreateTournament extends Component {
                   max="200"
                   value={this.state.numeroParejas}
                   onChange={this.onChange}
-                  error={errors.numeroParejas}
                 />
                 <TextFieldGroup
                   placeholder="Elige el número de parejas por grupo que va a haber en cada ronda"
@@ -104,7 +103,6 @@ class CreateTournament extends Component {
                   max="100"
                   value={this.state.parejasPorGrupo}
                   onChange={this.onChange}
-                  error={errors.parejasPorGrupo}
                   info="Parejas por grupo"
                 />
                 <SelectListBoolean
@@ -112,7 +110,6 @@ class CreateTournament extends Component {
                   value={this.state.publico}
                   onChange={this.onChange}
                   options={options1}
-                  error={errors.publico}
                   info="Elige el tipo de torneo que quieres"
                 />
                 <TextFieldGroup
@@ -120,7 +117,6 @@ class CreateTournament extends Component {
                   name="puntosPG"
                   value={this.state.puntosPG}
                   onChange={this.onChange}
-                  error={errors.puntosPG}
                   info="Puntos por PG"
                 />
                 <TextFieldGroup
@@ -129,7 +125,6 @@ class CreateTournament extends Component {
                   type="number"
                   value={this.state.puntosPP}
                   onChange={this.onChange}
-                  error={errors.puntosPP}
                   info="Puntos por PP"
                 />
                 <SelectListBoolean
@@ -137,7 +132,6 @@ class CreateTournament extends Component {
                   valueb={this.state.idaYvuelta}
                   onChange={this.onChange}
                   options={options2}
-                  error={errors.idaYvuelta}
                   info="Elige si quieres que los partidos sean de ida y vuelta"
                 />
                 <TextFieldGroup
@@ -148,7 +142,6 @@ class CreateTournament extends Component {
                   max="500"
                   value={this.state.numeroRondas}
                   onChange={this.onChange}
-                  error={errors.numeroRondas}
                 />
                 <TextFieldGroup
                   placeholder="Elige el número de parejas que suben al terminar una ronda"
@@ -158,13 +151,15 @@ class CreateTournament extends Component {
                   max="20"
                   value={this.state.parejasSuben}
                   onChange={this.onChange}
-                  error={errors.parejasSuben}
                 />
                 <input
                   type="submit"
                   value="Enviar"
                   className="btn btn-info btn-block mt-4"
                 />
+                {/* <p className="errores">
+                  hola{error ? error.error.toString() : null}
+                </p> */}
               </form>
             </div>
           </div>

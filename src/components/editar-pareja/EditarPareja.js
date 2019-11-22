@@ -3,38 +3,40 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import TextFieldGroup from "../common/TextFieldGroup";
+import { getAdminTournament } from "../../actions/torneosActivosAdminActions";
 import {
-  registrarAdminTorneo,
-  seleccionTorneoAdmin
+  eliminarParejaAdmin,
+  editarParejaTorneoAdmin
 } from "../../actions/apuntarseTorneoAction";
 import "../../assets/Style.css";
 import Spinner from "../common/Spinner";
 
-class RegistrarPareja extends Component {
+class EditarPareja extends Component {
   constructor(props) {
     super(props);
     this.state = {
       emailUser2: "",
       emailUser1: "",
-      errors: {}
+      error: ""
     };
     // this.props.RegistrarPareja.loading = true;
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onDeleteClick = this.onDeleteClick.bind(this);
   }
   componentDidMount() {
-    const { id } = this.props.match.params;
+    const { id, idPareja } = this.props.match.params;
     console.log("-------------------x------------------- RegistrarPareja");
 
     console.log("DID MOUNT", this.props.match);
 
-    this.props.seleccionTorneoAdmin(id);
+    this.props.getAdminTournamet(id);
     console.log("DIDDDDDD", id);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
+    if (nextProps.error) {
+      this.setState({ error: nextProps.error });
     }
   }
 
@@ -44,34 +46,46 @@ class RegistrarPareja extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    const { torneoAdminSelected } = this.props.apuntarseTorneo;
-    const torneoId = torneoAdminSelected.tournament.id;
-    const email = {
+    const { torneoAdmin } = this.props.torneosActivosAdmin;
+    const { id, idPareja } = this.props.match.params;
+
+    const emails = {
       emailUser1: this.state.emailUser1,
       emailUser2: this.state.emailUser2
     };
-    console.log("parámetros:", email, torneoId);
+    console.log("parámetros:", emails, id, idPareja);
 
     //history sirve para redirigir. Para que funcione history tenemos que añadir withRouter en el componente que exportamos
     //console.log("El registerCode del torneo es: ", registerCodeData);
-    this.props.registrarAdminTorneo(torneoId, email, this.props.history);
+    this.props.registrarAdminTorneo(id, idPareja, emails, this.props.history);
+  }
+  onDeleteClick(e) {
+    e.preventDefault();
+    this.props.eliminarParejaAdmin(id, idPareja, this.props.history);
   }
   render() {
-    const { torneoAdminSelected, loadingAdmin } = this.props.apuntarseTorneo;
-    const { error } = this.state.errors;
-    console.log("---------", error);
-    let torneo = torneoAdminSelected;
+    const { torneoAdmin, loading2 } = this.props.torneosActivosAdmin;
+    const { error } = this.state;
+    let torneo = torneoAdmin.tournament;
 
     let apuntarseContent;
     if (loadingAdmin) {
       console.log("loading");
       apuntarseContent = <Spinner />;
     } else {
+      console.log(
+        "-------------------x------------------- apuntarseNO MAS LOADING"
+      );
+      console.log("El torneo seleccionado es:", torneo);
+      for (i = 0; i < torneo.couples.length; i++) {
+        if (torneo.couples[i].id === idPareja) {
+          // ****************************************** NO TENGO LOS EMAILSSSSSS
+          //let email1 = torneo.couples[i].
+        }
+      }
       apuntarseContent = (
         <div>
-          <h1 className="display-4 text-center">
-            Apúntate a {torneo.tournament.name}
-          </h1>
+          <h1 className="display-4 text-center">Edita la pareja</h1>
           <p className="lead text-center">
             Rellena el email de las parejas, recuerda que tienen que estar
             registrados en la plataforma.
@@ -82,6 +96,7 @@ class RegistrarPareja extends Component {
               name="emailUser1"
               value={this.state.emailUser1}
               onChange={this.onChange}
+              error={error}
               info="pareja1@ejemplo.com"
             />
             <TextFieldGroup
@@ -89,6 +104,7 @@ class RegistrarPareja extends Component {
               name="emailUser2"
               value={this.state.emailUser2}
               onChange={this.onChange}
+              error={error}
               info="pareja2@ejemplo.com"
             />
             <input
@@ -96,8 +112,17 @@ class RegistrarPareja extends Component {
               value="Enviar"
               className="btn btn-info btn-block mt-4"
             />
-            <p className="errores">{error ? error.error.toString() : null}</p>
           </form>
+          <div style={{ marginBottom: "60px" }} />
+          <div className="row">
+            <button
+              style={{ marginLeft: "200px" }}
+              onClick={this.onDeleteClick.bind(this)}
+              className="btn btn-danger"
+            >
+              Eliminar mi cuenta
+            </button>
+          </div>
         </div>
       );
     }
@@ -111,19 +136,21 @@ class RegistrarPareja extends Component {
   }
 }
 
-RegistrarPareja.propTypes = {
-  registrarAdminTorneo: PropTypes.func.isRequired,
-  seleccionTorneoAdmin: PropTypes.func.isRequired,
-  apuntarseTorneo: PropTypes.object.isRequired,
+EditarPareja.propTypes = {
+  eliminarParejaAdmin: PropTypes.func.isRequired,
+  editarParejaTorneoAdmin: PropTypes.func.isRequired,
+  getAdminTournament: PropTypes.func.isRequired,
+  torneosActivosAdmin: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
-  errors: PropTypes.object
+  error: PropTypes.object
 };
 const mapStateToProps = state => ({
-  apuntarseTorneo: state.apuntarseTorneo,
+  torneosActivosAdmin: state.torneosActivosAdmin,
   match: state.match,
-  errors: state.errors
+  error: state.error
 });
 export default connect(mapStateToProps, {
-  registrarAdminTorneo,
-  seleccionTorneoAdmin
-})(withRouter(RegistrarPareja));
+  editarParejaTorneoAdmin,
+  getAdminTournament,
+  eliminarParejaAdmin
+})(withRouter(EditarPareja));

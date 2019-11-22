@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authAction";
 import TextFieldGroup from "../common/TextFieldGroup";
+import "../../assets/Style.css";
 
 class Register extends Component {
   constructor() {
@@ -52,9 +53,10 @@ class Register extends Component {
   render() {
     //npm i classnames para instalar isInvalid y toda la pesca
 
-    const { errors } = this.state; //const errors = this.state.errors es lo mismo!!
+    const { error } = this.state.errors; //const errors = this.state.errors es lo mismo!!
     //Las clases form-control etc van a estar siempre. Las is-invalid solo existen cuando hay un error, en el array de errores del estado.
     //Errors.name
+    console.log("*********", error);
     return (
       <div className="register">
         <div className="container">
@@ -68,14 +70,12 @@ class Register extends Component {
                   name="name"
                   value={this.state.name}
                   onChange={this.onChange}
-                  error={errors.name}
                 />
                 <TextFieldGroup
                   placeholder="Apellidos"
                   name="lastname"
                   value={this.state.lastname}
                   onChange={this.onChange}
-                  error={errors.lastname}
                 />
 
                 <TextFieldGroup
@@ -84,7 +84,6 @@ class Register extends Component {
                   type="email"
                   value={this.state.email}
                   onChange={this.onChange}
-                  error={errors.email}
                 />
                 <TextFieldGroup
                   placeholder="Password"
@@ -92,7 +91,6 @@ class Register extends Component {
                   type="password"
                   value={this.state.password1}
                   onChange={this.onChange}
-                  error={errors.password1}
                 />
                 <TextFieldGroup
                   placeholder="Confirm Password"
@@ -100,9 +98,11 @@ class Register extends Component {
                   type="password"
                   value={this.state.password2}
                   onChange={this.onChange}
-                  error={errors.password2}
                 />
                 <input type="submit" className="btn btn-info btn-block mt-4" />
+                <p className="errores">
+                  {error ? error.error.toString() : null}
+                </p>
               </form>
             </div>
           </div>
@@ -120,7 +120,4 @@ const mapStateToProps = state => ({
   auth: state.auth,
   errors: state.errors
 });
-export default connect(
-  mapStateToProps,
-  { registerUser }
-)(withRouter(Register));
+export default connect(mapStateToProps, { registerUser })(withRouter(Register));

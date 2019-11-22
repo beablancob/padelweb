@@ -16,7 +16,7 @@ class ApuntarseTorneo extends Component {
     this.state = {
       emailUser2: "",
       registerCodeData: "",
-      error: ""
+      errors: {}
     };
     // this.props.apuntarseTorneo.loading = true;
     this.onChange = this.onChange.bind(this);
@@ -24,17 +24,12 @@ class ApuntarseTorneo extends Component {
   }
   componentDidMount() {
     const { id } = this.props.match.params;
-    console.log("-------------------x------------------- apuntarseTorneo");
-
-    console.log("DID MOUNT", this.props.match);
-
     this.props.seleccionTorneo(id);
     console.log("DIDDDDDD", id);
   }
-
   componentWillReceiveProps(nextProps) {
-    if (nextProps.error) {
-      this.setState({ error: nextProps.error });
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
     }
   }
 
@@ -51,7 +46,6 @@ class ApuntarseTorneo extends Component {
     const email = {
       emailUser2: this.state.emailUser2
     };
-    console.log("parámetros:", infoRegistro);
 
     //history sirve para redirigir. Para que funcione history tenemos que añadir withRouter en el componente que exportamos
     //console.log("El registerCode del torneo es: ", registerCodeData);
@@ -59,20 +53,16 @@ class ApuntarseTorneo extends Component {
   }
   render() {
     const { torneoSelected, loading } = this.props.apuntarseTorneo;
-    const { error } = this.state;
+    const { error } = this.state.errors;
     let torneo = torneoSelected;
+    console.log("**********", error);
 
     let apuntarseContent;
     if (loading) {
       console.log("loading");
       apuntarseContent = <Spinner />;
     } else {
-      console.log(
-        "-------------------x------------------- apuntarseNO MAS LOADING"
-      );
-      console.log("El torneo seleccionado es:", torneo);
       let registerCodeData = torneo.tournament.registerCode;
-      console.log("Register", registerCodeData);
       this.state.registerCodeData = registerCodeData;
       apuntarseContent = (
         <div>
@@ -89,7 +79,6 @@ class ApuntarseTorneo extends Component {
               name="emailUser2"
               value={this.state.emailUser2}
               onChange={this.onChange}
-              error={error}
               info="tupareja@ejemplo.com"
             />
             <TextFieldGroup
@@ -104,6 +93,7 @@ class ApuntarseTorneo extends Component {
               value="Enviar"
               className="btn btn-info btn-block mt-4"
             />
+            <p className="errores">{error ? error.error.toString() : null}</p>
           </form>
         </div>
       );
@@ -123,12 +113,12 @@ ApuntarseTorneo.propTypes = {
   seleccionTorneo: PropTypes.func.isRequired,
   apuntarseTorneo: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
-  error: PropTypes.object
+  errors: PropTypes.object
 };
 const mapStateToProps = state => ({
   apuntarseTorneo: state.apuntarseTorneo,
   match: state.match,
-  error: state.error
+  errors: state.errors
 });
 export default connect(mapStateToProps, { registrarseTorneo, seleccionTorneo })(
   withRouter(ApuntarseTorneo)

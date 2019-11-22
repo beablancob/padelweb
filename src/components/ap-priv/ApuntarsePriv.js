@@ -12,15 +12,15 @@ class ApuntarsePriv extends Component {
     this.state = {
       emailUser2: "",
       registerCodeData: "",
-      error: ""
+      errors: {}
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.error) {
-      this.setState({ error: nextProps.error });
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
     }
   }
   onChange(e) {
@@ -41,8 +41,8 @@ class ApuntarsePriv extends Component {
     this.props.registrarseTorneoPriv(infoRegistro, this.props.history);
   }
   render() {
-    const { error } = this.state;
-
+    const { error } = this.state.errors;
+    console.log("errores", error);
     return (
       <div className="apuntarse-torneo">
         <div className="container">
@@ -61,7 +61,6 @@ class ApuntarsePriv extends Component {
                 name="emailUser2"
                 value={this.state.emailUser2}
                 onChange={this.onChange}
-                error={error}
                 info="tupareja@ejemplo.com"
               />
               <TextFieldGroup
@@ -70,7 +69,6 @@ class ApuntarsePriv extends Component {
                 onChange={this.onChange}
                 value={this.state.registerCodeData}
                 onChange={this.onChange}
-                error={error}
                 info="12codigo23de245registro"
               />
               <input
@@ -78,6 +76,9 @@ class ApuntarsePriv extends Component {
                 value="Enviar"
                 className="btn btn-info btn-block mt-4"
               />
+              <p className="errores">
+                hola{error ? error.error.toString() : null}
+              </p>
             </form>
           </div>
         </div>
@@ -88,11 +89,11 @@ class ApuntarsePriv extends Component {
 
 ApuntarsePriv.propTypes = {
   registrarseTorneo: PropTypes.func.isRequired,
-  error: PropTypes.object
+  errors: PropTypes.object
 };
 const mapStateToProps = state => ({
   apuntarseTorneo: state.apuntarseTorneo,
-  error: state.error
+  errors: state.errors
 });
 export default connect(mapStateToProps, { registrarseTorneoPriv })(
   withRouter(ApuntarsePriv)

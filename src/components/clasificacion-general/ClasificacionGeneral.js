@@ -40,62 +40,62 @@ class ClasificacionGeneral extends Component {
           );
           j++;
           children.push(
-            <td key={j} className="text-left">
+            <td key={j} className="text-center">
               {torneo.couples[i].puntos}
             </td>
           );
           j++;
           children.push(
-            <td key={j} className="text-left">
+            <td key={j} className="text-center">
               {torneo.couples[i].partidosJugados}
             </td>
           );
           j++;
           children.push(
-            <td key={j} className="text-left">
+            <td key={j} className="text-center">
               {torneo.couples[i].partidosGanados}
             </td>
           );
           j++;
           children.push(
-            <td key={j} className="text-left">
+            <td key={j} className="text-center">
               {torneo.couples[i].partidosPerdidos}
             </td>
           );
           j++;
           children.push(
-            <td key={j} className="text-left">
+            <td key={j} className="text-center">
               {torneo.couples[i].setsGanados}
             </td>
           );
           j++;
           children.push(
-            <td key={j} className="text-left">
+            <td key={j} className="text-center">
               {torneo.couples[i].setsPerdidos}
             </td>
           );
           j++;
           children.push(
-            <td key={j} className="text-left">
+            <td key={j} className="text-center">
               {torneo.couples[i].juegosGanados}
             </td>
           );
           j++;
           children.push(
-            <td key={j} className="text-left">
+            <td key={j} className="text-center">
               {torneo.couples[i].juegosPerdidos}
             </td>
           );
           j++;
           children.push(
-            <td key={j} className="text-left">
-              {torneo.couples[i].diferenciaJuegos}
+            <td key={j} className="text-center">
+              {torneo.couples[i].diferenciaSets}
             </td>
           );
           j++;
           children.push(
-            <td key={j} className="text-left">
-              {torneo.couples[i].diferenciaSets}
+            <td key={j} className="text-center">
+              {torneo.couples[i].diferenciaJuegos}
             </td>
           );
           j++;
@@ -125,8 +125,8 @@ class ClasificacionGeneral extends Component {
                 <th className="text-center">Sets Perdidos </th>
                 <th className="text-center">Juegos Ganados </th>
                 <th className="text-center">Juegos Perdidos </th>
-                <th className="text-center">Diferencia Juegos </th>
-                <th className="text-center">Diferencia Sets </th>
+                <th className="text-center">Diferencia de Sets </th>
+                <th className="text-center">Diferencia de Juegos </th>
               </tr>
             </thead>
             <tbody>{createTable()}</tbody>
