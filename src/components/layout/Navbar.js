@@ -42,14 +42,13 @@ class Navbar extends Component {
           <span></span>
         </li>
         <li className="nav-item">
-          <p className="usuario">Welcome {user.name}</p>
           <div className="row">
             <Link
               to="/torneos-activos-user"
               className="nav-link btn-us"
               onClick={this.onUserClick.bind(this)}
             >
-              Usuario{" "}
+              Usuario
             </Link>
             <Link
               to="/torneos-activos-admin"
@@ -91,10 +90,10 @@ class Navbar extends Component {
     );
 
     return (
-      <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+      <nav className="navbar navbar-expand-sm navbar-light mb-4">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
-            Torneos de pádel
+            <div id="img-pelota"></div> Torneos de pádel
           </Link>
           <button
             className="navbar-toggler"
@@ -124,7 +123,9 @@ Navbar.propTypes = {
 const mapStateToProps = state => ({
   auth: state.auth
 });
-export default connect(
-  mapStateToProps,
-  { logoutUser, isAdmin, isNotAdmin, clearCurrentProfile }
-)(Navbar);
+export default connect(mapStateToProps, {
+  logoutUser,
+  isAdmin,
+  isNotAdmin,
+  clearCurrentProfile
+})(Navbar);

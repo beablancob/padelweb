@@ -17,7 +17,7 @@ class CreateTournament extends Component {
       publico: true,
       puntosPG: "",
       puntosPP: "",
-      idaYvuelta: false,
+      idaYvuelta: true,
       numeroRondas: "",
       parejasSuben: "",
       errors: {}
@@ -71,7 +71,7 @@ class CreateTournament extends Component {
     ];
 
     return (
-      <div className="create-profile">
+      <div className="dashboard">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
@@ -155,7 +155,7 @@ class CreateTournament extends Component {
                 <input
                   type="submit"
                   value="Enviar"
-                  className="btn btn-info btn-block mt-4"
+                  className="btn btn-block mt-4 btn-verde"
                 />
                 {/* <p className="errores">
                   hola{error ? error.error.toString() : null}

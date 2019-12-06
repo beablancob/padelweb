@@ -161,7 +161,10 @@ class ResultadoPartido extends Component {
               </div>
             </div>
 
-            <input type="submit" className="btn btn-info btn-block mt-4" />
+            <input
+              type="submit"
+              className="btn btn-info btn-block mt-4 btn-verde"
+            />
             <p className="errores">{error ? error.error.toString() : null}</p>
           </form>
         </div>
@@ -171,6 +174,7 @@ class ResultadoPartido extends Component {
       <div className="info-torneo">
         <div className="container">
           <h2>Sube el resultado de tu partido</h2>
+          <p>Recuerda que si no has jugado tercer set, tienes que poner 0-0</p>
 
           {ResultadoContent}
         </div>

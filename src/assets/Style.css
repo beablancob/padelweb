@@ -1,3 +1,7 @@
+th {
+  text-align: center;
+  width: 300px;
+}
 #sesion {
   margin: auto;
   width: 300px;
@@ -8,10 +12,42 @@
   border-radius: 50%;
   margin: auto;
 }
+.img-pelota {
+  background: url("../components/img/pelota2.png") no-repeat;
+  width: 5px;
+  height: 5px;
+}
+.btn-verde {
+  color: white;
+  background: #8ac125;
+  border: solid 1px #8ac125;
+  transition: background 150ms;
+}
+.btn-verde:hover {
+  color: white;
+  background: #7bab21;
+  border: solid 1px #7bab21;
+
+  transition: background 150ms;
+  transition: color 150ms;
+}
+.footer {
+  background-color: black;
+  color: #8ac125;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 100;
+}
 .errores {
   color: red;
 }
-
+.dashboard {
+  overflow: hidden;
+  margin-top: 150px;
+  margin-bottom: 100px;
+}
 .alert {
   color: red;
 }
@@ -21,29 +57,40 @@
 }
 .navbar-torneo {
   margin-left: 160;
+  padding: 9px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #8ac125;
 }
 .navbar {
+  background-color: #8ac125;
+  color: black !important;
   z-index: 999;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
 }
-
+.nav-link {
+  margin-right: 25px;
+}
 .torneos {
   margin-top: 58px;
 }
 .sidenav {
-  margin-top: 50px;
-  height: 100%;
+  margin-top: 100px;
+  height: 70%;
   width: 160px;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: darkgrey;
+  border-right: 3px solid #8ac125;
   overflow-x: hidden;
   padding-top: 20px;
 }
 
 .sidenav a {
-  padding: 6px 8px 6px 16px;
+  padding: 0px 8px 0px 16px;
   text-decoration: none;
   font-size: 20px;
   color: #818181;
@@ -51,9 +98,11 @@
 }
 
 .sidenav a:hover {
-  color: #f1f1f1;
+  color: black;
 }
-
+.sidenav li {
+  padding: 0px;
+}
 .main {
   margin-left: 160px; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
@@ -70,7 +119,7 @@
 }
 
 .typeUser {
-  color: white;
+  color: black;
 }
 
 .usuario {
@@ -79,6 +128,29 @@
 .sidenav .nav-item {
   padding-top: 50px;
 }
+.aux-nav {
+  text-decoration: none;
+  color: #8ac125;
+  transition: background 150ms;
+  border-radius: 20px;
+  padding: 10px;
+}
+.aux-nav:active {
+  border-bottom: 1px solid #8ac125;
+  background: #8ac125;
+  color: white;
+}
+
+.aux-nav:hover {
+  margin-bottom: 500px;
+
+  background: #8ac125;
+  color: white;
+
+  transition: background 150ms;
+  transition: color 150ms;
+  text-decoration: none;
+}
 
 .container-app {
   margin-left: 160px;
@@ -86,18 +158,42 @@
 .grupo {
   margin: 5px 5px 5px 5px;
 }
+.comenzado {
+  color: #8ac125;
+  text-decoration: none;
+}
+.no-comenzado {
+  color: #818181;
+}
+/* .link-button {
+  margin-top: 5px;
+  padding: 5px;
+  color: white;
+  background: #8ac125;
+  border: #8ac125 1px solid;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: background 150ms;
+} */
 .link-button {
   margin-top: 5px;
   padding: 5px;
-  color: #17a2b8;
-  border: #17a2b8 1px solid;
+  color: #8ac125;
+  border: #8ac125 1px solid;
   border-radius: 20px;
   text-decoration: none;
   transition: background 150ms;
 }
+/* .link-button:hover {
+  text-decoration: none;
+  background: #7bab21;
+  color: black;
+  transition: background 150ms;
+  transition: color 150ms;
+} */
 .link-button:hover {
   text-decoration: none;
-  background: #17a2b8;
+  background: #8ac125;
   color: white;
   transition: background 150ms;
   transition: color 150ms;
@@ -106,8 +202,8 @@
 .resultado-button {
   margin-top: 50px;
   padding: 3px;
-  color: #17a2b8;
-  border: #17a2b8 1px solid;
+  color: #8ac125;
+  border: #8ac125 1px solid;
   border-radius: 20px;
   text-decoration: none;
   transition: background 150ms;
@@ -115,7 +211,7 @@
 
 .resultado-button:hover {
   text-decoration: none;
-  background: #17a2b8;
+  background: #8ac125;
   color: white;
   transition: background 150ms;
   transition: color 150ms;
@@ -132,29 +228,29 @@
 .link-parejas {
   margin-top: 100px;
   padding: 5px;
-  color: #17a2b8;
-  border: #17a2b8 1px solid;
+  color: #8ac125;
+  border: #8ac125 1px solid;
   border-radius: 20px;
   text-decoration: none;
   transition: background 150ms;
 }
 .link-parejas:hover {
   text-decoration: none;
-  background: #17a2b8;
-  color: white;
+  background: #8ac125;
+  color: black;
   transition: background 150ms;
   transition: color 150ms;
 }
 .t-comenzado-link {
   padding: 5px;
-  color: #17a2b8;
-  border: #17a2b8 1px solid;
+  color: #8ac125;
+  border: #8ac125 1px solid;
   border-radius: 20px;
   transition: background 150ms;
 }
 .t-comenzado-link:hover {
   text-decoration: none;
-  background: #17a2b8;
+  background: #8ac125;
   color: white;
   transition: background 150ms;
   transition: color 150ms;
@@ -162,16 +258,16 @@
 
 .t-nocomenzado-link {
   padding: 5px;
-  color: #17a2b8;
-  border: #17a2b8 1px solid;
+  color: #818181;
+  border: #818181 1px solid;
   border-radius: 20px;
   transition: background 150ms;
 }
 
 .t-nocomenzado-link:hover {
   text-decoration: none;
-  background: #17a2b8;
-  color: white;
+  background: #818181;
+  color: black;
   transition: background 150ms;
   transition: color 150ms;
 }

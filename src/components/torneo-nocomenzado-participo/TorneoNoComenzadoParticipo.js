@@ -48,7 +48,7 @@ class TorneoNoComenzadoParticipo extends Component {
           );
 
           children.push(
-            <td key={j} className="text-left">
+            <td key={j} className="text-center">
               {torneoNoComenzado.tournament.couples[i].user1Name}
             </td>
           );
@@ -92,7 +92,7 @@ class TorneoNoComenzadoParticipo extends Component {
     }
 
     return (
-      <div className="info-torneo">
+      <div className="dashboard">
         <div className="container">
           <div className="col-md-8 m-auto">{torneoContent}</div>
         </div>

@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authAction";
 import TextFieldGroup from "../common/TextFieldGroup";
+import "../../assets/Style.css";
 
 class Login extends Component {
   constructor() {
@@ -44,7 +45,8 @@ class Login extends Component {
 
     this.props.loginUser(userData);
     console.log(userData);
-    console.log("Errores:", this.state.errors);
+    const { error } = this.state.errors;
+    console.log("+++++++++", error);
   }
 
   render() {
@@ -52,7 +54,7 @@ class Login extends Component {
     console.log("error", error);
 
     return (
-      <div className="login">
+      <div className="dashboard">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
@@ -76,8 +78,10 @@ class Login extends Component {
                   onChange={this.onChange}
                 />
 
-                <input type="submit" className="btn btn-info btn-block mt-4" />
-                <p className="errores">{error ? error.msg.toString() : null}</p>
+                <input type="submit" className="btn btn-block mt-4 btn-verde" />
+                <p className="errores">
+                  {error ? error.error.toString() : null}
+                </p>
               </form>
             </div>
           </div>

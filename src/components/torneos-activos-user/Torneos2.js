@@ -72,7 +72,7 @@ class TorneosPublicos extends Component {
                   listTorneos[i].name
                 );
                 children.push(
-                  <td key={j} className="text-left">
+                  <td key={j} className="text-center">
                     {listTorneos[i].name}
                   </td>
                 );
@@ -125,7 +125,7 @@ class TorneosPublicos extends Component {
                             "<<<<<<<<LA RONDA ACTUAL ES 0, ME PUEDO APUNTAR!!!!!!>>>>>>>>>>>>"
                           );
                           children.push(
-                            <td key={j} className="text-left">
+                            <td key={j} className="text-center">
                               {listTorneos[i].name}
                             </td>
                           );

@@ -12,6 +12,10 @@ import {
 // Get current admin tournaments
 export const getCurrentAdminTournaments = () => dispatch => {
   dispatch(setTournamentsLoading());
+  dispatch({
+    type: GET_ERRORS,
+    payload: null
+  });
   axios
     .get("/admin/tournaments")
     .then(res =>

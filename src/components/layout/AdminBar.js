@@ -3,9 +3,9 @@ import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Navbar, Nav, NavDropdown, Form, Container, Button } from "reactstrap";
 import { BrowserRouter as Router } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import { Nav } from "react-bootstrap";
 import { miRondaInfo } from "../../actions/torneoInfoAction";
 import "../../assets/Style.css";
 
@@ -23,15 +23,18 @@ class AdminBar extends Component {
     console.log(link2);
     if (isAuthenticated) {
       return (
-        <nav className="navbar-torneo">
-          <NavLink exact to={link1}>
-            Grupos
-          </NavLink>
-
-          <NavLink exact to={link2}>
-            Clasificación General
-          </NavLink>
-        </nav>
+        <Nav className="navbar-torneo">
+          <Nav.Item>
+            <Link exact className="aux-nav" to={link1}>
+              Grupos
+            </Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Link exact className="aux-nav" to={link2}>
+              Clasificación General
+            </Link>
+          </Nav.Item>
+        </Nav>
       );
     }
   }

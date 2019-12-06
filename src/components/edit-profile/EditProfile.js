@@ -74,7 +74,7 @@ class EditProfile extends Component {
     //Errors.name
 
     return (
-      <div className="register">
+      <div className="dashboard">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
@@ -125,7 +125,7 @@ class EditProfile extends Component {
                   onChange={this.onChange}
                   error={errors.password2}
                 />
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <input type="submit" className="btn btn-block mt-4 btn-verde" />
               </form>
             </div>
           </div>

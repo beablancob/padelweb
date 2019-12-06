@@ -4,11 +4,11 @@ img {
 
 .landing {
   position: relative;
-  background: url('../components/img/Pala_de_padel.jpg') no-repeat;
+  background: url("../components/img/Pala_de_padel.jpg") no-repeat;
   background-size: cover;
   background-position: center;
   height: 100vh;
-  margin-top: -24px;
+  margin-top: 24px;
   margin-bottom: -50px;
 }
 

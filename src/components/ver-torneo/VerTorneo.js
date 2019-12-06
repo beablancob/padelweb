@@ -74,7 +74,7 @@ class VerTorneo extends Component {
     }
 
     return (
-      <div className="info-torneo">
+      <div className="dashboard">
         <div className="container">
           <div className="col-md-10 m-auto">{infoContent}</div>
         </div>

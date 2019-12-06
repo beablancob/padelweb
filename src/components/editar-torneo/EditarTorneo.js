@@ -102,22 +102,39 @@ class EditarTorneo extends Component {
     const { errors } = this.state;
     const { loading2, torneoAdmin } = this.props.torneosActivosAdmin;
     console.log("params", this.props.match.params);
-    console.log(this.props.torneosActivosAdmin);
+    console.log("+++++++++++", torneoAdmin);
     let editContent;
     if (loading2) {
       console.log("loading");
       editContent = <Spinner />;
     } else {
-      const options2 = [
-        { label: "Si", value: true },
-        { label: "No", value: false }
-      ];
+      // Select options of idaYvuelta
+      let options2;
+      if (torneoAdmin.tournament.idaYvuelta === false) {
+        options2 = [
+          { label: "No", value: false },
+          { label: "Si", value: true }
+        ];
+      } else {
+        options2 = [
+          { label: "Si", value: true },
+          { label: "No", value: false }
+        ];
+      }
+      // Select options of type of tournament
+      let options1;
+      if (torneoAdmin.tournament.publico === true) {
+        options1 = [
+          { label: "Público", value: true },
+          { label: "Privado", value: false }
+        ];
+      } else {
+        options1 = [
+          { label: "Privado", value: false },
+          { label: "Público", value: true }
+        ];
+      }
 
-      // Select options for type of tournament
-      const options1 = [
-        { label: "Público", value: true },
-        { label: "Privado", value: false }
-      ];
       let torneoId = torneoAdmin.tournament.id;
       editContent = (
         <div>
@@ -231,7 +248,7 @@ class EditarTorneo extends Component {
                   <input
                     type="submit"
                     value="Enviar"
-                    className="btn btn-info btn-block mt-4"
+                    className="btn btn-info btn-block mt-4 btn-verde"
                   />
                 </form>
               </div>
@@ -265,7 +282,7 @@ class EditarTorneo extends Component {
     }
 
     return (
-      <div className="create-profile">
+      <div className="dashboard">
         <div className="container">{editContent}</div>
       </div>
     );

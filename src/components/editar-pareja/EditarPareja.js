@@ -110,7 +110,7 @@ class EditarPareja extends Component {
             <input
               type="submit"
               value="Enviar"
-              className="btn btn-info btn-block mt-4"
+              className="btn btn-block mt-4 btn-verde"
             />
           </form>
           <div style={{ marginBottom: "60px" }} />
@@ -127,7 +127,7 @@ class EditarPareja extends Component {
       );
     }
     return (
-      <div className="apuntarse-torneo">
+      <div className="dashboard">
         <div className="container">
           <div className="col-md-8 m-auto">{apuntarseContent}</div>
         </div>

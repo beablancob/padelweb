@@ -70,10 +70,24 @@ class TorneosActivosAdmin extends Component {
               let children = [];
 
               children.push(
-                <td key={j} className="text-left">
+                <td key={j} className="text-center">
                   {listTorneos[i].name}
                 </td>
               );
+              j++;
+              if (listTorneos[i].publico === true) {
+                children.push(
+                  <td key={j} className="text-center">
+                    Público
+                  </td>
+                );
+              } else {
+                children.push(
+                  <td key={j} className="text-center">
+                    Privado
+                  </td>
+                );
+              }
 
               j++;
               children.push(<td key={j}>{listTorneos[i].registerCode}</td>);
@@ -124,7 +138,7 @@ class TorneosActivosAdmin extends Component {
                 children.push(
                   <td key={j} style={{ width: 220 }}>
                     <Link className="link-button" to={myLink}>
-                      Info del torneo en juego
+                      Info del torneo
                     </Link>
                   </td>
                 );
@@ -152,6 +166,7 @@ class TorneosActivosAdmin extends Component {
                 <thead>
                   <tr className="text-center">
                     <th>Nombre</th>
+                    <th>Tipo</th>
                     <th>Código de registro</th>
                     <th>Información</th>
                     <th>Registrar pareja</th>

@@ -26,7 +26,9 @@ class ApuntarseTorneo extends Component {
     const { id } = this.props.match.params;
     this.props.seleccionTorneo(id);
     console.log("DIDDDDDD", id);
+    const { error } = this.state.errors;
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
@@ -91,7 +93,7 @@ class ApuntarseTorneo extends Component {
             <input
               type="submit"
               value="Enviar"
-              className="btn btn-info btn-block mt-4"
+              className="btn btn-info btn-block mt-4 btn-verde"
             />
             <p className="errores">{error ? error.error.toString() : null}</p>
           </form>
@@ -99,7 +101,7 @@ class ApuntarseTorneo extends Component {
       );
     }
     return (
-      <div className="apuntarse-torneo">
+      <div className="dashboard">
         <div className="container">
           <div className="col-md-8 m-auto">{apuntarseContent}</div>
         </div>

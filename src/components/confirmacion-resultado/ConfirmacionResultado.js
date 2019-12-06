@@ -6,6 +6,7 @@ import Spinner from "../common/Spinner";
 import { withRouter } from "react-router-dom";
 import TextFieldGroup from "../common/TextFieldGroup";
 import { Button } from "react-bootstrap";
+import "../../assets/Style.css";
 
 import {
   miRondaInfo,
@@ -131,7 +132,7 @@ class ConfirmacionResultado extends Component {
             <Button
               outline
               color="success"
-              className="btn btn-info btn-block mt-4"
+              className="btn btn-block mt-4 btn-verde"
               onClick={this.onConfirmResult.bind(this)}
               className="btn"
             >

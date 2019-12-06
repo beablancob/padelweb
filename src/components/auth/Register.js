@@ -58,7 +58,7 @@ class Register extends Component {
     //Errors.name
     console.log("*********", error);
     return (
-      <div className="register">
+      <div className="dashboard">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
@@ -99,7 +99,7 @@ class Register extends Component {
                   value={this.state.password2}
                   onChange={this.onChange}
                 />
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <input type="submit" className="btn btn-block mt-4 btn-verde" />
                 <p className="errores">
                   {error ? error.error.toString() : null}
                 </p>

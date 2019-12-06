@@ -41,7 +41,6 @@ export const registrarseTorneo = (infoRegistro, email, history) => dispatch => {
       console.log("RESPUESTA APUNTARSE", res);
       history.push("/mis-torneos");
     })
-
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -57,7 +56,7 @@ export const registrarseTorneoPriv = (infoRegistro, history) => dispatch => {
   axios
     .post(
       "/tournaments/" + infoRegistro.registerCodeData + "/couples",
-      infoRegistro
+      infoRegistro.emailUser2
     )
     .then(res => {
       console.log("RESPUESTA APUNTARSE", res);
@@ -72,7 +71,7 @@ export const registrarseTorneoPriv = (infoRegistro, history) => dispatch => {
 };
 
 //Seleccion del torneo al que me quiero apuntar
-export const seleccionTorneoAdmin = (torneoId, history) => dispatch => {
+export const seleccionTorneoAdmin = torneoId => dispatch => {
   dispatch(setRegistroAdminLoading());
 
   axios.get("/admin/tournaments/" + torneoId).then(res => {
@@ -80,7 +79,6 @@ export const seleccionTorneoAdmin = (torneoId, history) => dispatch => {
       type: SET_SELECTED_ADMIN_TOURNAMENT,
       payload: res.data
     });
-    if (history) history.push("/apuntarse-torneo/" + torneoId);
     console.log("res.data", res.data);
   });
 

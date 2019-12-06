@@ -94,7 +94,7 @@ class RegistrarPareja extends Component {
             <input
               type="submit"
               value="Enviar"
-              className="btn btn-info btn-block mt-4"
+              className="btn btn-info btn-block mt-4 btn-verde"
             />
             <p className="errores">{error ? error.error.toString() : null}</p>
           </form>
@@ -102,7 +102,7 @@ class RegistrarPareja extends Component {
       );
     }
     return (
-      <div className="apuntarse-torneo">
+      <div className="dashboard">
         <div className="container">
           <div className="col-md-8 m-auto">{apuntarseContent}</div>
         </div>

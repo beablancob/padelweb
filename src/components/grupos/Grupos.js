@@ -42,13 +42,23 @@ class Grupos extends Component {
         console.log("HEY YOU", torneoAdmin.tournament);
         let couples = torneoAdmin.tournament.couples;
         let numGrupos;
+
+        numGrupos = couples[0].grupoActual;
+
         for (let i = 0; i < couples.length - 1; i++) {
-          numGrupos = couples[i].grupoActual;
           if (couples[i + 1].grupoActual > numGrupos) {
+            console.log(
+              "couple, numgrupo",
+              couples[i + 1].grupoActual,
+              numGrupos
+            );
             numGrupos = couples[i + 1].grupoActual;
           }
-          numGrupos += 1;
+          console.log(">>>>>>>>>>>>>>>>>>>>>>1111", numGrupos);
         }
+        numGrupos += 1;
+        console.log(">>>>>>>>>>>>>>>>>>>>>>", numGrupos);
+
         let createTable = () => {
           let table = [];
           let k = 0;
@@ -75,6 +85,26 @@ class Grupos extends Component {
           m = 0;
           return table;
         };
+
+        let partidosJugados = true;
+        // let todosPartidos = torneoAdmin.tournament.partidos;
+        // for (let i = 0; i < todosPartidos.length; i++) {
+        //   if (
+        //     torneoAdmin.tournament.rondaActual === todosPartidos[i].numeroRonda
+        //   ) {
+        //     while (partidosJugados === true) {
+        //       if (todosPartidos[i].jugado === false) {
+        //         partidosJugados = false;
+        //       }
+        //     }
+        //   }
+        // }
+
+        console.log(
+          "*****************+ partidosJugados",
+          torneoAdmin.tournament,
+          partidosJugados
+        );
         gruposContent = (
           <div className="row">
             <div className="col">

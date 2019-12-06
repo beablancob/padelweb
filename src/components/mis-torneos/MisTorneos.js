@@ -17,27 +17,10 @@ class MisTorneos extends Component {
       torneo: "",
       errors: {}
     };
-
-    // this.onTorneoComenzadoParticipoClick = this.onTorneoComenzadoParticipoClick.bind(
-    //   this
-    // );
-    // this.onTorneoNoComenzadoParticipoClick = this.onTorneoNoComenzadoParticipoClick.bind(
-    //   this
-    // );
   }
   componentDidMount() {
     this.props.getMyCurrentTournaments();
   }
-
-  // onTorneoComenzadoParticipoClick(torneoData) {
-  //   this.props.infoTorneoComenzadoParticipo(torneoData);
-
-  //   this.props.miRondaInfo(torneoData, this.props.history);
-  // }
-
-  // onTorneoNoComenzadoParticipoClick(torneoData) {
-  //   // this.props.infoTorneoNoComenzadoParticipo(torneoData, this.props.history);
-  // }
 
   render() {
     const { user } = this.props.auth;
@@ -65,7 +48,6 @@ class MisTorneos extends Component {
 
           torneosContent = (
             <div>
-              <p className="lead text-muted">Bienvenido {user.name}</p>
               <p>
                 Todavía no te has apuntado a ningún torneo. ¡Anímate a ello!
               </p>
@@ -95,9 +77,8 @@ class MisTorneos extends Component {
                   listTorneos[i].couples[k].user1Id === user.id ||
                   listTorneos[i].couples[k].user2Id === user.id
                 ) {
-                  if (listTorneos[i].rondaActual === 0) {
                     children.push(
-                      <td key={j} className="text-left">
+                      <td key={j} className="text-center">
                         {listTorneos[i].name}
                       </td>
                     );
@@ -112,6 +93,9 @@ class MisTorneos extends Component {
                       <td key={j}>{listTorneos[i].numeroRondas}</td>
                     );
                     j++;
+
+                  if (listTorneos[i].rondaActual === 0) {
+
                     console.log(
                       "-------------------x------------------- MIS TORNEOS",
                       listTorneos[i].id
@@ -119,12 +103,20 @@ class MisTorneos extends Component {
                     let myLink =
                       "/torneo-nocomenzado-participo/" + listTorneos[i].id;
                     children.push(
+                      <td key={j} className="no-comenzado">
+                       
+                          Torneo no comenzado
+                        
+                      </td>
+                    );
+                    j++;
+                    children.push(
                       <td key={j}>
                         <Link
                           className="link-button t-comenzado-link"
                           to={myLink}
                         >
-                          Torneo no comenzado
+                          + info
                         </Link>
                       </td>
                     );
@@ -144,27 +136,21 @@ class MisTorneos extends Component {
                     //   </td>
                     // );
                     break;
+
                   } else {
+                   
+                    let myLink2 = "/torneo-apuntado-info/" + listTorneos[i].id;
                     children.push(
-                      <td key={j} className="text-left">
-                        {listTorneos[i].name}
+                      <td key={j} className="comenzado">
+                        
+                          Comenzado
+                        
                       </td>
                     );
-                    j++;
-                    children.push(
-                      <td key={j}>{listTorneos[i].numeroParejas}</td>
-                    );
-
-                    j++;
-                    children.push(
-                      <td key={j}>{listTorneos[i].numeroRondas}</td>
-                    );
-                    j++;
-                    let myLink2 = "/torneo-apuntado-info/" + listTorneos[i].id;
                     children.push(
                       <td key={j}>
                         <Link className="t-comenzado-link" to={myLink2}>
-                          Comenzado
+                          + info
                         </Link>
                       </td>
                     );
@@ -195,7 +181,8 @@ class MisTorneos extends Component {
                     <th>Nombre </th>
                     <th>Número de parejas </th>
                     <th>Número de rondas </th>
-                    <th>Informacion </th>
+                    <th>Estado</th>
+                    <th>Información</th>
                   </tr>
                 </thead>
                 <tbody>{createTable()}</tbody>
