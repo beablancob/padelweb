@@ -110,6 +110,7 @@ export const eliminarTorneo = (torneoId, history) => dispatch => {
     );
 };
 
+// Dar comienzo a mi torneo
 export const comenzarTorneo = (torneoId, history) => dispatch => {
   console.log("COMENZAR TORNEO ACTIONS");
 
@@ -126,9 +127,16 @@ export const comenzarTorneo = (torneoId, history) => dispatch => {
     );
 };
 
+// Avanzar ronda
 export const avanzarRonda = (id, history) => dispatch => {
-  console.log("avanzar ronda");
+  console.log("avanzar ronda id:", id);
   axios.post("/admin/tournaments/" + id + "/nextRound");
+  // .get("/admin(tournaments/" + id)
+  // .then(res=>{
+  //   dispatch({
+  //     type:
+  //   })
+  // });
 };
 
 export const getRoundsTournament = id => dispatch => {

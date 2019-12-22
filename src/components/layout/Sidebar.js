@@ -18,18 +18,13 @@ class Sidebar extends Component {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/mis-torneos">
-              Mis torneos
+            <Link className="nav-link" to="/create-tournament">
+              Organizar un torneo
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/ap-priv">
               Registrarse a un torneo privado
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/edit-profile">
-              Ajustes de perfil
             </Link>
           </li>
         </ul>
@@ -40,13 +35,18 @@ class Sidebar extends Component {
       <div className="sidenav">
         <ul className="list-unstyled components">
           <li className="nav-item">
-            <Link className="nav-link" to="/torneos-activos-admin">
-              Torneos activos organizados por mi
+            <Link className="nav-link" to="/mis-torneos">
+              Torneos en los que participo
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/create-tournament">
-              Organizar un torneo
+            <Link className="nav-link" to="/torneos-activos-admin">
+              Torneos organizados por mi
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/edit-profile">
+              Ajustes de perfil
             </Link>
           </li>
         </ul>

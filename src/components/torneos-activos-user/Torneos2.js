@@ -90,10 +90,12 @@ class TorneosPublicos extends Component {
                   </td>
                 );
               } else {
+                // 2. Existen parejas apuntadas
                 for (var k = 0; k < listTorneos[i].couples.length; k++) {
                   if (
                     listTorneos[i].couples.length < listTorneos[i].numeroParejas
                   ) {
+                    // 2.1 Sigue habiendo hueco para que se apunten parejas nuevas
                     console.log("--------Análisis torneo", listTorneos[i].name);
                     console.log(
                       "user.id:",
@@ -108,40 +110,43 @@ class TorneosPublicos extends Component {
                       listTorneos[i].couples[k].user1Id !== user.id &&
                       listTorneos[i].couples[k].user2Id !== user.id
                     ) {
-                      console.log(
-                        ">>>>>>>>>>el usuario no pertenece a este torneo"
-                      );
-                      p++;
-                      console.log("valor de p", p);
-                      console.log(
-                        "couples.length",
-                        listTorneos[i].couples.length
-                      );
+                      // 2.1.1. Además, todavía no me he apuntado a ese torneo
 
+                      p++;
                       if (p === listTorneos[i].couples.length) {
                         p = 0;
+                        // 2.1.1.1 Y todavía no ha comenzado el torneo
                         if (listTorneos[i].rondaActual === 0) {
-                          console.log(
-                            "<<<<<<<<LA RONDA ACTUAL ES 0, ME PUEDO APUNTAR!!!!!!>>>>>>>>>>>>"
-                          );
                           children.push(
                             <td key={j} className="text-center">
                               {listTorneos[i].name}
                             </td>
                           );
                           j++;
-                          children.push(
-                            <td key={j}>{listTorneos[i].numeroParejas}</td>
+                          // children.push(
+                          //   <td key={j} className="text-center">
+                          //     {listTorneos[i].numeroParejas}
+                          //   </td>
+                          // );
+                          // j++;
+
+                          let numRestante =
+                            listTorneos[i].numeroParejas -
+                            listTorneos[i].couples.length;
+                          console.log(
+                            "--------------------",
+                            numRestante,
+                            listTorneos[i].numeroParejas,
+                            listTorneos[i].couples.length
                           );
+                          children.push(<td key={j}>{numRestante}</td>);
 
                           j++;
                           children.push(
                             <td key={j}>{listTorneos[i].numeroRondas}</td>
                           );
                           j++;
-                          console.log(
-                            "-------------------x------------------- torneos2"
-                          );
+
                           let myLink = "/apuntarse-torneo/" + listTorneos[i].id;
                           children.push(
                             <td key={j}>
@@ -176,15 +181,15 @@ class TorneosPublicos extends Component {
             <div>
               <p>
                 Estos son los torneos públicos de este momento. Puedes animarte
-                a organizar uno actuando como admin.
+                a organizar uno en inicio.
               </p>
               <table>
                 <thead>
                   <tr className="text-center">
                     <th>Nombre </th>
-                    <th>Número de parejas </th>
-                    {/* <th>Ronda actual </th> */}
-                    <th>Número de rondas </th>
+                    {/* <th>Número de parejas</th> */}
+                    <th>Parejas restantes que se pueden apuntar </th>
+                    <th>Rondas </th>
                     <th>Apúntate </th>
                   </tr>
                 </thead>

@@ -79,9 +79,7 @@ class Login extends Component {
                 />
 
                 <input type="submit" className="btn btn-block mt-4 btn-verde" />
-                <p className="errores">
-                  {error ? error.error.toString() : null}
-                </p>
+                <p className="errores">{error ? error.msg.toString() : null}</p>
               </form>
             </div>
           </div>

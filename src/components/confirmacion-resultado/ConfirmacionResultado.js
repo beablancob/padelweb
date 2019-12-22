@@ -109,6 +109,7 @@ class ConfirmacionResultado extends Component {
           break;
         }
       }
+
       ResultadoContent = (
         <div className="container">
           <div>
@@ -130,9 +131,8 @@ class ConfirmacionResultado extends Component {
             </div>
 
             <Button
-              outline
-              color="success"
-              className="btn btn-block mt-4 btn-verde"
+              variant="outline-danger"
+              className="btn  mt-4 btn-verde"
               onClick={this.onConfirmResult.bind(this)}
               className="btn"
             >
@@ -143,6 +143,7 @@ class ConfirmacionResultado extends Component {
           <p>
             Si el resultado no es el acorde, sube aquí el resultado actualizado
           </p>
+          <p>Recuerda, si no has jugado tercer set pon 0-0.</p>
           <form noValidate onSubmit={this.onSubmit}>
             <div className="row">
               <div className="col"> {pareja1}</div>
@@ -210,7 +211,7 @@ class ConfirmacionResultado extends Component {
               </div>
             </div>
 
-            <input type="submit" className="btn btn-info btn-block mt-4" />
+            <input type="submit" className="btn  btn-block mt-4 btn-verde" />
             <p className="errores">{error ? error.error.toString() : null}</p>
           </form>
         </div>

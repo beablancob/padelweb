@@ -30,12 +30,20 @@ export const getMyCurrentTournaments = () => dispatch => {
     payload: null
   });
 
-  axios.get("/tournaments").then(res =>
-    dispatch({
-      type: GET_MY_CURRENT_TOURNAMENTS,
-      payload: res.data
-    })
-  );
+  axios
+    .get("/tournaments")
+    .then(res =>
+      dispatch({
+        type: GET_MY_CURRENT_TOURNAMENTS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: {}
+      })
+    );
 };
 
 // Tournaments loading

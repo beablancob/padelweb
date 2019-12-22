@@ -1,4 +1,3 @@
-// YA NO ME HACE FALTA ESTE COMPONENTE
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -13,7 +12,7 @@ import "../../assets/Style.css";
 class Grupo extends Component {
   componentDidMount() {
     const { id, numGrupo } = this.props.match.params;
-    console.log(id);
+    console.log(id, numGrupo);
   }
   render() {
     const { torneoAdmin, loading2 } = this.props.torneosActivosAdmin;
@@ -35,93 +34,80 @@ class Grupo extends Component {
         let numeroGrupo = numGrupo - 1;
 
         let j = 0;
+        let partidos = torneoAdmin.tournament.partidos;
         let couples = torneoAdmin.tournament.couples;
         let createTable = () => {
-          for (var i = 0; i < couples.length; i++) {
+          let table = [];
+
+          // Outer loop to create parent
+          for (let i = 0; i < partidos.length; i++) {
             let children = [];
-            if (numeroGrupo === couples[i].grupoActual) {
-              j++;
-              children.push(
-                <td key={j} className="text-left">
-                  {couples[i].user1Name} {couples[i].user1LastName}
-                </td>
-              );
-              j++;
-              children.push(
-                <td key={j} className="text-left">
-                  {couples[i].user2Name} {couples[i].user2LastName}
-                </td>
-              );
+            //Inner loop to create children
+            if (partidos[i].numeroGrupo === numeroGrupo) {
               children.push(
                 <td key={j} className="text-center">
-                  {couples[i].puntos}
+                  {partidos[i].user1Name} {partidos[i].user1LastName}{" "}
+                  {partidos[i].user2Name} {partidos[i].user2LastName}
                 </td>
               );
               j++;
+              if (partidos[i].jugado === null || partidos[i].jugado === false) {
+                children.push(
+                  <td key={j} className="text-center">
+                    Partido sin jugar
+                  </td>
+                );
+                j++;
+                // let myLink =
+                //   "/ver-torneo/" +
+                //   torneoAdmin.id +
+                //   "/grupos/" +
+                //   partidos[i].id +
+                //   "/clasificacion/subir-resultado";
+                // children.push(
+                //   <td key={j} className="td-link">
+                //     <Link className="resultado-button" to={myLink}>
+                //       Subir resultado
+                //     </Link>
+                //   </td>
+                // );
+              } else {
+                children.push(
+                  <td key={j} className="text-center">
+                    {partidos[i].set1Couple1}-{partidos[i].set1Couple2}{" "}
+                    {partidos[i].set2Couple1}-{partidos[i].set2Couple2}{" "}
+                    {partidos[i].set3Couple1}-{partidos[i].set3Couple2}
+                  </td>
+                );
+                j++;
+                // let myLink =
+                //   "/ver-torneo/" +
+                //   torneoAdmin.id +
+                //   "/grupos/" +
+                //   partidos[i].id +
+                //   "/clasificacion/editar-resultado";
+                // children.push(
+                //   <td key={j} className="td-link">
+                //     <Link className="resultado-button" to={myLink}>
+                //       {partidos[i].set1Couple1}-{partidos[i].set1Couple2}{" "}
+                //       {partidos[i].set2Couple1}-{partidos[i].set2Couple2}{" "}
+                //       {partidos[i].set3Couple1}-{partidos[i].set3Couple2}
+                //     </Link>
+                //   </td>
+                // );
+              }
               children.push(
                 <td key={j} className="text-center">
-                  {couples[i].partidosJugados}
+                  {partidos[i].user3Name} {partidos[i].user3LastName}{" "}
+                  {partidos[i].user4Name} {partidos[i].user4LastName}
                 </td>
               );
               j++;
-              children.push(
-                <td key={j} className="text-center">
-                  {couples[i].partidosGanados}
-                </td>
-              );
-              j++;
-              children.push(
-                <td key={j} className="text-center">
-                  {couples[i].partidosPerdidos}
-                </td>
-              );
-              j++;
-              children.push(
-                <td key={j} className="text-left">
-                  {couples[i].setsGanados}
-                </td>
-              );
-              j++;
-              children.push(
-                <td key={j} className="text-left">
-                  {couples[i].setsPerdidos}
-                </td>
-              );
-              j++;
-              children.push(
-                <td key={j} className="text-center">
-                  {couples[i].juegosGanados}
-                </td>
-              );
-              j++;
-              children.push(
-                <td key={j} className="text-center">
-                  {couples[i].juegosPerdidos}
-                </td>
-              );
-              j++;
-              children.push(
-                <td key={j} className="text-center">
-                  {couples[i].diferenciaSets}
-                </td>
-              );
-              j++;
-              children.push(
-                <td key={j} className="text-center">
-                  {couples[i].diferenciaJuegos}
-                </td>
-              );
-              j++;
-              m++;
-              table.push(
-                <tr key={m} className="table">
-                  {children}
-                </tr>
-              );
-              m++;
+
+              //Create the parent and add the children
+              table.push(<tr className="table">{children}</tr>);
             }
           }
-          console.log("table en Grupos", table);
           return table;
         };
 
@@ -132,32 +118,23 @@ class Grupo extends Component {
             <table>
               <thead>
                 <tr>
-                  <th className="text-right">Pareja </th>
-                  <th className="text-center"> </th>
-                  <th className="text-center">Puntos </th>
-                  <th className="text-center">Partidos Jugados </th>
-                  <th className="text-center">Partidos Ganados </th>
-                  <th className="text-center">Partidos Perdidos </th>
-                  <th className="text-center">Sets Ganados</th>
-                  <th className="text-center">Sets Perdidos </th>
-                  <th className="text-center">Juegos Ganados </th>
-                  <th className="text-center">Juegos Perdidos </th>
-                  <th className="text-center">Diferencia Sets </th>
-                  <th className="text-center">Diferencia Juegos </th>
+                  <th className="text-center">Pareja 1 </th>
+                  <th className="text-center">Resultado </th>
+                  <th className="text-center">Pareja 2 </th>
                 </tr>
               </thead>
               <tbody>{createTable()}</tbody>
             </table>
           </div>
         );
+
+        return (
+          <div className="info-torneo">
+            <div className="container">{gruposContent}</div>
+          </div>
+        );
       }
     }
-
-    return (
-      <div className="info-torneo">
-        <div className="container">{gruposContent}</div>
-      </div>
-    );
   }
 }
 Grupo.propTypes = {

@@ -6,7 +6,6 @@ import torneosActivosUserReducer from "./torneosActivosUserReducer";
 import torneosActivosAdminReducer from "./torneosActivosAdminReducer";
 import apuntarseTorneoReducer from "./apuntarseTorneoReducer";
 import torneoInfoReducer from "./torneoInfoReducer";
-import resultadoPartidoReducer from "./resultadoPartidoReducer";
 
 //En este fichero solo combinamos reducers
 export default combineReducers({
@@ -16,7 +15,6 @@ export default combineReducers({
   torneosActivosUser: torneosActivosUserReducer,
   torneosActivosAdmin: torneosActivosAdminReducer,
   apuntarseTorneo: apuntarseTorneoReducer,
-  torneoInfo: torneoInfoReducer,
-  resultadoPartido: resultadoPartidoReducer
+  torneoInfo: torneoInfoReducer
 });
 //utilizaremos this.props.auth

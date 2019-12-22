@@ -32,13 +32,13 @@ class MisTorneos extends Component {
     } else {
       console.log(myTorneos);
 
-      if (myTorneos === null) {
+      if (myTorneos.msg === "No pertenece a ningún torneo") {
         torneosContent = (
           <div>
             <p className="lead text-muted">Bienvenido/a {user.name} </p>
             <p>
-              No te has apuntado a ningún torneo todavía, ¡anímate y apúntate a
-              uno u organiza uno como administrador!
+              No te has apuntado a ningún torneo todavía, ¡anímate a ello en
+              inicio!
             </p>
           </div>
         );
@@ -77,25 +77,22 @@ class MisTorneos extends Component {
                   listTorneos[i].couples[k].user1Id === user.id ||
                   listTorneos[i].couples[k].user2Id === user.id
                 ) {
-                    children.push(
-                      <td key={j} className="text-center">
-                        {listTorneos[i].name}
-                      </td>
-                    );
-                    j++;
-                    children.push(
-                      <td key={j}>{listTorneos[i].numeroParejas}</td>
-                    );
-                    // j++;
-                    // children.push(<td key={j}>{listTorneos[i].rondaActual}</td>);
-                    j++;
-                    children.push(
-                      <td key={j}>{listTorneos[i].numeroRondas}</td>
-                    );
-                    j++;
+                  children.push(
+                    <td key={j} className="text-center">
+                      {listTorneos[i].name}
+                    </td>
+                  );
+                  j++;
+                  children.push(
+                    <td key={j}>{listTorneos[i].numeroParejas}</td>
+                  );
+                  // j++;
+                  // children.push(<td key={j}>{listTorneos[i].rondaActual}</td>);
+                  j++;
+                  children.push(<td key={j}>{listTorneos[i].numeroRondas}</td>);
+                  j++;
 
                   if (listTorneos[i].rondaActual === 0) {
-
                     console.log(
                       "-------------------x------------------- MIS TORNEOS",
                       listTorneos[i].id
@@ -104,9 +101,7 @@ class MisTorneos extends Component {
                       "/torneo-nocomenzado-participo/" + listTorneos[i].id;
                     children.push(
                       <td key={j} className="no-comenzado">
-                       
-                          Torneo no comenzado
-                        
+                        Torneo no comenzado
                       </td>
                     );
                     j++;
@@ -136,15 +131,11 @@ class MisTorneos extends Component {
                     //   </td>
                     // );
                     break;
-
                   } else {
-                   
                     let myLink2 = "/torneo-apuntado-info/" + listTorneos[i].id;
                     children.push(
                       <td key={j} className="comenzado">
-                        
-                          Comenzado
-                        
+                        Comenzado
                       </td>
                     );
                     children.push(
@@ -171,9 +162,11 @@ class MisTorneos extends Component {
 
           torneosContent = (
             <div>
+              <p className="lead text-muted">Bienvenido/a {user.name}</p>
+
               <p>
                 Estos son los torneos públicos de este momento. Puedes animarte
-                a organizar uno actuando como admin.
+                a organizar uno actuando en inicio.
               </p>
               <table>
                 <thead>
@@ -199,7 +192,6 @@ class MisTorneos extends Component {
           <div className="row">
             <div className="col md-12">
               <h1 className="display-4">Mis torneos</h1>
-              <p className="lead text-muted">Bienvenido/a {user.name}</p>
               {torneosContent}
             </div>
           </div>

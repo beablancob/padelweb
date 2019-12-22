@@ -1,3 +1,4 @@
+// TENGO QUE PONER LA INFORMACIÓN DE GRUPOACTUAL!!!!!
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -15,7 +16,7 @@ class Clasificacion extends Component {
       loadingTorneo,
       miRondaInformacion
     } = this.props.torneoInfo;
-    console.log(torneoInformacion);
+    console.log("+++++++++++++++ info del torneo", torneoInformacion);
     let torneo = torneoInformacion.tournament;
     console.log(torneo.tournament);
     let couples = torneo.couples;

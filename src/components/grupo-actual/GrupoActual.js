@@ -116,13 +116,27 @@ class GrupoActual extends Component {
                       );
                       j++;
                     } else {
-                      children.push(
-                        <td key={j} className="text-center">
-                          {partidos[i].set1Couple1}-{partidos[i].set1Couple2}{" "}
-                          {partidos[i].set2Couple1}-{partidos[i].set2Couple2}{" "}
-                          {partidos[i].set3Couple1}-{partidos[i].set3Couple2}
-                        </td>
-                      );
+                      // Si el partido no ha tenido tercer set
+                      if (
+                        partidos[i].set3Couple1 === 0 &&
+                        partidos[i].set3Couple2 === 0
+                      ) {
+                        children.push(
+                          <td key={j} className="text-center">
+                            {partidos[i].set1Couple1}-{partidos[i].set1Couple2}{" "}
+                            {partidos[i].set2Couple1}-{partidos[i].set2Couple2}
+                          </td>
+                        );
+                      } else {
+                        children.push(
+                          <td key={j} className="text-center">
+                            {partidos[i].set1Couple1}-{partidos[i].set1Couple2}{" "}
+                            {partidos[i].set2Couple1}-{partidos[i].set2Couple2}{" "}
+                            {partidos[i].set3Couple1}-{partidos[i].set3Couple2}
+                          </td>
+                        );
+                      }
+
                       j++;
                     }
                   } else {
@@ -160,16 +174,31 @@ class GrupoActual extends Component {
                           );
                           j++;
                         } else {
-                          children.push(
-                            <td key={j} className="text-center">
-                              {partidos[i].set1Couple1}-
-                              {partidos[i].set1Couple2}{" "}
-                              {partidos[i].set2Couple1}-
-                              {partidos[i].set2Couple2}{" "}
-                              {partidos[i].set3Couple1}-
-                              {partidos[i].set3Couple2}
-                            </td>
-                          );
+                          // Si el partido no ha tenido tercer set
+                          if (
+                            partidos[i].set3Couple1 === 0 &&
+                            partidos[i].set3Couple2 === 0
+                          ) {
+                            children.push(
+                              <td key={j} className="text-center">
+                                {partidos[i].set1Couple1}-
+                                {partidos[i].set1Couple2}{" "}
+                                {partidos[i].set2Couple1}-
+                                {partidos[i].set2Couple2}
+                              </td>
+                            );
+                          } else {
+                            children.push(
+                              <td key={j} className="text-center">
+                                {partidos[i].set1Couple1}-
+                                {partidos[i].set1Couple2}{" "}
+                                {partidos[i].set2Couple1}-
+                                {partidos[i].set2Couple2}{" "}
+                                {partidos[i].set3Couple1}-
+                                {partidos[i].set3Couple2}
+                              </td>
+                            );
+                          }
                           j++;
                         }
                       } else {
@@ -193,16 +222,31 @@ class GrupoActual extends Component {
                           );
                           j++;
                         } else {
-                          children.push(
-                            <td key={j} className="text-center">
-                              {partidos[i].set1Couple1}-
-                              {partidos[i].set1Couple2}{" "}
-                              {partidos[i].set2Couple1}-
-                              {partidos[i].set2Couple2}{" "}
-                              {partidos[i].set3Couple1}-
-                              {partidos[i].set3Couple2}
-                            </td>
-                          );
+                          // Si el partido no ha tenido tercer set
+                          if (
+                            partidos[i].set3Couple1 === 0 &&
+                            partidos[i].set3Couple2 === 0
+                          ) {
+                            children.push(
+                              <td key={j} className="text-center">
+                                {partidos[i].set1Couple1}-
+                                {partidos[i].set1Couple2}{" "}
+                                {partidos[i].set2Couple1}-
+                                {partidos[i].set2Couple2}
+                              </td>
+                            );
+                          } else {
+                            children.push(
+                              <td key={j} className="text-center">
+                                {partidos[i].set1Couple1}-
+                                {partidos[i].set1Couple2}{" "}
+                                {partidos[i].set2Couple1}-
+                                {partidos[i].set2Couple2}{" "}
+                                {partidos[i].set3Couple1}-
+                                {partidos[i].set3Couple2}
+                              </td>
+                            );
+                          }
                           j++;
                         }
                       }

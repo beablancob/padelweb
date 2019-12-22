@@ -86,19 +86,30 @@ class Grupos extends Component {
           return table;
         };
 
+        // Comprobación de partidos jugados en la ronda actual
         let partidosJugados = true;
-        // let todosPartidos = torneoAdmin.tournament.partidos;
-        // for (let i = 0; i < todosPartidos.length; i++) {
-        //   if (
-        //     torneoAdmin.tournament.rondaActual === todosPartidos[i].numeroRonda
-        //   ) {
-        //     while (partidosJugados === true) {
-        //       if (todosPartidos[i].jugado === false) {
-        //         partidosJugados = false;
-        //       }
-        //     }
-        //   }
-        // }
+        let blabla = (
+          <p>¡Todos los partidos de la ronda han sido disputados!</p>
+        );
+        let allPartidos = torneoAdmin.tournament.partidos;
+        let content = null;
+
+        for (let i = 0; i < allPartidos.length; i++) {
+          if (
+            torneoAdmin.tournament.rondaActual === allPartidos[i].numeroRonda
+          ) {
+            if (partidosJugados === true) {
+              if (
+                allPartidos[i].jugado === false ||
+                allPartidos[i].jugado === null
+              ) {
+                partidosJugados = false;
+              }
+            } else {
+              blabla = <p>No se ha terminado de jugar la ronda</p>;
+            }
+          }
+        }
 
         console.log(
           "*****************+ partidosJugados",
@@ -114,7 +125,7 @@ class Grupos extends Component {
             </div>
 
             <div className="col">
-              <p>COMPROBAR SI SE HAN JUGADO TODOS LOS PARTIDOS DE LA RONDA</p>
+              <div> {blabla} </div>
               <Button
                 variant="outline-info"
                 color="success"

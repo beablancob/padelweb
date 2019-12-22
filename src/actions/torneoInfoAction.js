@@ -42,7 +42,6 @@ export const miRondaInfo = torneoData => dispatch => {
         type: GET_MI_RONDA_INFO,
         payload: res.data
       });
-      // history.push("/torneo-apuntado-info/id=" + torneoData.id);
     });
 };
 
@@ -60,6 +59,8 @@ export const infoTorneoNoComenzadoParticipo = torneoId => dispatch => {
   console.log("ADIOS");
 };
 
+// Subida del resultado de un partido de la ronda actual, jugado por mi
+
 export const subirResultado = (partidoId, id, sets, history) => dispatch => {
   console.log("actions de actualizar resultado");
 
@@ -73,6 +74,9 @@ export const subirResultado = (partidoId, id, sets, history) => dispatch => {
       })
     );
 };
+
+// Confimación del resultado de un partido que ha sido subido por mi contrincante
+
 export const confirmarResultado = (partidoId, id, history) => dispatch => {
   console.log("actions de confirm resultado");
   axios

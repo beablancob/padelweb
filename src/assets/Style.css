@@ -156,7 +156,10 @@ th {
   margin-left: 160px;
 }
 .grupo {
-  margin: 5px 5px 5px 5px;
+  margin: 10px 10px 10px 10px;
+}
+.grupos {
+  padding: 10px;
 }
 .comenzado {
   color: #8ac125;

@@ -35,61 +35,63 @@ class Navbar extends Component {
     console.log("Nombre del usuario: ", user.name);
 
     const authLinks = (
-      <ul className="navbar-nav ml-auto">
-        <li className="sidebarCollapse nav-icon3">
-          <span></span>
-          <span></span>
-          <span></span>
-        </li>
-        <li className="nav-item">
-          <div className="row">
-            <Link
-              to="/torneos-activos-user"
-              className="nav-link btn-us"
-              onClick={this.onUserClick.bind(this)}
-            >
-              Usuario
-            </Link>
-            <Link
-              to="/torneos-activos-admin"
-              className="nav-link btn-us"
-              onClick={this.onAdminClick.bind(this)}
-            >
-              Admin
-            </Link>
-          </div>
-        </li>
-        <li className="nav-item"></li>
-        <li className="nav-item"></li>
-        <li className="nav-item">
-          <a
-            href=""
-            onClick={this.onLogoutClick.bind(this)}
-            className="nav-link"
+      <nav className="navbar navbar-expand-sm navbar-light mb-4">
+        <div className="container-fluid">
+          <div id="img-pelota">Torneos de pádel</div>
+
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#mobile-nav"
           >
-            {" "}
-            Logout
-          </a>
-        </li>
-      </ul>
+            <span className="navbar-toggler-icon"></span>
+          </button>
+
+          <div className="collapse navbar-collapse" id="mobile-nav">
+            <ul className="navbar-nav ml-auto">
+              <li className="sidebarCollapse nav-icon3">
+                <span></span>
+                <span></span>
+                <span></span>
+              </li>
+              <li className="nav-item">
+                <div className="row">
+                  <Link
+                    to="/torneos-activos-user"
+                    className="nav-link btn-us"
+                    onClick={this.onUserClick.bind(this)}
+                  >
+                    Inicio
+                  </Link>
+                  <Link
+                    to="/torneos-activos-admin"
+                    className="nav-link btn-us"
+                    onClick={this.onAdminClick.bind(this)}
+                  >
+                    Mi perfil
+                  </Link>
+                </div>
+              </li>
+              <li className="nav-item"></li>
+              <li className="nav-item"></li>
+              <li className="nav-item">
+                <a
+                  href=""
+                  onClick={this.onLogoutClick.bind(this)}
+                  className="nav-link"
+                >
+                  {" "}
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     );
 
     const guestLinks = (
-      <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
-          <Link className="nav-link" to="/register">
-            Regístrate
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/login">
-            Inicia Sesión
-          </Link>
-        </li>
-      </ul>
-    );
-
-    return (
       <nav className="navbar navbar-expand-sm navbar-light mb-4">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
@@ -105,11 +107,26 @@ class Navbar extends Component {
           </button>
 
           <div className="collapse navbar-collapse" id="mobile-nav">
-            {isAuthenticated ? authLinks : guestLinks}
+            <div>
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link className="nav-link" to="/register">
+                    Regístrate
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login">
+                    Inicia Sesión
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </nav>
     );
+
+    return <div>{isAuthenticated ? authLinks : guestLinks}</div>;
   }
 }
 //Si tiene dispatch, lo añado aqui como una funcion. Sino, no.
