@@ -26,7 +26,6 @@ class ApuntarseTorneo extends Component {
     const { id } = this.props.match.params;
     this.props.seleccionTorneo(id);
     console.log("DIDDDDDD", id);
-    const { error } = this.state.errors;
   }
 
   componentWillReceiveProps(nextProps) {

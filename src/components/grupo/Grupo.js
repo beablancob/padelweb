@@ -1,13 +1,10 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../common/Spinner";
 import { withRouter } from "react-router-dom";
 import { miRondaInfo } from "../../actions/torneoInfoAction";
 import "../../assets/Style.css";
-
-// NO QUIERO ESTO, QUIERO EDITAR UN RESULTADO DE UN PARTIDO
 
 class Grupo extends Component {
   componentDidMount() {
@@ -30,7 +27,6 @@ class Grupo extends Component {
         gruposContent = <p>Todavía no hay información de la ronda</p>;
       } else {
         console.log(torneoAdmin.tournament);
-        let table = [];
         let numeroGrupo = numGrupo - 1;
 
         let j = 0;
@@ -43,7 +39,15 @@ class Grupo extends Component {
           for (let i = 0; i < partidos.length; i++) {
             let children = [];
             //Inner loop to create children
-            if (partidos[i].numeroGrupo === numeroGrupo) {
+
+            if (
+              partidos[i].numeroGrupo === numeroGrupo &&
+              partidos[i].numeroRonda === torneoAdmin.tournament.rondaActual
+            ) {
+              console.log(
+                partidos[i].numeroRonda,
+                torneoAdmin.tournament.rondaActual
+              );
               children.push(
                 <td key={j} className="text-center">
                   {partidos[i].user1Name} {partidos[i].user1LastName}{" "}
@@ -58,43 +62,27 @@ class Grupo extends Component {
                   </td>
                 );
                 j++;
-                // let myLink =
-                //   "/ver-torneo/" +
-                //   torneoAdmin.id +
-                //   "/grupos/" +
-                //   partidos[i].id +
-                //   "/clasificacion/subir-resultado";
-                // children.push(
-                //   <td key={j} className="td-link">
-                //     <Link className="resultado-button" to={myLink}>
-                //       Subir resultado
-                //     </Link>
-                //   </td>
-                // );
               } else {
-                children.push(
-                  <td key={j} className="text-center">
-                    {partidos[i].set1Couple1}-{partidos[i].set1Couple2}{" "}
-                    {partidos[i].set2Couple1}-{partidos[i].set2Couple2}{" "}
-                    {partidos[i].set3Couple1}-{partidos[i].set3Couple2}
-                  </td>
-                );
+                if (
+                  partidos[i].set3Couple1 === 0 &&
+                  partidos[i].set3Couple2 === 0
+                ) {
+                  children.push(
+                    <td key={j} className="text-center">
+                      {partidos[i].set1Couple1}-{partidos[i].set1Couple2}{" "}
+                      {partidos[i].set2Couple1}-{partidos[i].set2Couple2}
+                    </td>
+                  );
+                } else {
+                  children.push(
+                    <td key={j} className="text-center">
+                      {partidos[i].set1Couple1}-{partidos[i].set1Couple2}{" "}
+                      {partidos[i].set2Couple1}-{partidos[i].set2Couple2}{" "}
+                      {partidos[i].set3Couple1}-{partidos[i].set3Couple2}
+                    </td>
+                  );
+                }
                 j++;
-                // let myLink =
-                //   "/ver-torneo/" +
-                //   torneoAdmin.id +
-                //   "/grupos/" +
-                //   partidos[i].id +
-                //   "/clasificacion/editar-resultado";
-                // children.push(
-                //   <td key={j} className="td-link">
-                //     <Link className="resultado-button" to={myLink}>
-                //       {partidos[i].set1Couple1}-{partidos[i].set1Couple2}{" "}
-                //       {partidos[i].set2Couple1}-{partidos[i].set2Couple2}{" "}
-                //       {partidos[i].set3Couple1}-{partidos[i].set3Couple2}
-                //     </Link>
-                //   </td>
-                // );
               }
               children.push(
                 <td key={j} className="text-center">

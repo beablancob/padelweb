@@ -1,27 +1,17 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-// import { getCurrentUser } from "../../actions/authAction";
 import { getMyCurrentTournaments } from "../../actions/torneosActivosUserActions";
 import Spinner from "../common/Spinner";
 import "../../assets/Style.css";
 
 import { withRouter } from "react-router-dom";
-import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 
 class MisTorneos extends Component {
-  constructor() {
-    super();
-    this.state = {
-      torneo: "",
-      errors: {}
-    };
-  }
   componentDidMount() {
     this.props.getMyCurrentTournaments();
   }
-
   render() {
     const { user } = this.props.auth;
     const { myTorneos, myLoading } = this.props.torneosActivosUser;
@@ -30,8 +20,6 @@ class MisTorneos extends Component {
     if (myLoading) {
       torneosContent = <Spinner />;
     } else {
-      console.log(myTorneos);
-
       if (myTorneos.msg === "No pertenece a ningún torneo") {
         torneosContent = (
           <div>
@@ -45,7 +33,6 @@ class MisTorneos extends Component {
       } else {
         if (myTorneos.tournaments.length === 0) {
           console.log("Nombre del usuario:", user.name);
-
           torneosContent = (
             <div>
               <p>
@@ -55,14 +42,13 @@ class MisTorneos extends Component {
           );
         } else {
           let listTorneos = myTorneos.tournaments;
-          let listCouples = myTorneos.couples;
           let table = [];
           var j = 0;
           var p = 0;
+          // Creo la tabla con "mis torneos"
           createTable = () => {
             for (var i = 0; i < listTorneos.length; i++) {
               let children = [];
-
               for (var k = 0; k < listTorneos[i].couples.length; k++) {
                 console.log(
                   "user.id:",
@@ -72,7 +58,7 @@ class MisTorneos extends Component {
                   "user2Id: ",
                   listTorneos[i].couples[k].user2Id
                 );
-
+                // Si pertenezco al torneo
                 if (
                   listTorneos[i].couples[k].user1Id === user.id ||
                   listTorneos[i].couples[k].user2Id === user.id
@@ -86,17 +72,12 @@ class MisTorneos extends Component {
                   children.push(
                     <td key={j}>{listTorneos[i].numeroParejas}</td>
                   );
-                  // j++;
-                  // children.push(<td key={j}>{listTorneos[i].rondaActual}</td>);
+
                   j++;
                   children.push(<td key={j}>{listTorneos[i].numeroRondas}</td>);
                   j++;
-
+                  // Si el torneo todavía no ha comenzado
                   if (listTorneos[i].rondaActual === 0) {
-                    console.log(
-                      "-------------------x------------------- MIS TORNEOS",
-                      listTorneos[i].id
-                    );
                     let myLink =
                       "/torneo-nocomenzado-participo/" + listTorneos[i].id;
                     children.push(
@@ -108,31 +89,18 @@ class MisTorneos extends Component {
                     children.push(
                       <td key={j}>
                         <Link
-                          className="link-button t-comenzado-link"
+                          className="link-button t-nocomenzado-link"
                           to={myLink}
                         >
                           + info
                         </Link>
                       </td>
                     );
-                    // children.push(
-                    //   <td key={j}>
-                    //     <Button
-                    //       outline
-                    //       color="info"
-                    //       onClick={this.onTorneoNoComenzadoParticipoClick.bind(
-                    //         this,
-                    //         listTorneos[i]
-                    //       )}
-                    //       className="btn"
-                    //     >
-                    //       No comenzado
-                    //     </Button>
-                    //   </td>
-                    // );
+
                     break;
                   } else {
-                    let myLink2 = "/torneo-apuntado-info/" + listTorneos[i].id;
+                    let myLink2 =
+                      "/torneo-apuntado-info/" + listTorneos[i].id + "/parejas";
                     children.push(
                       <td key={j} className="comenzado">
                         Comenzado
@@ -156,14 +124,11 @@ class MisTorneos extends Component {
               );
               console.log("valor de p: ", p);
             }
-
             return table;
           };
-
           torneosContent = (
             <div>
               <p className="lead text-muted">Bienvenido/a {user.name}</p>
-
               <p>
                 Estos son los torneos públicos de este momento. Puedes animarte
                 a organizar uno actuando en inicio.
@@ -185,7 +150,6 @@ class MisTorneos extends Component {
         }
       }
     }
-
     return (
       <div className="dashboard">
         <div className="container-app">
@@ -209,7 +173,6 @@ const mapStateToProps = state => ({
   torneosActivosUser: state.torneosActivosUser,
   auth: state.auth
 });
-
 export default connect(mapStateToProps, {
   getMyCurrentTournaments
 })(withRouter(MisTorneos));

@@ -16,20 +16,12 @@ export const getCurrentAdminTournaments = () => dispatch => {
     type: GET_ERRORS,
     payload: null
   });
-  axios
-    .get("/admin/tournaments")
-    .then(res =>
-      dispatch({
-        type: GET_CURRENT_ADMIN_TOURNAMENTS,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_CURRENT_ADMIN_TOURNAMENTS,
-        payload: {}
-      })
-    );
+  axios.get("/admin/tournaments").then(res =>
+    dispatch({
+      type: GET_CURRENT_ADMIN_TOURNAMENTS,
+      payload: res.data
+    })
+  );
 };
 
 //Get info from the current admin tournaments
@@ -60,24 +52,24 @@ export const setTournamentsLoading = () => {
 export const createTournament = (tournamentData, history) => dispatch => {
   axios
     .post("/admin/tournaments", tournamentData)
-    .then(res => history.push("/torneos-activos-admin"))
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+    .then(res => history.push("/torneos-activos-admin"));
+  // .catch(err =>
+  //   dispatch({
+  //     type: GET_ERRORS,
+  //     payload: err.response.data
+  //   })
+  // );
 };
 
-export const getAdminTournament = torneoId => dispatch => {
-  console.log("getAdminTournament", torneoId);
+export const getAdminTournament = id => dispatch => {
+  console.log("getAdminTournament", id);
   dispatch(setTournamentLoading());
-  axios.get("/admin/tournaments/" + torneoId).then(res => {
+  axios.get("/admin/tournaments/" + id).then(res => {
     dispatch({
       type: GET_CURRENT_ADMIN_TOURNAMENT,
       payload: res.data
     });
-    //  console.log("info del torneo en actions", res.data);
+    console.log("info del torneo", res.data);
   });
 };
 
@@ -130,7 +122,19 @@ export const comenzarTorneo = (torneoId, history) => dispatch => {
 // Avanzar ronda
 export const avanzarRonda = (id, history) => dispatch => {
   console.log("avanzar ronda id:", id);
-  axios.post("/admin/tournaments/" + id + "/nextRound");
+
+  axios
+    .post("/admin/tournaments/" + id + "/nextRound")
+    .then(res => {
+      console.log("YA tenemos respuesta", res);
+      history.push("/ver-torneo/" + id + "/grupos");
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
   // .get("/admin(tournaments/" + id)
   // .then(res=>{
   //   dispatch({
@@ -147,7 +151,7 @@ export const getRoundsTournament = id => dispatch => {
       type: GET_ADMIN_TOURNAMENT_ROUNDS,
       payload: res.data
     });
-    console.log("info del torneo en actions", res.data);
+    console.log("info del torneo en actions aaaaa", res.data);
   });
 };
 

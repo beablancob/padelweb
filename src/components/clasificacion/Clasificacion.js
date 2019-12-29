@@ -6,32 +6,27 @@ import {
   miRondaInfo,
   infoTorneoComenzadoParticipo
 } from "../../actions/torneoInfoAction";
-import ReactTable from "react-table";
 import { withRouter } from "react-router-dom";
 
 class Clasificacion extends Component {
   render() {
-    const {
-      torneoInformacion,
-      loadingTorneo,
-      miRondaInformacion
-    } = this.props.torneoInfo;
+    const { torneoInformacion } = this.props.torneoInfo;
     console.log("+++++++++++++++ info del torneo", torneoInformacion);
     let torneo = torneoInformacion.tournament;
     console.log(torneo.tournament);
     let couples = torneo.couples;
     let j = 0;
     let m = 500;
-    let numGrupos;
+    let numGrupos = couples[0].grupoActual;
     for (let i = 0; i < couples.length - 1; i++) {
-      numGrupos = couples[i].grupoActual;
+      // numGrupos = couples[i].grupoActual;
+      console.log(couples[i].grupoActual);
 
       if (couples[i + 1].grupoActual > numGrupos) {
         numGrupos = couples[i + 1].grupoActual;
       }
-      numGrupos += 1;
     }
-
+    numGrupos += 1;
     console.log("numero de grupos del torneo", numGrupos);
 
     let createTables = parejas => {

@@ -70,7 +70,7 @@ class RegistrarPareja extends Component {
       apuntarseContent = (
         <div>
           <h1 className="display-4 text-center">
-            Apúntate a {torneo.tournament.name}
+            Apunta a quien quieras a {torneo.tournament.name}
           </h1>
           <p className="lead text-center">
             Rellena el email de las parejas, recuerda que tienen que estar

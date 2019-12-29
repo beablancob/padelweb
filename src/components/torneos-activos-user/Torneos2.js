@@ -7,7 +7,6 @@ import Spinner from "../common/Spinner";
 import "../../assets/Style.css";
 import { seleccionTorneo } from "../../actions/apuntarseTorneoAction";
 import { withRouter } from "react-router-dom";
-import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 
 class TorneosPublicos extends Component {
@@ -33,7 +32,10 @@ class TorneosPublicos extends Component {
       torneosContent = <Spinner />;
     } else {
       console.log("torneos públicos", torneos);
-      if (torneos === null) {
+      if (
+        torneos === null ||
+        torneos.mensaje === "No hay ningún torneo público"
+      ) {
         // User is logged
         torneosContent = (
           <div>
@@ -123,13 +125,6 @@ class TorneosPublicos extends Component {
                             </td>
                           );
                           j++;
-                          // children.push(
-                          //   <td key={j} className="text-center">
-                          //     {listTorneos[i].numeroParejas}
-                          //   </td>
-                          // );
-                          // j++;
-
                           let numRestante =
                             listTorneos[i].numeroParejas -
                             listTorneos[i].couples.length;
@@ -179,6 +174,8 @@ class TorneosPublicos extends Component {
 
           torneosContent = (
             <div>
+              <p className="lead text-muted">Bienvenido/a {user.name}</p>
+
               <p>
                 Estos son los torneos públicos de este momento. Puedes animarte
                 a organizar uno en inicio.
@@ -207,7 +204,6 @@ class TorneosPublicos extends Component {
           <div className="row">
             <div className="col md-12">
               <h1 className="display-4">Torneos públicos</h1>
-              <p className="lead text-muted">Bienvenido/a {user.name}</p>
               {torneosContent}
             </div>
           </div>

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import "../../assets/Style.css";
@@ -8,16 +7,8 @@ import Spinner from "../common/Spinner";
 import { infoTorneoComenzadoParticipo } from "../../actions/torneoInfoAction";
 
 class Parejas extends Component {
-  //No funciona, en clasificación tb lo tengo q arreglar
-  // componentDidMount() {
-  //   this.props.infoTorneoComenzadoParticipo();
-  // }
   render() {
-    const {
-      torneoInformacion,
-      loadingTorneo,
-      miRondaInformacion
-    } = this.props.torneoInfo;
+    const { torneoInformacion, loadingTorneo } = this.props.torneoInfo;
 
     console.log(">>>>>>>>>>>>>>", torneoInformacion);
     let parejasContent;
@@ -36,11 +27,7 @@ class Parejas extends Component {
       let table = [];
       let j = 0;
       let createTable = () => {
-        for (
-          var i = 0;
-          i < torneoInformacion.tournament.couples.length - 1;
-          i++
-        ) {
+        for (var i = 0; i < torneoInformacion.tournament.couples.length; i++) {
           let children = [];
           console.log("i: ", i);
           console.log(torneoInformacion.tournament.couples.length);
@@ -56,14 +43,14 @@ class Parejas extends Component {
           );
 
           children.push(
-            <td key={j} className="text-left">
+            <td key={j} className="text-center">
               {torneoInformacion.tournament.couples[i].user1Name}{" "}
               {torneoInformacion.tournament.couples[i].user1LastName}
             </td>
           );
           j++;
           children.push(
-            <td key={j} className="text-left">
+            <td key={j} className="text-center">
               {torneoInformacion.tournament.couples[i].user2Name}{" "}
               {torneoInformacion.tournament.couples[i].user2LastName}
             </td>

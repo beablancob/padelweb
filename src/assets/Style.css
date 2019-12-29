@@ -155,6 +155,9 @@ th {
 .container-app {
   margin-left: 160px;
 }
+.container {
+  padding: 10px;
+}
 .grupo {
   margin: 10px 10px 10px 10px;
 }
@@ -178,6 +181,21 @@ th {
   text-decoration: none;
   transition: background 150ms;
 } */
+.avanzar-ronda {
+  padding: 5px;
+  color: #8ac125;
+  border: #8ac125 1px solid;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: background 150ms;
+}
+.avanzar-ronda:hover {
+  text-decoration: none;
+  background: #8ac125;
+  color: white;
+  transition: background 150ms;
+  transition: color 150ms;
+}
 .link-button {
   margin-top: 5px;
   padding: 5px;

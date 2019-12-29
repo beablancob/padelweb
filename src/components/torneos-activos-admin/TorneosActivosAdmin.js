@@ -114,27 +114,11 @@ class TorneosActivosAdmin extends Component {
                   </td>
                 );
                 j++;
-                children.push(<td key={j}>Lista de parjeas apuntadas</td>);
-                j++;
-                // children.push(
-                //   <td key={j}>
-                //     <Button
-                //       outline
-                //       color="success"
-                //       onClick={this.onEditarTorneoClick.bind(
-                //         this,
-                //         listTorneos[i]
-                //       )}
-                //       className="btn"
-                //     >
-                //       Editar torneo
-                //     </Button>
-                //   </td>
-                // );
+                console.log("<<<<<<<<<<<<<<", listTorneos[i]);
                 j++;
               } else {
                 console.log("listTorneosid", listTorneos[i].id);
-                let myLink = "/ver-torneo/" + listTorneos[i].id;
+                let myLink = "/ver-torneo/" + listTorneos[i].id + "/grupos";
                 children.push(
                   <td key={j} style={{ width: 220 }}>
                     <Link className="link-button" to={myLink}>
@@ -144,8 +128,6 @@ class TorneosActivosAdmin extends Component {
                 );
                 j++;
                 children.push(<td key={j}>Torneo comenzado</td>);
-                j++;
-                children.push(<td key={j}>-</td>);
                 j++;
               }
 
@@ -170,7 +152,7 @@ class TorneosActivosAdmin extends Component {
                     <th>Código de registro</th>
                     <th>Información</th>
                     <th>Registrar pareja</th>
-                    <th>Parejas apuntadas</th>
+                    {/* <th>Parejas apuntadas</th> */}
                   </tr>
                 </thead>
                 <tbody>{createTable()}</tbody>
@@ -186,7 +168,7 @@ class TorneosActivosAdmin extends Component {
         <div className="container-app">
           <div className="row">
             <div className="col md-12">
-              <h1 className="display-4">Torneos organizados por ti</h1>
+              <h1 className="display-4">Torneos organizados</h1>
               {torneosContent}
             </div>
           </div>

@@ -28,7 +28,6 @@ class TorneoNoComenzadoParticipo extends Component {
       console.log("Esta es la info del torneo ", torneoNoComenzado);
       console.log(torneoNoComenzado.tournament.couples);
 
-      let parejasContent;
       let table = [];
       let j = 0;
       let createTable = () => {

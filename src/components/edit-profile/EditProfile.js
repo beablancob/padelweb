@@ -8,7 +8,6 @@ import {
   deleteAccount,
   editedUser
 } from "../../actions/profileActions";
-import isEmpty from "../../validation/is-empty";
 
 class EditProfile extends Component {
   constructor() {
@@ -67,8 +66,6 @@ class EditProfile extends Component {
 
   render() {
     //npm i classnames para instalar isInvalid y toda la pesca
-    const { user } = this.props.auth;
-    const { profile, loading } = this.props.profile;
     const { errors } = this.state; //const errors = this.state.errors es lo mismo!!
     //Las clases form-control etc van a estar siempre. Las is-invalid solo existen cuando hay un error, en el array de errores del estado.
     //Errors.name

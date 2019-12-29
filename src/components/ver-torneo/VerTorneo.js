@@ -8,7 +8,6 @@ import {
 } from "../../actions/torneosActivosAdminActions";
 import "../../assets/Style.css";
 
-import { Router } from "react-router-dom";
 import PrivateRoute from "../common/PrivateRoute";
 import { Switch } from "react-router-dom";
 import Spinner from "../common/Spinner";
@@ -17,7 +16,7 @@ import Grupo from "../grupo/Grupo";
 import Grupos from "../grupos/Grupos";
 import AdminBar from "../layout/AdminBar";
 
-import ClasifGeneral from "../clasif-general/ClasifGeneral";
+import ClasifGeneralAdmin from "../clasif-general/ClasifGeneralAdmin";
 
 class VerTorneo extends Component {
   componentDidMount() {
@@ -34,15 +33,21 @@ class VerTorneo extends Component {
       loading2,
       torneoAdmin
     } = this.props.torneosActivosAdmin;
-    console.log("HOLAAA", rounds, torneoAdmin);
+    // const { loading2, torneoAdmin } = this.props.torneosActivosAdmin;
+    console.log("HOLAAA", torneoAdmin);
 
     let infoContent;
     if (roundsLoading) {
+      console.log("load1");
       infoContent = <Spinner />;
     } else {
       if (loading2) {
+        console.log("load2");
+
         infoContent = <Spinner />;
       } else {
+        console.log("no load");
+
         infoContent = (
           <div>
             <h1 className="display-4 text-center">
@@ -55,7 +60,7 @@ class VerTorneo extends Component {
               <PrivateRoute
                 exact
                 path="/ver-torneo/:id/clasif-general/"
-                component={ClasifGeneral}
+                component={ClasifGeneralAdmin}
               />
               <PrivateRoute
                 exact

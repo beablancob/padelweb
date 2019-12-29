@@ -6,8 +6,6 @@ import "../../assets/Style.css";
 import { withRouter } from "react-router-dom";
 import Spinner from "../common/Spinner";
 import { miRondaInfo } from "../../actions/torneoInfoAction";
-import { Button, ButtonToolBar, Modal } from "react-bootstrap";
-//import { infoTorneoComenzadoParticipo } from "../../actions/torneoInfoAction";
 
 class GrupoActual extends Component {
   constructor(props) {
@@ -26,7 +24,6 @@ class GrupoActual extends Component {
   onAceptar(partidoId) {}
   onRechazar(partidoId) {}
 
-  // TODO: TENGO QUE PEDIR LA INFORMACIÓN DE MI RONDA QUE ES DONDE ESTÁN LOS PARTIDOS!!
   componentDidMount() {
     const { torneoInformacion } = this.props.torneoInfo;
     let torneoData = torneoInformacion;
@@ -47,11 +44,16 @@ class GrupoActual extends Component {
     let miParejaId;
 
     if (loadingTorneo) {
+      console.log("hola");
       parejasContent = <Spinner />;
     } else {
       if (loadingRonda) {
+        console.log("hola2");
+
         parejasContent = <Spinner />;
       } else {
+        console.log("hola3");
+
         console.log(torneoInformacion.tournament.couples);
         let torneo = torneoInformacion.tournament;
         let miGrupo;

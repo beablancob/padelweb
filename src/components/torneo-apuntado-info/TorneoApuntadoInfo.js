@@ -10,7 +10,6 @@ import "../../assets/Style.css";
 import Parejas from "../parejas/Parejas";
 import Clasificacion from "../clasificacion/Clasificacion";
 import Torneosbaruser from "../layout/Torneosbaruser";
-import { Router } from "react-router-dom";
 import PrivateRoute from "../common/PrivateRoute";
 import { Switch } from "react-router-dom";
 import Spinner from "../common/Spinner";

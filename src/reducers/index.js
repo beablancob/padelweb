@@ -17,4 +17,3 @@ export default combineReducers({
   apuntarseTorneo: apuntarseTorneoReducer,
   torneoInfo: torneoInfoReducer
 });
-//utilizaremos this.props.auth

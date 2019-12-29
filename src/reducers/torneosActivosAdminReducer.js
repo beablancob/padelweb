@@ -41,6 +41,7 @@ export default function(state = initialState, action) {
       };
 
     case GET_CURRENT_ADMIN_TOURNAMENT:
+      console.log("aaaaaaaa");
       return {
         ...state,
         torneoAdmin: action.payload,

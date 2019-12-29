@@ -5,7 +5,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../common/Spinner";
 import { withRouter } from "react-router-dom";
-import { avanzarRonda } from "../../actions/torneosActivosAdminActions";
+import {
+  avanzarRonda,
+  getAdminTournament
+} from "../../actions/torneosActivosAdminActions";
 import { Button } from "react-bootstrap";
 import "../../assets/Style.css";
 
@@ -19,6 +22,10 @@ class Grupos extends Component {
       this.setState({ errors: nextProps.errors });
     }
   }
+  // componentDidMount() {
+  //   const { id } = this.props.match.params;
+  //   this.props.getAdminTournament(id);
+  // }
   onAvanzarRondaClick(id) {
     this.props.avanzarRonda(id, this.props.history);
   }
@@ -92,18 +99,20 @@ class Grupos extends Component {
           <p>¡Todos los partidos de la ronda han sido disputados!</p>
         );
         let allPartidos = torneoAdmin.tournament.partidos;
-        let content = null;
-
+        console.log("+++++++++++++++", allPartidos);
         for (let i = 0; i < allPartidos.length; i++) {
           if (
             torneoAdmin.tournament.rondaActual === allPartidos[i].numeroRonda
           ) {
             if (partidosJugados === true) {
+              console.log("ksdfhwi", allPartidos[i].jugado);
               if (
                 allPartidos[i].jugado === false ||
                 allPartidos[i].jugado === null
               ) {
+                console.log("HOLA");
                 partidosJugados = false;
+                blabla = <p>No se ha terminado de jugar la ronda</p>;
               }
             } else {
               blabla = <p>No se ha terminado de jugar la ronda</p>;
@@ -126,9 +135,9 @@ class Grupos extends Component {
 
             <div className="col">
               <div> {blabla} </div>
+
               <Button
-                variant="outline-info"
-                color="success"
+                variant="outline-danger"
                 onClick={this.onAvanzarRondaClick.bind(this, id)}
               >
                 Avanzar ronda
@@ -151,10 +160,14 @@ class Grupos extends Component {
 }
 Grupos.propTypes = {
   torneosActivosAdmin: PropTypes.object.isRequired,
-  avanzarRonda: PropTypes.func.isRequired
+  avanzarRonda: PropTypes.func.isRequired,
+  getAdminTournament: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
-  torneosActivosAdmin: state.torneosActivosAdmin
+  torneosActivosAdmin: state.torneosActivosAdmin,
+  getAdminTournament: state.getAdminTournament
 });
 
-export default connect(mapStateToProps, { avanzarRonda })(withRouter(Grupos));
+export default connect(mapStateToProps, { avanzarRonda, getAdminTournament })(
+  withRouter(Grupos)
+);

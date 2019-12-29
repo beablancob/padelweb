@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../common/Spinner";
@@ -58,14 +57,10 @@ class ResultadoPartido extends Component {
 
   render() {
     let ResultadoContent;
-    const { id, partidoId } = this.props.match.params;
+    const { partidoId } = this.props.match.params;
     let idPartido = partidoId;
     console.log("HOLA", this.props.match.params);
-    const {
-      torneoInformacion,
-      loadingRonda,
-      miRondaInformacion
-    } = this.props.torneoInfo;
+    const { loadingRonda, miRondaInformacion } = this.props.torneoInfo;
     const { error } = this.state.errors;
     if (loadingRonda) {
       ResultadoContent = <Spinner />;
