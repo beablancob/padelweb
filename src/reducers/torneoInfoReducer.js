@@ -4,7 +4,9 @@ import {
   TORNEO_COMENZADO_LOADING,
   TORNEO_NO_COMENZADO_LOADING,
   SET_TORNEO_NC_INFO,
-  RONDA_LOADING
+  RONDA_LOADING,
+  GET_PREVIOUS_ROUND,
+  PREVIOUS_ROUNDS_LOADING
 } from "../actions/types";
 
 const initialState = {
@@ -13,7 +15,9 @@ const initialState = {
   loadingRonda: true,
   torneoNoComenzado: null,
   loadingTNC: true,
-  miRondaInformacion: null
+  miRondaInformacion: null,
+  previousRound: null,
+  loadingRound: true
 };
 
 export default function(state = initialState, action) {
@@ -51,6 +55,17 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loadingRonda: true
+      };
+    case GET_PREVIOUS_ROUND:
+      return {
+        ...state,
+        previousRound: action.payload,
+        loadingRound: false
+      };
+    case PREVIOUS_ROUNDS_LOADING:
+      return {
+        ...state,
+        loadingRound: true
       };
 
     default:

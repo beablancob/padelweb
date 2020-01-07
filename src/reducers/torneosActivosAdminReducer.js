@@ -4,7 +4,9 @@ import {
   GET_CURRENT_ADMIN_TOURNAMENT,
   TOURNAMENT_ADMIN_LOADING,
   ROUNDS_LOADING,
-  GET_ADMIN_TOURNAMENT_ROUNDS
+  GET_ADMIN_TOURNAMENT_ROUNDS,
+  PAREJAS_TORNEO,
+  PAREJAS_LOADING
 } from "../actions/types";
 
 const initialState = {
@@ -13,7 +15,9 @@ const initialState = {
   loading2: true,
   roundsLoading: true,
   rounds: null,
-  torneoAdmin: null
+  torneoAdmin: null,
+  parejas: null,
+  loadingP: true
 };
 export default function(state = initialState, action) {
   switch (action.type) {
@@ -27,6 +31,11 @@ export default function(state = initialState, action) {
         ...state,
         loading2: true
       };
+    case PAREJAS_LOADING:
+      return {
+        ...state,
+        loadingP: true
+      };
 
     case TOURNAMENTS_ADMIN_LOADING:
       return {
@@ -39,9 +48,14 @@ export default function(state = initialState, action) {
         torneosAdmin: action.payload,
         loading: false
       };
+    case PAREJAS_TORNEO:
+      return {
+        ...state,
+        parejas: action.payload,
+        loadingP: false
+      };
 
     case GET_CURRENT_ADMIN_TOURNAMENT:
-      console.log("aaaaaaaa");
       return {
         ...state,
         torneoAdmin: action.payload,

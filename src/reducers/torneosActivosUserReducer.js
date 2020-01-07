@@ -35,6 +35,7 @@ export default function(state = initialState, action) {
         myTorneos: action.payload,
         myLoading: false
       };
+
     default:
       return state;
   }

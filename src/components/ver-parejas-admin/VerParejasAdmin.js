@@ -5,115 +5,126 @@ import { connect } from "react-redux";
 import "../../assets/Style.css";
 import { withRouter } from "react-router-dom";
 import Spinner from "../common/Spinner";
-import { getAdminTournament } from "../../actions/torneosActivosAdminActions";
+import { obtenerParejas } from "../../actions/torneosActivosAdminActions";
 
 class VerParejasAdmin extends Component {
-  //No funciona, en clasificación tb lo tengo q arreglar
-  // componentDidMount() {
-  //   this.props.infoTorneoComenzadoParticipo();
-  // }
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    console.log(id);
+    this.props.obtenerParejas(id);
+  }
+
   render() {
-    const {
-      torneoAdmin,
-      loading2,
-      miRondaInformacion
-    } = this.props.torneosActivosAdmin;
+    //const { torneoInformacion, loadingTorneo } = this.props.torneoInfo;
+    const { parejas, loadingP } = this.props.torneosActivosAdmin;
 
-    console.log(">>>>>>>>>>>>>>", torneoAdmin);
+    console.log(">>>>>>>>>>>>>>", parejas, loadingP);
+
     let parejasContent;
-    console.log("LOADING PAREJAS", loading2);
+    console.log("LOADING PAREJAS", loadingP);
 
-    if (loading2) {
-      console.log("kjsdhfiusalfhgsuiflfghsjdhfjash", loading2);
+    if (loadingP) {
+      console.log("kjsdhfiusalfhgsuiflfghsjdhfjash", loadingP);
       parejasContent = <Spinner />;
     } else {
-      console.log(
-        "**********************Estoy en parejas, info del torneo ",
-        torneoAdmin
-      );
-      console.log(torneoAdmin.tournament.couples);
+      if (parejas.msg) {
+        parejasContent = <p>No hay parejas apuntadas de momento</p>;
+      } else {
+        console.log(
+          "**********************Estoy en parejas, info del torneo ",
+          parejas
+        );
+        console.log(parejas.nombres);
 
-      let table = [];
-      let j = 0;
-      let createTable = () => {
-        for (var i = 0; i < torneoAdmin.tournament.couples.length; i++) {
-          let children = [];
-          console.log("i: ", i);
-          console.log(torneoAdmin.tournament.couples.length);
-          console.log(
-            "user1name",
-            i,
-            torneoAdmin.tournament.couples[i].user1Name
-          );
-          console.log(
-            "user2name",
-            i,
-            torneoAdmin.tournament.couples[i].user2Name
-          );
+        let table = [];
+        let j = 0;
+        let m = 0;
+        let createTable = () => {
+          for (var i = 0; i < parejas.nombres.length; i++) {
+            let children = [];
+            let k = 0;
 
-          children.push(
-            <td key={j} className="text-left">
-              {torneoAdmin.tournament.couples[i].user1Name}{" "}
-              {torneoAdmin.tournament.couples[i].user1LastName}
-            </td>
-          );
-          j++;
-          children.push(
-            <td key={j} className="text-left">
-              {torneoAdmin.tournament.couples[i].user2Name}{" "}
-              {torneoAdmin.tournament.couples[i].user2LastName}
-            </td>
-          );
-          let idPareja = torneoAdmin.tournament.couples[i].id;
-          let id = torneoAdmin.tournament.id;
-          j++;
-          // Añadir a APP
-          let myLink =
-            "/torneos-activos-admin/" +
-            id +
-            "/ver-parejas/" +
-            idPareja +
-            "/editar-pareja";
-          children.push(
-            <td key={k} className="grupos">
-              <Link className="link-button" to={myLink}>
-                Editar
-              </Link>
-            </td>
-          );
+            if (k === 0) {
+              m++;
+              children.push(
+                <td key={j} className="text-center">
+                  {m}
+                </td>
+              );
+              console.log("----------------", parejas.nombres[i]);
+              k++;
+              i++;
+            }
+            if (k === 1) {
+              console.log("HOLA");
+              children.push(
+                <td key={j} className="text-center">
+                  {parejas.nombres[i]}
+                </td>
+              );
+              k++;
+              i++;
+            }
+            if (k === 2) {
+              children.push(
+                <td key={j} className="text-center">
+                  {parejas.nombres[i]}
+                </td>
+              );
+              k = 0;
+              //  i++;
+            }
+            console.log("i: ", i);
+            console.log(parejas.nombres.length);
+            console.log("user1name", i, parejas.nombres[i]);
+            // children.push(
+            //   <td key={j} className="text-center">
+            //     {parejas.nombres[i]}
+            //   </td>
+            // );
 
-          table.push(
-            <tr key={i} className="table">
-              {children}
-            </tr>
-          );
-        }
-        console.log("table en parejas", table);
-        return table;
-      };
+            j++;
 
-      parejasContent = (
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th className="text-center">Jugador 1 </th>
-                <th className="text-center">Jugador 2 </th>
-                <th className="text-center">Editar pareja </th>
+            table.push(
+              <tr key={i} className="table">
+                {children}
               </tr>
-            </thead>
-            <tbody>{createTable()}</tbody>
-          </table>
-        </div>
-      );
+            );
+          }
+          console.log("table en parejas", table);
+          return table;
+        };
+
+        parejasContent = (
+          <div>
+            <table>
+              <thead>
+                <tr>
+                  <th className="text-center"></th>
+
+                  <th className="text-center">Jugador 1 </th>
+                  <th className="text-center">Jugador 2 </th>
+                </tr>
+              </thead>
+              <tbody>{createTable()}</tbody>
+            </table>
+          </div>
+        );
+      }
     }
 
     return (
-      <div className="info-torneo">
-        <div className="container">
-          <h2>Lista de parejas apuntadas al torneo</h2>
+      <div className="dashboard">
+        <div className="info-torneo">
+          <div className="container">
+            <div className="col-md-8 m-auto">
+              <h2 className="display-4 text-center">
+                Lista de parejas apuntadas
+              </h2>
 
-          {parejasContent}
+              {parejasContent}
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -121,14 +132,17 @@ class VerParejasAdmin extends Component {
 }
 VerParejasAdmin.propTypes = {
   torneosActivosAdmin: PropTypes.object.isRequired,
+  torneoInfo: PropTypes.object.isRequired,
+
   match: PropTypes.object.isRequired,
-  getAdminTournament: PropTypes.func.isRequired
+  obtenerParejas: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
+  torneoInfo: state.torneoInfo,
   torneosActivosAdmin: state.torneosActivosAdmin,
   match: state.match
 });
 
-export default connect(mapStateToProps, { getAdminTournament })(
+export default connect(mapStateToProps, { obtenerParejas })(
   withRouter(VerParejasAdmin)
 );

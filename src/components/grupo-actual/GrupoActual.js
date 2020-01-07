@@ -8,22 +8,6 @@ import Spinner from "../common/Spinner";
 import { miRondaInfo } from "../../actions/torneoInfoAction";
 
 class GrupoActual extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      show: false,
-      errors: {}
-    };
-    this.handleModal = this.handleModal.bind(this);
-    this.onAceptar = this.onAceptar.bind(this);
-    this.onRechazar = this.onRechazar.bind(this);
-  }
-  handleModal() {
-    this.setState({ show: true });
-  }
-  onAceptar(partidoId) {}
-  onRechazar(partidoId) {}
-
   componentDidMount() {
     const { torneoInformacion } = this.props.torneoInfo;
     let torneoData = torneoInformacion;

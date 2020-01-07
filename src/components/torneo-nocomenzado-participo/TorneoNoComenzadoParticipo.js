@@ -7,7 +7,6 @@ import { withRouter } from "react-router-dom";
 import Spinner from "../common/Spinner";
 import "../../assets/Style.css";
 
-// TODO: Poner un botón de volver
 class TorneoNoComenzadoParticipo extends Component {
   componentDidMount() {
     console.log(
@@ -21,7 +20,7 @@ class TorneoNoComenzadoParticipo extends Component {
     const { torneoNoComenzado, loadingTNC } = this.props.torneoInfo;
     console.log("***************", this.props.match);
     let torneoContent;
-    console.log("loadingTNC", loadingTNC);
+    console.log("loadingTNC", loadingTNC, torneoNoComenzado);
     if (loadingTNC) {
       torneoContent = <Spinner />;
     } else {

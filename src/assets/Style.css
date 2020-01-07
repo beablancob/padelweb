@@ -129,6 +129,7 @@ th {
   padding-top: 50px;
 }
 .aux-nav {
+  margin-right: 100px;
   text-decoration: none;
   color: #8ac125;
   transition: background 150ms;

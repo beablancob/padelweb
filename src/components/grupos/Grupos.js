@@ -39,7 +39,7 @@ class Grupos extends Component {
     const { id } = this.props.match.params;
 
     let gruposContent;
-
+    let infoRondas;
     if (loading2) {
       gruposContent = <Spinner />;
     } else {
@@ -48,6 +48,7 @@ class Grupos extends Component {
       } else {
         console.log("HEY YOU", torneoAdmin.tournament);
         let couples = torneoAdmin.tournament.couples;
+        console.log("------------------------", torneoAdmin);
         let numGrupos;
 
         numGrupos = couples[0].grupoActual;
@@ -93,6 +94,19 @@ class Grupos extends Component {
           return table;
         };
 
+        // Comprobación del número de rondas que quedan
+        if (
+          torneoAdmin.tournament.rondaActual ===
+          torneoAdmin.tournament.numeroRondas
+        ) {
+          infoRondas = <p>¡Esta es la última ronda por disputar!</p>;
+        } else {
+          let numRondas =
+            torneoAdmin.tournament.numeroRondas -
+            torneoAdmin.tournament.rondaActual;
+          infoRondas = <p> Quedan {numRondas} rondas por disputar </p>;
+        }
+
         // Comprobación de partidos jugados en la ronda actual
         let partidosJugados = true;
         let blabla = (
@@ -135,6 +149,7 @@ class Grupos extends Component {
 
             <div className="col">
               <div> {blabla} </div>
+              <div>{infoRondas}</div>
 
               <Button
                 variant="outline-danger"

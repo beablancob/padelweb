@@ -35,7 +35,7 @@ export const editedUser = (userId, editedUser) => dispatch => {
         payload: err.response.data
       })
     );
-  window.alert("¡Ajustes cambiados!");
+  window.alert("¡Perfil editado!");
 };
 // Delete account & profile
 export const deleteAccount = (userId, history) => dispatch => {

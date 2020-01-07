@@ -6,7 +6,9 @@ import {
   TOURNAMENT_ADMIN_LOADING,
   GET_ERRORS,
   GET_ADMIN_TOURNAMENT_ROUNDS,
-  ROUNDS_LOADING
+  ROUNDS_LOADING,
+  PAREJAS_TORNEO,
+  PAREJAS_LOADING
 } from "./types";
 
 // Get current admin tournaments
@@ -59,6 +61,22 @@ export const createTournament = (tournamentData, history) => dispatch => {
   //     payload: err.response.data
   //   })
   // );
+};
+export const obtenerParejas = id => dispatch => {
+  console.log("HOLA", id);
+  dispatch(obtenerParejasLoading());
+  axios.get("/admin/tournaments/" + id + "/couples").then(res => {
+    dispatch({
+      type: PAREJAS_TORNEO,
+      payload: res.data
+    });
+  });
+};
+
+export const obtenerParejasLoading = () => {
+  return {
+    type: PAREJAS_LOADING
+  };
 };
 
 export const getAdminTournament = id => dispatch => {

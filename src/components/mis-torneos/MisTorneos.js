@@ -78,8 +78,7 @@ class MisTorneos extends Component {
                   j++;
                   // Si el torneo todavía no ha comenzado
                   if (listTorneos[i].rondaActual === 0) {
-                    let myLink =
-                      "/torneo-nocomenzado-participo/" + listTorneos[i].id;
+                    let myLink = "/torneo-nocomenzado/" + listTorneos[i].id;
                     children.push(
                       <td key={j} className="no-comenzado">
                         Torneo no comenzado
@@ -130,8 +129,8 @@ class MisTorneos extends Component {
             <div>
               <p className="lead text-muted">Bienvenido/a {user.name}</p>
               <p>
-                Estos son los torneos públicos de este momento. Puedes animarte
-                a organizar uno actuando en inicio.
+                Esta es la lista de torneos a los que estás apuntado
+                actualmente.
               </p>
               <table>
                 <thead>

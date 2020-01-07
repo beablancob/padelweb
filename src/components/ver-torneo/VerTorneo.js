@@ -15,67 +15,57 @@ import Grupo from "../grupo/Grupo";
 
 import Grupos from "../grupos/Grupos";
 import AdminBar from "../layout/AdminBar";
-
 import ClasifGeneralAdmin from "../clasif-general/ClasifGeneralAdmin";
 
 class VerTorneo extends Component {
   componentDidMount() {
     console.log("DIDDDD**********", this.props.match.params);
     const { id } = this.props.match.params;
-    this.props.getRoundsTournament(id);
+    // this.props.getRoundsTournament(id);
     this.props.getAdminTournament(id);
   }
 
   render() {
-    const {
-      roundsLoading,
-      rounds,
-      loading2,
-      torneoAdmin
-    } = this.props.torneosActivosAdmin;
+    const { loading2, torneoAdmin } = this.props.torneosActivosAdmin;
     // const { loading2, torneoAdmin } = this.props.torneosActivosAdmin;
     console.log("HOLAAA", torneoAdmin);
 
     let infoContent;
-    if (roundsLoading) {
-      console.log("load1");
+
+    if (loading2) {
+      console.log("load2");
+
       infoContent = <Spinner />;
     } else {
-      if (loading2) {
-        console.log("load2");
+      console.log("no load");
 
-        infoContent = <Spinner />;
-      } else {
-        console.log("no load");
+      infoContent = (
+        <div>
+          <h1 className="display-4 text-center">
+            Torneo {torneoAdmin.tournament.name}
+          </h1>
 
-        infoContent = (
-          <div>
-            <h1 className="display-4 text-center">
-              Torneo {torneoAdmin.tournament.name}
-            </h1>
+          <AdminBar />
 
-            <AdminBar />
-
-            <Switch>
-              <PrivateRoute
-                exact
-                path="/ver-torneo/:id/clasif-general/"
-                component={ClasifGeneralAdmin}
-              />
-              <PrivateRoute
-                exact
-                path="/ver-torneo/:id/grupos"
-                component={Grupos}
-              />
-              <PrivateRoute
-                exact
-                path="/ver-torneo/:id/grupos/:numGrupo/clasificacion"
-                component={Grupo}
-              />
-            </Switch>
-          </div>
-        );
-      }
+          <Switch>
+            <PrivateRoute
+              exact
+              path="/ver-torneo/:id/clasif-general/"
+              component={ClasifGeneralAdmin}
+            />
+            <PrivateRoute
+              exact
+              path="/ver-torneo/:id/grupos"
+              component={Grupos}
+            />
+            <PrivateRoute
+              exact
+              path="/ver-torneo/:id/grupos/:numGrupo/clasificacion"
+              component={Grupo}
+            />
+          </Switch>
+        </div>
+      );
     }
 
     return (

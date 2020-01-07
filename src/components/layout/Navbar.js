@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authAction";
 import { clearCurrentProfile } from "../../actions/profileActions";
@@ -22,11 +22,13 @@ class Navbar extends Component {
     e.preventDefault();
     this.props.isAdmin();
     console.log("Hola has clickado en admin", e);
+    this.props.history.push("/mis-torneos");
   }
-  onUserClick(e) {
+  onUserClick(e, his) {
     e.preventDefault();
     this.props.isNotAdmin();
     console.log("Adios admin, ahora eres usuario", e);
+    this.props.history.push("/torneos-publicos");
   }
   // TODO: Cuando tengan user.img entonces la meto en el login. Si el usuario no tiene, añadir la default
   render() {
@@ -58,8 +60,9 @@ class Navbar extends Component {
               <li className="nav-item">
                 <div className="row">
                   <Link
-                    to="/torneos-activos-user"
+                    exact
                     className="nav-link btn-us"
+                    to="/torneos-publicos"
                     onClick={this.onUserClick.bind(this)}
                   >
                     Inicio
@@ -145,4 +148,4 @@ export default connect(mapStateToProps, {
   isAdmin,
   isNotAdmin,
   clearCurrentProfile
-})(Navbar);
+})(withRouter(Navbar));

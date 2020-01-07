@@ -15,12 +15,11 @@ import Footer from "./layout/Footer";
 import Landing from "./layout/Landing";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
-import Dashboard from "./dashboard/Dashboard";
 import EditProfile from "./edit-profile/EditProfile";
-import Torneos2 from "./torneos-activos-user/Torneos2";
 import MisTorneos from "./mis-torneos/MisTorneos";
+import VerParejasAdmin from "./ver-parejas-admin/VerParejasAdmin";
 import TorneosActivosAdmin from "./torneos-activos-admin/TorneosActivosAdmin";
-import CreateTournament from "./create-tournament/CreateTournament";
+import CrearTorneo from "./crear-torneo/CrearTorneo";
 import EditarTorneo from "./editar-torneo/EditarTorneo";
 import RegistrarPareja from "./registrar-pareja/RegistrarPareja";
 import VerTorneo from "./ver-torneo/VerTorneo";
@@ -28,6 +27,7 @@ import ApuntarseTorneo from "./apuntarse-torneo/ApuntarseTorneo";
 import ApuntarsePriv from "./ap-priv/ApuntarsePriv";
 import TorneoApuntadoInfo from "./torneo-apuntado-info/TorneoApuntadoInfo";
 import TorneoNoComenzadoParticipo from "./torneo-nocomenzado-participo/TorneoNoComenzadoParticipo";
+import TorneosPublicos from "./torneos-publicos/TorneosPublicos";
 
 //Con esto hacemos que aunque se refresque la página, nosotros sigamos con la sesión iniciada.
 // Check for token
@@ -65,7 +65,6 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Switch>
-                <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 <PrivateRoute
                   exact
                   path="/edit-profile"
@@ -73,18 +72,18 @@ class App extends Component {
                 />
                 <PrivateRoute
                   exact
-                  path="/torneos-activos-user"
-                  component={Torneos2}
+                  path="/torneos-publicos"
+                  component={TorneosPublicos}
                 />
                 <PrivateRoute
                   exact
-                  path="/create-tournament"
-                  component={CreateTournament}
+                  path="/crear-torneo"
+                  component={CrearTorneo}
                 />
                 <PrivateRoute path="/ver-torneo/:id" component={VerTorneo} />
                 <PrivateRoute
                   exact
-                  path="/torneos-activos-admin"
+                  path="/torneos-administrados"
                   component={TorneosActivosAdmin}
                 />
                 <PrivateRoute
@@ -107,7 +106,12 @@ class App extends Component {
                   component={RegistrarPareja}
                 />
                 <PrivateRoute
-                  path="/torneo-nocomenzado-participo/:id"
+                  exact
+                  path="/torneo/:id/listado-de-parejas"
+                  component={VerParejasAdmin}
+                />
+                <PrivateRoute
+                  path="/torneo-nocomenzado/:id"
                   component={TorneoNoComenzadoParticipo}
                 />
                 <PrivateRoute path="/mis-torneos" component={MisTorneos} />

@@ -7,18 +7,18 @@ import { Link } from "react-router-dom";
 class Sidebar extends Component {
   render() {
     const { admin } = this.props.profile;
-    const { isAuthenticated, user } = this.props.auth;
+    const { isAuthenticated } = this.props.auth;
 
     const asUser = (
       <div className="sidenav">
         <ul className="list-unstyled components">
           <li className="nav-item">
-            <Link className="nav-link" to="/torneos-activos-user">
+            <Link className="nav-link" to="/torneos-publicos">
               Torneos públicos
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/create-tournament">
+            <Link className="nav-link" to="/crear-torneo">
               Organizar un torneo
             </Link>
           </li>
@@ -40,7 +40,7 @@ class Sidebar extends Component {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/torneos-activos-admin">
+            <Link className="nav-link" to="/torneos-administrados">
               Torneos organizados por mi
             </Link>
           </li>

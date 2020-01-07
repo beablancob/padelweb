@@ -6,7 +6,9 @@ import {
   TORNEO_NO_COMENZADO_LOADING,
   SET_TORNEO_NC_INFO,
   RONDA_LOADING,
-  GET_ERRORS
+  GET_ERRORS,
+  GET_PREVIOUS_ROUND,
+  PREVIOUS_ROUNDS_LOADING
 } from "./types";
 
 // TORNEO EN EL QUE PARTICIPO Y QUE HA EMPEZADO
@@ -49,6 +51,7 @@ export const miRondaInfo = torneoData => dispatch => {
 export const infoTorneoNoComenzadoParticipo = torneoId => dispatch => {
   console.log("HOLA");
   dispatch(setTorneoNoComenzadoLoading());
+  console.log("hey");
 
   axios.get("/tournaments/" + torneoId).then(res => {
     dispatch({
@@ -88,6 +91,22 @@ export const confirmarResultado = (partidoId, id, history) => dispatch => {
         payload: err.response.data
       })
     );
+};
+
+export const getPreviousRounds = (torneoId, ronda) => dispatch => {
+  dispatch(previousRoundsLoading());
+  console.log("hola");
+  axios.get("/tournaments/" + torneoId + "/ronda/" + ronda).then(res => {
+    dispatch({
+      type: GET_PREVIOUS_ROUND,
+      payload: res.data
+    });
+  });
+};
+export const previousRoundsLoading = () => {
+  return {
+    type: PREVIOUS_ROUNDS_LOADING
+  };
 };
 
 // Tournaments loading

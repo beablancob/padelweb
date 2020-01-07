@@ -130,7 +130,14 @@ class TorneosActivosAdmin extends Component {
                 children.push(<td key={j}>Torneo comenzado</td>);
                 j++;
               }
-
+              let link = "/torneo/" + listTorneos[i].id + "/listado-de-parejas";
+              children.push(
+                <td key={j} style={{ width: 220 }}>
+                  <Link className="link-button" to={link}>
+                    Listado
+                  </Link>
+                </td>
+              );
               //Create the parent and add the children
               table.push(
                 <tr key={m} className="table">
@@ -152,7 +159,7 @@ class TorneosActivosAdmin extends Component {
                     <th>Código de registro</th>
                     <th>Información</th>
                     <th>Registrar pareja</th>
-                    {/* <th>Parejas apuntadas</th> */}
+                    <th>Parejas apuntadas</th>
                   </tr>
                 </thead>
                 <tbody>{createTable()}</tbody>

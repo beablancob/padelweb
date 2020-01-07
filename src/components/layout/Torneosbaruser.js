@@ -22,7 +22,7 @@ class Torneosbaruser extends Component {
     let myLink1 = "/torneo-apuntado-info/" + id + "/parejas";
     let myLink2 = "/torneo-apuntado-info/" + id + "/clasificacion";
     let myLink3 = "/torneo-apuntado-info/" + id + "/grupo-actual";
-    let myLink4 = "/torneo-apuntado-info/" + id + "/clasificacion-general";
+    //let myLink4 = "/torneo-apuntado-info/" + id + "/rondas";
 
     if (isAuthenticated) {
       return (
@@ -42,11 +42,11 @@ class Torneosbaruser extends Component {
               Grupo actual
             </Link>
           </Nav.Item>
-          <Nav.Item>
+          {/* <Nav.Item>
             <Link exact className="aux-nav" to={myLink4}>
-              Clasificación General
+              Rondas
             </Link>
-          </Nav.Item>
+          </Nav.Item> */}
         </Nav>
       );
     }

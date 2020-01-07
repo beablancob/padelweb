@@ -15,7 +15,6 @@ import { Switch } from "react-router-dom";
 import Spinner from "../common/Spinner";
 import GrupoActual from "../grupo-actual/GrupoActual";
 import ResultadoPartido from "../resultado-partido/ResultadoPartido";
-import ClasificacionGeneral from "../clasificacion-general/ClasificacionGeneral";
 import ConfirmacionResultado from "../confirmacion-resultado/ConfirmacionResultado";
 
 class TorneoApuntadoInfo extends Component {
@@ -42,6 +41,9 @@ class TorneoApuntadoInfo extends Component {
           <h1 className="display-4 text-center">
             Torneo {torneoInformacion.tournament.name}
           </h1>
+          <h2 className="text-center">
+            Ronda {torneoInformacion.tournament.rondaActual}
+          </h2>
 
           <Torneosbaruser />
           <Switch>
@@ -63,19 +65,12 @@ class TorneoApuntadoInfo extends Component {
               path="/torneo-apuntado-info/:id/grupo-actual/"
               component={GrupoActual}
             />
-            <PrivateRoute
-              exact
-              path="/torneo-apuntado-info/:id/clasificacion-general/"
-              component={ClasificacionGeneral}
-            />
 
             <PrivateRoute
               exact
               path="/torneo-apuntado-info/:id/grupo-actual/:partidoId/confirmacion-resultado"
               component={ConfirmacionResultado}
             />
-            {/* let myLink = "/torneo-apuntado-info/" + torneo.id + "/grupo-actual/"
-            + partidos[i].id + "/subir-resultado"; */}
           </Switch>
         </div>
       );
