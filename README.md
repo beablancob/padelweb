@@ -1,6 +1,12 @@
 # TFG Pádel Frontend
 
+Este Trabajo Fin de Grado consiste en el desarrollo de una aplicación web para la gestión de torneos deportivos, inicialmente para torneos de pádel. Se ha llevado a cabo la parte de interacción con el usuario de la aplicación, el frontend.
 
+A través de la plataforma implementada, los usuarios pueden registrarse, apuntarse a torneos, crearlos, ver la clasificación del torneo así como subir resultados de los partidos, entre otras muchas funcionalidades.
+
+Para desarrollar este proyecto, se ha utilizado React como librería de JavaScript. Además, se ha empleado la librería Redux para obtener una arquitectura escalable y para tener un máximo control del flujo de los datos y del estado de la aplicación.
+
+Asimismo, se ha utilizado tanto el framework React-Bootstrap como Bootstrap para el diseño de la aplicación web, de tal manera que el usuario es capaz de utilizar el sistema de una forma intuitiva y sencilla. Para la persistencia de los datos se envían peticiones a un servidor REST desarrollado de forma paralela como parte de otro TFG.
 
 
 
